@@ -5,11 +5,9 @@
 //= require <jquery/plugins/jquery.cookie>
 //= require <jquery/plugins/jquery.bgiframe.min>
 //= require <jquery/plugins/jquery.flash>
-//= require <jquery/plugins/jquery.couch>
 //= require <jquery/plugins/jquery.easyTooltip>
 //= require <jquery/plugins/jquery.tablesorter.min>
 //= require <jquery/plugins/jquery.event.drag-2.0.min>
-//= require <data-source/couch-ds>
 //= require <helpers/util>
 //= require <helpers/unit>
 //= require <models/activity>
@@ -63,8 +61,8 @@
 (function () {
 
   sparks.config.flash_id = 'breadboardActivity1';
-  sparks.activity_base_url = "http://couchdb.cosmos.concord.org/sparks/_design/app/_show/activity/";
-  sparks.activity_images_base_url = "http://couchdb.cosmos.concord.org/sparks/";
+  sparks.activity_base_url = "activities/bb-activities/";
+  sparks.activity_images_base_url = "activities/images/";
   sparks.tutorial_base_url = "tutorials/";
 
   window._gaq = window._gaq || [];      // in case this script loads before the GA queue is created
@@ -83,23 +81,6 @@
   };
 
   this.loadActivity = function () {
-    var learner_id = sparks.util.readCookie('learner_id');
-
-    if (learner_id) {
-       console.log("setting user "+learner_id);
-       var user = {"learner_id": learner_id, "name": sparks.util.readCookie('student_name'),
-         "student_id": sparks.util.readCookie('student_id'), "class_id": sparks.util.readCookie('class_id')};
-       sparks.couchDS.setUser(user);
-
-       // if there's a logged-in user, we want to stop them before they leave
-       var askConfirm = function(){
-         return "Are you sure you want to leave this page?";
-       };
-       window.onbeforeunload = askConfirm;
-    }
-
-    sparks.GAHelper.setUserLoggedIn(!!learner_id);
-
     var activityName = window.location.hash;
     activityName = activityName.substring(1,activityName.length);
     if (!activityName){
@@ -107,7 +88,8 @@
     }
 
     console.log("loading "+activityName);
-    sparks.couchDS.loadActivity(activityName, function(activity) {
+
+    $.getJSON(sparks.activity_base_url + activityName, function(activity) {
       console.log(activity);
       var ac = new sparks.ActivityConstructor(activity);
     });
@@ -154,29 +136,8 @@
 
   this.setupQuitButton = function () {
     $('#return_to_portal').click(function() {
-      if (!!sparks.couchDS.user) {
-        sparks.reportController.saveData();
-        apMessageBox.information({
-        	title: "Ready to leave?",
-        	message: "All your work up until this page has been saved.",
-        	informationImage: "lib/information-32x32.png",
-        	width: 400,
-        	height: 200,
-        	buttons: {
-        	  "Go to the portal": function () {
-        	    $(this).dialog("close");
-        	    window.onbeforeunload = null;
-              window.location.href = "http://sparks.portal.concord.org";
-        	  },
-        	  "Keep working": function() {
-        	    $(this).dialog("close");
-        	  }
-        	}
-        });
-      } else {
-        window.onbeforeunload = null;
-        window.location.href = "http://sparks.portal.concord.org";
-      }
+      window.onbeforeunload = null;
+      window.location.href = "http://sparks.portal.concord.org";
     });
   };
 })();

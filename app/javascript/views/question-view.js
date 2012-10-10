@@ -154,7 +154,9 @@
       if (fileName.indexOf("http") > -1){
         return fileName;
       } else if (!!sparks.jsonSection.images_url) {
-        return sparks.jsonSection.images_url + "/" + fileName;
+        // hard-change urls from jpg to jpeg for couch conversion...
+        fileName = fileName.replace('.jpg', '.jpeg');
+        return sparks.jsonSection.images_url + fileName;
       }
       console.log(fileName + " appears to be a relative filename, but there is no base activity url.");
       return "";

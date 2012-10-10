@@ -1232,653 +1232,6 @@ if (window.attachEvent) {
 }
 
 })();
-
-(function($) {
-  $.couch = $.couch || {};
-
-  function encodeDocId(docID) {
-    var parts = docID.split("/");
-    if (parts[0] == "_design") {
-      parts.shift();
-      return "_design/" + encodeURIComponent(parts.join('/'));
-    }
-    return encodeURIComponent(docID);
-  };
-
-  function prepareUserDoc(user_doc, new_password) {
-    if (typeof hex_sha1 == "undefined") {
-      alert("creating a user doc requires sha1.js to be loaded in the page");
-      return;
-    }
-    var user_prefix = "org.couchdb.user:";
-    user_doc._id = user_doc._id || user_prefix + user_doc.name;
-    if (new_password) {
-      user_doc.salt = $.couch.newUUID();
-      user_doc.password_sha = hex_sha1(new_password + user_doc.salt);
-    }
-    user_doc.type = "user";
-    if (!user_doc.roles) {
-      user_doc.roles = []
-    }
-    return user_doc;
-  };
-
-  var uuidCache = [];
-
-  $.extend($.couch, {
-    urlPrefix: '',
-    activeTasks: function(options) {
-      ajax(
-        {url: this.urlPrefix + "/_active_tasks"},
-        options,
-        "Active task status could not be retrieved"
-      );
-    },
-
-    allDbs: function(options) {
-      ajax(
-        {url: this.urlPrefix + "/_all_dbs"},
-        options,
-        "An error occurred retrieving the list of all databases"
-      );
-    },
-
-    config: function(options, section, option, value) {
-      var req = {url: this.urlPrefix + "/_config/"};
-      if (section) {
-        req.url += encodeURIComponent(section) + "/";
-        if (option) {
-          req.url += encodeURIComponent(option);
-        }
-      }
-      if (value === null) {
-        req.type = "DELETE";
-      } else if (value !== undefined) {
-        req.type = "PUT";
-        req.data = toJSON(value);
-        req.contentType = "application/json";
-        req.processData = false
-      }
-
-      ajax(req, options,
-        "An error occurred retrieving/updating the server configuration"
-      );
-    },
-
-    session: function(options) {
-      options = options || {};
-      $.ajax({
-        type: "GET", url: this.urlPrefix + "/_session",
-        complete: function(req) {
-          var resp = $.httpData(req, "json");
-          if (req.status == 200) {
-            if (options.success) options.success(resp);
-          } else if (options.error) {
-            options.error(req.status, resp.error, resp.reason);
-          } else {
-            alert("An error occurred getting session info: " + resp.reason);
-          }
-        }
-      });
-    },
-
-    userDb : function(callback) {
-      $.couch.session({
-        success : function(resp) {
-          var userDb = $.couch.db(resp.info.authentication_db);
-          callback(userDb);
-        }
-      });
-    },
-
-    signup: function(user_doc, password, options) {
-      options = options || {};
-      user_doc = prepareUserDoc(user_doc, password);
-      $.couch.userDb(function(db) {
-        db.saveDoc(user_doc, options);
-      })
-    },
-
-    login: function(options) {
-      options = options || {};
-      $.ajax({
-        type: "POST", url: this.urlPrefix + "/_session", dataType: "json",
-        data: {name: options.name, password: options.password},
-        complete: function(req) {
-          var resp = $.httpData(req, "json");
-          if (req.status == 200) {
-            if (options.success) options.success(resp);
-          } else if (options.error) {
-            options.error(req.status, resp.error, resp.reason);
-          } else {
-            alert("An error occurred logging in: " + resp.reason);
-          }
-        }
-      });
-    },
-    logout: function(options) {
-      options = options || {};
-      $.ajax({
-        type: "DELETE", url: this.urlPrefix + "/_session", dataType: "json",
-        username : "_", password : "_",
-        complete: function(req) {
-          var resp = $.httpData(req, "json");
-          if (req.status == 200) {
-            if (options.success) options.success(resp);
-          } else if (options.error) {
-            options.error(req.status, resp.error, resp.reason);
-          } else {
-            alert("An error occurred logging out: " + resp.reason);
-          }
-        }
-      });
-    },
-
-    db: function(name, db_opts) {
-      db_opts = db_opts || {};
-      var rawDocs = {};
-      function maybeApplyVersion(doc) {
-        if (doc._id && doc._rev && rawDocs[doc._id] && rawDocs[doc._id].rev == doc._rev) {
-          if (typeof Base64 == "undefined") {
-            alert("please include /_utils/script/base64.js in the page for base64 support");
-            return false;
-          } else {
-            doc._attachments = doc._attachments || {};
-            doc._attachments["rev-"+doc._rev.split("-")[0]] = {
-              content_type :"application/json",
-              data : Base64.encode(rawDocs[doc._id].raw)
-            }
-            return true;
-          }
-        }
-      };
-      return {
-        name: name,
-        uri: this.urlPrefix + "/" + encodeURIComponent(name) + "/",
-
-        compact: function(options) {
-          $.extend(options, {successStatus: 202});
-          ajax({
-              type: "POST", url: this.uri + "_compact",
-              data: "", processData: false
-            },
-            options,
-            "The database could not be compacted"
-          );
-        },
-        viewCleanup: function(options) {
-          $.extend(options, {successStatus: 202});
-          ajax({
-              type: "POST", url: this.uri + "_view_cleanup",
-              data: "", processData: false
-            },
-            options,
-            "The views could not be cleaned up"
-          );
-        },
-        compactView: function(groupname, options) {
-          $.extend(options, {successStatus: 202});
-          ajax({
-              type: "POST", url: this.uri + "_compact/" + groupname,
-              data: "", processData: false
-            },
-            options,
-            "The view could not be compacted"
-          );
-        },
-        create: function(options) {
-          $.extend(options, {successStatus: 201});
-          ajax({
-              type: "PUT", url: this.uri, contentType: "application/json",
-              data: "", processData: false
-            },
-            options,
-            "The database could not be created"
-          );
-        },
-        drop: function(options) {
-          ajax(
-            {type: "DELETE", url: this.uri},
-            options,
-            "The database could not be deleted"
-          );
-        },
-        info: function(options) {
-          ajax(
-            {url: this.uri},
-            options,
-            "Database information could not be retrieved"
-          );
-        },
-        changes: function(since, options) {
-          options = options || {};
-          var timeout = 100, db = this, active = true,
-            listeners = [],
-            promise = {
-            onChange : function(fun) {
-              listeners.push(fun);
-            },
-            stop : function() {
-              active = false;
-            }
-          };
-          function triggerListeners(resp) {
-            $.each(listeners, function() {
-              this(resp);
-            });
-          };
-          options.success = function(resp) {
-            timeout = 100;
-            if (active) {
-              since = resp.last_seq;
-              triggerListeners(resp);
-              getChangesSince();
-            };
-          };
-          options.error = function() {
-            if (active) {
-              setTimeout(getChangesSince, timeout);
-              timeout = timeout * 2;
-            }
-          };
-          function getChangesSince() {
-            var opts = $.extend({heartbeat : 10 * 1000}, options, {
-              feed : "longpoll",
-              since : since
-            });
-            ajax(
-              {url: db.uri + "_changes"+encodeOptions(opts)},
-              options,
-              "Error connecting to "+db.uri+"/_changes."
-            );
-          }
-          if (since) {
-            getChangesSince();
-          } else {
-            db.info({
-              success : function(info) {
-                since = info.update_seq;
-                getChangesSince();
-              }
-            });
-          }
-          return promise;
-        },
-        allDocs: function(options) {
-          var type = "GET";
-          var data = null;
-          if (options["keys"]) {
-            type = "POST";
-            var keys = options["keys"];
-            delete options["keys"];
-            data = toJSON({ "keys": keys });
-          }
-          ajax({
-              type: type,
-              data: data,
-              url: this.uri + "_all_docs" + encodeOptions(options)
-            },
-            options,
-            "An error occurred retrieving a list of all documents"
-          );
-        },
-        allDesignDocs: function(options) {
-          this.allDocs($.extend({startkey:"_design", endkey:"_design0"}, options));
-        },
-        allApps: function(options) {
-          options = options || {};
-          var self = this;
-          if (options.eachApp) {
-            this.allDesignDocs({
-              success: function(resp) {
-                $.each(resp.rows, function() {
-                  self.openDoc(this.id, {
-                    success: function(ddoc) {
-                      var index, appPath, appName = ddoc._id.split('/');
-                      appName.shift();
-                      appName = appName.join('/');
-                      index = ddoc.couchapp && ddoc.couchapp.index;
-                      if (index) {
-                        appPath = ['', name, ddoc._id, index].join('/');
-                      } else if (ddoc._attachments && ddoc._attachments["index.html"]) {
-                        appPath = ['', name, ddoc._id, "index.html"].join('/');
-                      }
-                      if (appPath) options.eachApp(appName, appPath, ddoc);
-                    }
-                  });
-                });
-              }
-            });
-          } else {
-            alert("Please provide an eachApp function for allApps()");
-          }
-        },
-        openDoc: function(docId, options, ajaxOptions) {
-          options = options || {};
-          if (db_opts.attachPrevRev || options.attachPrevRev) {
-            $.extend(options, {
-              beforeSuccess : function(req, doc) {
-                rawDocs[doc._id] = {
-                  rev : doc._rev,
-                  raw : req.responseText
-                };
-              }
-            });
-          } else {
-            $.extend(options, {
-              beforeSuccess : function(req, doc) {
-                if (doc["jquery.couch.attachPrevRev"]) {
-                  rawDocs[doc._id] = {
-                    rev : doc._rev,
-                    raw : req.responseText
-                  };
-                }
-              }
-            });
-          }
-          ajax({url: this.uri + encodeDocId(docId) + encodeOptions(options)},
-            options,
-            "The document could not be retrieved",
-            ajaxOptions
-          );
-        },
-        saveDoc: function(doc, options) {
-          options = options || {};
-          var db = this;
-          var beforeSend = fullCommit(options);
-          if (doc._id === undefined) {
-            var method = "POST";
-            var uri = this.uri;
-          } else {
-            var method = "PUT";
-            var uri = this.uri + encodeDocId(doc._id);
-          }
-          var versioned = maybeApplyVersion(doc);
-          $.ajax({
-            type: method, url: uri + encodeOptions(options),
-            contentType: "application/json",
-            dataType: "json", data: toJSON(doc),
-            beforeSend : beforeSend,
-            complete: function(req) {
-              var resp = $.httpData(req, "json");
-              if (req.status == 200 || req.status == 201 || req.status == 202) {
-                doc._id = resp.id;
-                doc._rev = resp.rev;
-                if (versioned) {
-                  db.openDoc(doc._id, {
-                    attachPrevRev : true,
-                    success : function(d) {
-                      doc._attachments = d._attachments;
-                      if (options.success) options.success(resp);
-                    }
-                  });
-                } else {
-                  if (options.success) options.success(resp);
-                }
-              } else if (options.error) {
-                options.error(req.status, resp.error, resp.reason);
-              } else {
-                alert("The document could not be saved: " + resp.reason);
-              }
-            }
-          });
-        },
-        bulkSave: function(docs, options) {
-          var beforeSend = fullCommit(options);
-          $.extend(options, {successStatus: 201, beforeSend : beforeSend});
-          ajax({
-              type: "POST",
-              url: this.uri + "_bulk_docs" + encodeOptions(options),
-              contentType: "application/json", data: toJSON(docs)
-            },
-            options,
-            "The documents could not be saved"
-          );
-        },
-        removeDoc: function(doc, options) {
-          ajax({
-              type: "DELETE",
-              url: this.uri +
-                   encodeDocId(doc._id) +
-                   encodeOptions({rev: doc._rev})
-            },
-            options,
-            "The document could not be deleted"
-          );
-        },
-        bulkRemove: function(docs, options){
-          docs.docs = $.each(
-            docs.docs, function(i, doc){
-              doc._deleted = true;
-            }
-          );
-          $.extend(options, {successStatus: 201});
-          ajax({
-              type: "POST",
-              url: this.uri + "_bulk_docs" + encodeOptions(options),
-              data: toJSON(docs)
-            },
-            options,
-            "The documents could not be deleted"
-          );
-        },
-        copyDoc: function(docId, options, ajaxOptions) {
-          ajaxOptions = $.extend(ajaxOptions, {
-            complete: function(req) {
-              var resp = $.httpData(req, "json");
-              if (req.status == 201) {
-                if (options.success) options.success(resp);
-              } else if (options.error) {
-                options.error(req.status, resp.error, resp.reason);
-              } else {
-                alert("The document could not be copied: " + resp.reason);
-              }
-            }
-          });
-          ajax({
-              type: "COPY",
-              url: this.uri + encodeDocId(docId)
-            },
-            options,
-            "The document could not be copied",
-            ajaxOptions
-          );
-        },
-        query: function(mapFun, reduceFun, language, options) {
-          language = language || "javascript";
-          if (typeof(mapFun) !== "string") {
-            mapFun = mapFun.toSource ? mapFun.toSource() : "(" + mapFun.toString() + ")";
-          }
-          var body = {language: language, map: mapFun};
-          if (reduceFun != null) {
-            if (typeof(reduceFun) !== "string")
-              reduceFun = reduceFun.toSource ? reduceFun.toSource() : "(" + reduceFun.toString() + ")";
-            body.reduce = reduceFun;
-          }
-          ajax({
-              type: "POST",
-              url: this.uri + "_temp_view" + encodeOptions(options),
-              contentType: "application/json", data: toJSON(body)
-            },
-            options,
-            "An error occurred querying the database"
-          );
-        },
-        list: function(list, view, options) {
-          var list = list.split('/');
-          var options = options || {};
-          var type = 'GET';
-          var data = null;
-          if (options['keys']) {
-            type = 'POST';
-            var keys = options['keys'];
-            delete options['keys'];
-            data = toJSON({'keys': keys });
-          }
-          ajax({
-              type: type,
-              data: data,
-              url: this.uri + '_design/' + list[0] +
-                   '/_list/' + list[1] + '/' + view + encodeOptions(options)
-              },
-              options, 'An error occured accessing the list'
-          );
-        },
-        view: function(name, options) {
-          var name = name.split('/');
-          var options = options || {};
-          var type = "GET";
-          var data= null;
-          if (options["keys"]) {
-            type = "POST";
-            var keys = options["keys"];
-            delete options["keys"];
-            data = toJSON({ "keys": keys });
-          }
-          ajax({
-              type: type,
-              data: data,
-              url: this.uri + "_design/" + name[0] +
-                   "/_view/" + name[1] + encodeOptions(options)
-            },
-            options, "An error occurred accessing the view"
-          );
-        },
-        getDbProperty: function(propName, options, ajaxOptions) {
-          ajax({url: this.uri + propName + encodeOptions(options)},
-            options,
-            "The property could not be retrieved",
-            ajaxOptions
-          );
-        },
-
-        setDbProperty: function(propName, propValue, options, ajaxOptions) {
-          ajax({
-            type: "PUT",
-            url: this.uri + propName + encodeOptions(options),
-            data : JSON.stringify(propValue)
-          },
-            options,
-            "The property could not be updated",
-            ajaxOptions
-          );
-        }
-      };
-    },
-
-    encodeDocId: encodeDocId,
-
-    info: function(options) {
-      ajax(
-        {url: this.urlPrefix + "/"},
-        options,
-        "Server information could not be retrieved"
-      );
-    },
-
-    replicate: function(source, target, ajaxOptions, repOpts) {
-      repOpts = $.extend({source: source, target: target}, repOpts);
-      if (repOpts.continuous) {
-        ajaxOptions.successStatus = 202;
-      }
-      ajax({
-          type: "POST", url: this.urlPrefix + "/_replicate",
-          data: JSON.stringify(repOpts),
-          contentType: "application/json"
-        },
-        ajaxOptions,
-        "Replication failed"
-      );
-    },
-
-    newUUID: function(cacheNum) {
-      if (cacheNum === undefined) {
-        cacheNum = 1;
-      }
-      if (!uuidCache.length) {
-        ajax({url: this.urlPrefix + "/_uuids", data: {count: cacheNum}, async: false}, {
-            success: function(resp) {
-              uuidCache = resp.uuids
-            }
-          },
-          "Failed to retrieve UUID batch."
-        );
-      }
-      return uuidCache.shift();
-    }
-  });
-
-  function ajax(obj, options, errorMessage, ajaxOptions) {
-    options = $.extend({successStatus: 200}, options);
-    ajaxOptions = $.extend({contentType: "application/json"}, ajaxOptions);
-    errorMessage = errorMessage || "Unknown error";
-    $.ajax($.extend($.extend({
-      type: "GET", dataType: "json", cache : !$.browser.msie,
-      beforeSend: function(xhr){
-        if(ajaxOptions && ajaxOptions.headers){
-          for (var header in ajaxOptions.headers){
-            xhr.setRequestHeader(header, ajaxOptions.headers[header]);
-          }
-        }
-      },
-      complete: function(req) {
-        try {
-          var resp = $.httpData(req, "json");
-        } catch(e) {
-          if (options.error) {
-            options.error(req.status, req, e);
-          } else {
-            alert(errorMessage + ": " + e);
-          }
-          return;
-        }
-        if (options.ajaxStart) {
-          options.ajaxStart(resp);
-        }
-        if (req.status == options.successStatus) {
-          if (options.beforeSuccess) options.beforeSuccess(req, resp);
-          if (options.success) options.success(resp);
-        } else if (options.error) {
-          options.error(req.status, resp && resp.error || errorMessage, resp && resp.reason || "no response");
-        } else {
-          alert(errorMessage + ": " + resp.reason);
-        }
-      }
-    }, obj), ajaxOptions));
-  }
-
-  function fullCommit(options) {
-    var options = options || {};
-    if (typeof options.ensure_full_commit !== "undefined") {
-      var commit = options.ensure_full_commit;
-      delete options.ensure_full_commit;
-      return function(xhr) {
-        xhr.setRequestHeader("X-Couch-Full-Commit", commit.toString());
-      };
-    }
-  };
-
-  function encodeOptions(options) {
-    var buf = [];
-    if (typeof(options) === "object" && options !== null) {
-      for (var name in options) {
-        if ($.inArray(name, ["error", "success", "beforeSuccess", "ajaxStart"]) >= 0)
-          continue;
-        var value = options[name];
-        if ($.inArray(name, ["key", "startkey", "endkey"]) >= 0) {
-          value = toJSON(value);
-        }
-        buf.push(encodeURIComponent(name) + "=" + encodeURIComponent(value));
-      }
-    }
-    return buf.length ? "?" + buf.join("&") : "";
-  }
-
-  function toJSON(obj) {
-    return obj !== null ? JSON.stringify(obj) : null;
-  }
-
-})(jQuery);
 /*
  * 	Easy Tooltip 1.0 - jQuery plugin
  *	written by Alen Grakalic
@@ -1955,143 +1308,6 @@ var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];
  * Open Source MIT License - http://threedubmedia.com/code/license
  */
 ;(function(f){f.fn.drag=function(b,a,d){var e=typeof b=="string"?b:"",k=f.isFunction(b)?b:f.isFunction(a)?a:null;if(e.indexOf("drag")!==0)e="drag"+e;d=(b==k?a:d)||{};return k?this.bind(e,d,k):this.trigger(e)};var i=f.event,h=i.special,c=h.drag={defaults:{which:1,distance:0,not:":input",handle:null,relative:false,drop:true,click:false},datakey:"dragdata",livekey:"livedrag",add:function(b){var a=f.data(this,c.datakey),d=b.data||{};a.related+=1;if(!a.live&&b.selector){a.live=true;i.add(this,"draginit."+ c.livekey,c.delegate)}f.each(c.defaults,function(e){if(d[e]!==undefined)a[e]=d[e]})},remove:function(){f.data(this,c.datakey).related-=1},setup:function(){if(!f.data(this,c.datakey)){var b=f.extend({related:0},c.defaults);f.data(this,c.datakey,b);i.add(this,"mousedown",c.init,b);this.attachEvent&&this.attachEvent("ondragstart",c.dontstart)}},teardown:function(){if(!f.data(this,c.datakey).related){f.removeData(this,c.datakey);i.remove(this,"mousedown",c.init);i.remove(this,"draginit",c.delegate);c.textselect(true); this.detachEvent&&this.detachEvent("ondragstart",c.dontstart)}},init:function(b){var a=b.data,d;if(!(a.which>0&&b.which!=a.which))if(!f(b.target).is(a.not))if(!(a.handle&&!f(b.target).closest(a.handle,b.currentTarget).length)){a.propagates=1;a.interactions=[c.interaction(this,a)];a.target=b.target;a.pageX=b.pageX;a.pageY=b.pageY;a.dragging=null;d=c.hijack(b,"draginit",a);if(a.propagates){if((d=c.flatten(d))&&d.length){a.interactions=[];f.each(d,function(){a.interactions.push(c.interaction(this,a))})}a.propagates= a.interactions.length;a.drop!==false&&h.drop&&h.drop.handler(b,a);c.textselect(false);i.add(document,"mousemove mouseup",c.handler,a);return false}}},interaction:function(b,a){return{drag:b,callback:new c.callback,droppable:[],offset:f(b)[a.relative?"position":"offset"]()||{top:0,left:0}}},handler:function(b){var a=b.data;switch(b.type){case !a.dragging&&"mousemove":if(Math.pow(b.pageX-a.pageX,2)+Math.pow(b.pageY-a.pageY,2)<Math.pow(a.distance,2))break;b.target=a.target;c.hijack(b,"dragstart",a); if(a.propagates)a.dragging=true;case "mousemove":if(a.dragging){c.hijack(b,"drag",a);if(a.propagates){a.drop!==false&&h.drop&&h.drop.handler(b,a);break}b.type="mouseup"}case "mouseup":i.remove(document,"mousemove mouseup",c.handler);if(a.dragging){a.drop!==false&&h.drop&&h.drop.handler(b,a);c.hijack(b,"dragend",a)}c.textselect(true);if(a.click===false&&a.dragging){jQuery.event.triggered=true;setTimeout(function(){jQuery.event.triggered=false},20);a.dragging=false}break}},delegate:function(b){var a= [],d,e=f.data(this,"events")||{};f.each(e.live||[],function(k,j){if(j.preType.indexOf("drag")===0)if(d=f(b.target).closest(j.selector,b.currentTarget)[0]){i.add(d,j.origType+"."+c.livekey,j.origHandler,j.data);f.inArray(d,a)<0&&a.push(d)}});if(!a.length)return false;return f(a).bind("dragend."+c.livekey,function(){i.remove(this,"."+c.livekey)})},hijack:function(b,a,d,e,k){if(d){var j={event:b.originalEvent,type:b.type},n=a.indexOf("drop")?"drag":"drop",l,o=e||0,g,m;e=!isNaN(e)?e:d.interactions.length; b.type=a;b.originalEvent=null;d.results=[];do if(g=d.interactions[o])if(!(a!=="dragend"&&g.cancelled)){m=c.properties(b,d,g);g.results=[];f(k||g[n]||d.droppable).each(function(q,p){l=(m.target=p)?i.handle.call(p,b,m):null;if(l===false){if(n=="drag"){g.cancelled=true;d.propagates-=1}if(a=="drop")g[n][q]=null}else if(a=="dropinit")g.droppable.push(c.element(l)||p);if(a=="dragstart")g.proxy=f(c.element(l)||g.drag)[0];g.results.push(l);delete b.result;if(a!=="dropinit")return l});d.results[o]=c.flatten(g.results); if(a=="dropinit")g.droppable=c.flatten(g.droppable);a=="dragstart"&&!g.cancelled&&m.update()}while(++o<e);b.type=j.type;b.originalEvent=j.event;return c.flatten(d.results)}},properties:function(b,a,d){var e=d.callback;e.drag=d.drag;e.proxy=d.proxy||d.drag;e.startX=a.pageX;e.startY=a.pageY;e.deltaX=b.pageX-a.pageX;e.deltaY=b.pageY-a.pageY;e.originalX=d.offset.left;e.originalY=d.offset.top;e.offsetX=b.pageX-(a.pageX-e.originalX);e.offsetY=b.pageY-(a.pageY-e.originalY);e.drop=c.flatten((d.drop||[]).slice()); e.available=c.flatten((d.droppable||[]).slice());return e},element:function(b){if(b&&(b.jquery||b.nodeType==1))return b},flatten:function(b){return f.map(b,function(a){return a&&a.jquery?f.makeArray(a):a&&a.length?c.flatten(a):a})},textselect:function(b){f(document)[b?"unbind":"bind"]("selectstart",c.dontstart).attr("unselectable",b?"off":"on").css("MozUserSelect",b?"":"none")},dontstart:function(){return false},callback:function(){}};c.callback.prototype={update:function(){h.drop&&this.available.length&& f.each(this.available,function(b){h.drop.locate(this,b)})}};h.draginit=h.dragstart=h.dragend=c})(jQuery);
-/*globals console sparks $*/
-
-(function (){
-    sparks.CouchDS = function (){
-        this.saveDocUID = null;
-        this.saveDocRevision = null;
-        this.user = null;
-
-        this.saveDataPath = "/couchdb/learnerdata";
-
-        this.activityPath = "/couchdb/activities";
-    };
-
-    sparks.CouchDS.prototype =
-    {
-
-        loadActivity: function(id, callback) {
-          $.couch.urlPrefix = this.activityPath;
-          $.couch.db('').openDoc(id,
-            {
-              success: function (response) {
-                console.log("Loaded "+response._id);
-                callback(response);
-              }
-            }
-          );
-        },
-
-        setUser: function(_user) {
-          this.user = _user;
-        },
-
-        save: function (_data) {
-          if (!this.user){
-            return;
-          }
-
-          $.couch.urlPrefix = this.saveDataPath;
-
-          _data.user = this.user;
-          _data.runnable_id = this.runnableId;
-          _data.save_time = new Date().valueOf();
-
-          if (!!this.saveDocUID){
-            console.log("saving with known id "+this.saveDocUID);
-            _data._id = this.saveDocUID;
-          }
-          if (!!this.saveDocRevision){
-            _data._rev = this.saveDocRevision;
-          }
-
-          var self = this;
-          $.couch.db('').saveDoc(
-            _data,
-            { success: function(response) {
-              console.log("Saved ok, id = "+response.id);
-              self.saveDocUID = response.id;
-              self.saveDocRevision = response.rev;
-             }}
-          );
-
-        },
-
-        saveRawData: function(_data) {
-          $.couch.urlPrefix = this.saveDataPath;
-          $.couch.db(this.db).saveDoc(
-            _data,
-            { success: function(response) {
-              console.log("Saved ok, id = "+response.id);
-             }}
-          );
-        },
-
-        loadStudentData: function (activity, studentName, success, failure) {
-          $.couch.urlPrefix = this.saveDataPath;
-          if (!studentName){
-            studentName = this.user.name;
-          }
-          var self = this;
-          $.couch.db('').view(
-            "session_scores/Scores%20per%20activity",
-            {
-              key:[studentName, activity],
-              success: function(response) {
-                console.log("success loading");
-                console.log(response);
-                if (response.rows.length > 0){
-                  sparks.couchDS.saveDocUID = response.rows[response.rows.length-1].value._id;
-                  sparks.couchDS.saveDocRevision = response.rows[response.rows.length-1].value._rev;
-                  console.log("setting id to "+sparks.couchDS.saveDocUID);
-                  success(response);
-                } else {
-                  failure();
-                }
-            }}
-          );
-        },
-
-        loadClassData: function (activity, classId, success, failure) {
-          $.couch.urlPrefix = this.saveDataPath;
-          $.couch.db('').view(
-            "class_scores/Scores%20per%20class",
-            {
-              key:[classId, activity],
-              success: function(response) {
-                if (response.rows.length > 0){
-                  success(response);
-                } else {
-                  failure();
-                }
-            }}
-          );
-        },
-
-        loadClassDataWithLearnerIds: function (activity, studentIds, success, failure) {
-          var keys = []
-          for (var i=0, ii=studentIds.length; i<ii; i++){
-            keys.push([""+studentIds[i], activity]);
-          }
-          $.couch.urlPrefix = this.saveDataPath;
-          $.couch.db('').view(
-            "session_scores/Scores%20per%20student_id",
-            {
-              keys:keys,
-              success: function(response) {
-                if (response.rows.length > 0){
-                  success(response);
-                } else {
-                  failure();
-                }
-            }}
-          );
-        }
-    };
-
-    sparks.couchDS = new sparks.CouchDS();
-})();
 /* FILE util.js */
 
 sparks.util.readCookie = function (name) {
@@ -3210,7 +2426,8 @@ sparks.createQuestionsCSV = function(data) {
       if (fileName.indexOf("http") > -1){
         return fileName;
       } else if (!!this.section.images_url) {
-        return this.section.images_url + "/" + fileName;
+        fileName = fileName.replace('.jpg', '.jpeg');
+        return this.section.images_url + fileName;
       }
       console.log(fileName + " appears to be a relative filename, but there is no base activity url.");
       return "";
@@ -3615,7 +2832,8 @@ sparks.createQuestionsCSV = function(data) {
       if (fileName.indexOf("http") > -1){
         return fileName;
       } else if (!!sparks.jsonSection.images_url) {
-        return sparks.jsonSection.images_url + "/" + fileName;
+        fileName = fileName.replace('.jpg', '.jpeg');
+        return sparks.jsonSection.images_url + fileName;
       }
       console.log(fileName + " appears to be a relative filename, but there is no base activity url.");
       return "";
@@ -5188,7 +4406,6 @@ sparks.createQuestionsCSV = function(data) {
     showReport: function(page){
       sparks.logController.endSession();
       var sessionReport = sparks.reportController.addNewSessionReport(page);
-      sparks.reportController.saveData();
       var $report = sparks.report.view.getSessionReportView(sessionReport);
       page.view.showReport($report);
     },
@@ -5308,7 +4525,7 @@ sparks.createQuestionsCSV = function(data) {
       section.title = jsonSection.title;
 
       section.section_url = sparks.activity_base_url + section.id;
-      section.images_url = sparks.activity_images_base_url + section.id;
+      section.images_url = sparks.activity_images_base_url;
 
       section.image = jsonSection.image;
 
@@ -5401,8 +4618,6 @@ sparks.createQuestionsCSV = function(data) {
     },
 
     nextPage: function() {
-      sparks.reportController.saveData();
-
       var nextPage = this.areMorePage();
       if (!nextPage){
         return;
@@ -5418,7 +4633,6 @@ sparks.createQuestionsCSV = function(data) {
     repeatPage: function(page) {
       var section = sparks.activityController.currentSection;
       sparks.GAHelper.userRepeatedLevel(section.title);
-      sparks.reportController.saveData();
 
       if (!!page){
         this.currentPage = page;
@@ -5439,8 +4653,6 @@ sparks.createQuestionsCSV = function(data) {
     },
 
     viewSectionReport: function() {
-      sparks.reportController.saveData();
-
       var $report = sparks.report.view.getActivityReportView();
       this.currentPage.view.showReport($report, true);
     },
@@ -5507,7 +4719,7 @@ sparks.createQuestionsCSV = function(data) {
             callback();
           }
         } else {
-          sparks.couchDS.loadActivity(jsonSection, function(jsonSection) {
+          $.getJSON(sparks.activity_base_url + jsonSection, function(jsonSection) {
             self.addSection(jsonSection, i);
             totalCreated++;
             if (totalCreated == activity.sections.length){
@@ -5872,21 +5084,6 @@ sparks.createQuestionsCSV = function(data) {
       return sessions;
     },
 
-    saveData: function() {
-      if (!!sparks.activity.id && !!sparks.couchDS.user){
-        console.log("Saving data");
-        var score = 0;
-        var self = this;
-        $.each(sparks.activity.sections, function(i, section){
-          score += self.getTotalScoreForSection(section);
-        });
-        sparks.report.score = score;
-
-        var data = sparks.report.toJSON();
-        sparks.couchDS.save(data);
-      }
-    },
-
     loadReport: function(jsonReport) {
       sparks.report.score = jsonReport.score;
       $.each(jsonReport.sectionReports, function(i, jsonSectionReport){
@@ -5914,8 +5111,6 @@ sparks.createQuestionsCSV = function(data) {
     },
 
     showReport: function(studentName) {
-      var ds = new sparks.CouchDS("/couchdb:");
-      ds.loadStudentData(studentName);
     },
 
     fixData: function(jsonReport, callback) {
@@ -5990,14 +5185,6 @@ sparks.createQuestionsCSV = function(data) {
           sectionReport.sectionTitle = sectionTitles[sectionNo + i];
         });
 
-
-        if (!sparks.activity.dataService){
-          var tempDs = new sparks.CouchDS("/couchdb:sparks_data");
-          tempDs.saveRawData(jsonReport);
-        } else {
-          sparks.activity.dataService.saveRawData(jsonReport);
-        }
-
         callback(jsonReport);
       }
 
@@ -6028,40 +5215,7 @@ sparks.createQuestionsCSV = function(data) {
   sparks.ClassReportController.prototype = {
 
     getClassData: function(activityId, learnerIds, classId, callback) {
-      var reports = this.reports;
-      var self = this;
 
-      if (classId) {
-        $.get("http://sparks.portal.concord.org/portal/classes/"+classId, function(data) {
-          if (data) {
-            var classElem = $(data).find('strong:contains("Class:")'),
-                className = classElem ? classElem.text().split(": ")[1] : "",
-                teacherElem = $(data).find('li:contains("Teacher")>strong'),
-                teacherName = teacherElem ? teacherElem.text().replace(/\n/g, "") : "";
-            self.className = className;
-            self.teacherName = teacherName;
-
-            if (className && teacherName) {
-              $('#title').html(className + " &nbsp; &mdash; &nbsp; " + teacherName);
-            }
-          }
-        });
-      }
-
-      var receivedData = function(response){
-        if (!!response && !!response.rows && response.rows.length > 0){
-          for (var i = 0, ii = response.rows.length; i < ii; i++){
-            reports.push(response.rows[i].value);
-          }
-          callback(reports);
-        }
-      };
-
-      var fail = function() {
-        alert("Failed to load class report");
-      };
-
-      sparks.couchDS.loadClassDataWithLearnerIds(activityId, learnerIds, receivedData, fail);
     },
 
     getLevels: function() {
@@ -6191,34 +5345,9 @@ sparks.createQuestionsCSV = function(data) {
 
   sparks.ActivityConstructor.prototype = {
     loadFirstSection: function() {
-      if (!!sparks.activity.id && sparks.couchDS.user){
-        $('#loading-text').text('Loading previous work');
-        sparks.couchDS.loadStudentData(sparks.activity.id, sparks.couchDS.user.name,
-          function(response){
-            var jsonReport = response.rows[response.rows.length-1].value;
-            sparks.reportController.loadReport(jsonReport);
-            var lastSectionId;
-            $.each(sparks.activity.sections, function(i, section){
-              if (!!sparks.report.sectionReports[section]){
-                lastSectionId = i;
-              }
-            });
-            sparks.activityController.setCurrentSection(lastSectionId);
-            sparks.sectionController.loadCurrentSection();
-            sparks.activity.view.layoutCurrentSection();
-            sparks.sectionController.viewSectionReport();
-          },
-          function(){
-            sparks.activityController.setCurrentSection(0);
-            sparks.sectionController.loadCurrentSection();
-            sparks.activity.view.layoutCurrentSection();
-          }
-        );
-      } else {
-        sparks.activityController.setCurrentSection(0);
-        sparks.sectionController.loadCurrentSection();
-        sparks.activity.view.layoutCurrentSection();
-      }
+      sparks.activityController.setCurrentSection(0);
+      sparks.sectionController.loadCurrentSection();
+      sparks.activity.view.layoutCurrentSection();
     }
 
   };
@@ -9610,8 +8739,8 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
 (function () {
 
   sparks.config.flash_id = 'breadboardActivity1';
-  sparks.activity_base_url = "http://couchdb.cosmos.concord.org/sparks/_design/app/_show/activity/";
-  sparks.activity_images_base_url = "http://couchdb.cosmos.concord.org/sparks/";
+  sparks.activity_base_url = "activities/bb-activities/";
+  sparks.activity_images_base_url = "activities/images/";
   sparks.tutorial_base_url = "tutorials/";
 
   window._gaq = window._gaq || [];      // in case this script loads before the GA queue is created
@@ -9630,22 +8759,6 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
   };
 
   this.loadActivity = function () {
-    var learner_id = sparks.util.readCookie('learner_id');
-
-    if (learner_id) {
-       console.log("setting user "+learner_id);
-       var user = {"learner_id": learner_id, "name": sparks.util.readCookie('student_name'),
-         "student_id": sparks.util.readCookie('student_id'), "class_id": sparks.util.readCookie('class_id')};
-       sparks.couchDS.setUser(user);
-
-       var askConfirm = function(){
-         return "Are you sure you want to leave this page?";
-       };
-       window.onbeforeunload = askConfirm;
-    }
-
-    sparks.GAHelper.setUserLoggedIn(!!learner_id);
-
     var activityName = window.location.hash;
     activityName = activityName.substring(1,activityName.length);
     if (!activityName){
@@ -9653,7 +8766,8 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
     }
 
     console.log("loading "+activityName);
-    sparks.couchDS.loadActivity(activityName, function(activity) {
+
+    $.getJSON(sparks.activity_base_url + activityName, function(activity) {
       console.log(activity);
       var ac = new sparks.ActivityConstructor(activity);
     });
@@ -9699,29 +8813,8 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
 
   this.setupQuitButton = function () {
     $('#return_to_portal').click(function() {
-      if (!!sparks.couchDS.user) {
-        sparks.reportController.saveData();
-        apMessageBox.information({
-        	title: "Ready to leave?",
-        	message: "All your work up until this page has been saved.",
-        	informationImage: "lib/information-32x32.png",
-        	width: 400,
-        	height: 200,
-        	buttons: {
-        	  "Go to the portal": function () {
-        	    $(this).dialog("close");
-        	    window.onbeforeunload = null;
-              window.location.href = "http://sparks.portal.concord.org";
-        	  },
-        	  "Keep working": function() {
-        	    $(this).dialog("close");
-        	  }
-        	}
-        });
-      } else {
-        window.onbeforeunload = null;
-        window.location.href = "http://sparks.portal.concord.org";
-      }
+      window.onbeforeunload = null;
+      window.location.href = "http://sparks.portal.concord.org";
     });
   };
 })();

@@ -31,7 +31,7 @@
       section.title = jsonSection.title;
 
       section.section_url = sparks.activity_base_url + section.id;
-      section.images_url = sparks.activity_images_base_url + section.id;
+      section.images_url = sparks.activity_images_base_url;
 
       section.image = jsonSection.image;
 
@@ -125,8 +125,6 @@
     },
 
     nextPage: function() {
-      sparks.reportController.saveData();
-
       var nextPage = this.areMorePage();
       if (!nextPage){
         return;
@@ -143,7 +141,6 @@
     repeatPage: function(page) {
       var section = sparks.activityController.currentSection;
       sparks.GAHelper.userRepeatedLevel(section.title);
-      sparks.reportController.saveData();
 
       if (!!page){
         this.currentPage = page;
@@ -169,8 +166,6 @@
     },
 
     viewSectionReport: function() {
-      sparks.reportController.saveData();
-
       var $report = sparks.report.view.getActivityReportView();
       this.currentPage.view.showReport($report, true);
     },

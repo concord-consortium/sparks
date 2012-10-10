@@ -21,40 +21,7 @@
   sparks.ClassReportController.prototype = {
 
     getClassData: function(activityId, learnerIds, classId, callback) {
-      var reports = this.reports;
-      var self = this;
 
-      if (classId) {
-        $.get("http://sparks.portal.concord.org/portal/classes/"+classId, function(data) {
-          if (data) {
-            var classElem = $(data).find('strong:contains("Class:")'),
-                className = classElem ? classElem.text().split(": ")[1] : "",
-                teacherElem = $(data).find('li:contains("Teacher")>strong'),
-                teacherName = teacherElem ? teacherElem.text().replace(/\n/g, "") : "";
-            self.className = className;
-            self.teacherName = teacherName;
-
-            if (className && teacherName) {
-              $('#title').html(className + " &nbsp; &mdash; &nbsp; " + teacherName);
-            }
-          }
-        });
-      }
-
-      var receivedData = function(response){
-        if (!!response && !!response.rows && response.rows.length > 0){
-          for (var i = 0, ii = response.rows.length; i < ii; i++){
-            reports.push(response.rows[i].value);
-          }
-          callback(reports);
-        }
-      };
-
-      var fail = function() {
-        alert("Failed to load class report");
-      };
-
-      sparks.couchDS.loadClassDataWithLearnerIds(activityId, learnerIds, receivedData, fail);
     },
 
     getLevels: function() {
