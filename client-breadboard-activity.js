@@ -2305,11 +2305,13 @@ sparks.createQuestionsCSV = function(data) {
         section.meter.update();
       }
 
-      this.layoutPage();
+      this.layoutPage(true);
     },
 
-    layoutPage: function() {
-      this.hidePopups();
+    layoutPage: function(hidePopups) {
+      if (hidePopups) {
+        this.hidePopups();
+      }
       if (!!sparks.sectionController.currentPage){
         this.divs.$questionsDiv.html('');
         var $page = sparks.sectionController.currentPage.view.getView();
@@ -2383,6 +2385,11 @@ sparks.createQuestionsCSV = function(data) {
 
      hidePopups: function() {
        $('.ui-dialog').empty().remove();
+       var section = sparks.activityController.currentSection;
+       if (section && section.meter) {
+        section.meter.reset();
+        section.meter.update();
+       }
      },
 
      setEmbeddingTargets: function(targets) {
@@ -3249,14 +3256,15 @@ sparks.createQuestionsCSV = function(data) {
       }
 
       var self = this;
-      this.popup.bind('remove', function() {
-        self.popup = null;
-      });
 
       this.popup.dialog('open').dialog("widget").position({
          my: 'left top',
          at: 'center top',
          of: $("#breadboard_wrapper")
+      });
+
+      $('.ui-dialog').bind('remove', function() {
+        self.popup = null;
       });
     },
 
@@ -4625,7 +4633,7 @@ sparks.createQuestionsCSV = function(data) {
       this.currentPageIndex = this.currentPageIndex+1;
       this.currentPage = nextPage;
 
-      sparks.activity.view.layoutPage();
+      sparks.activity.view.layoutPage(false);
 
       sparks.logController.startNewSession();
     },
