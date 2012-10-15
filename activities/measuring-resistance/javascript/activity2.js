@@ -4,8 +4,6 @@
 //= require <jquery/plugins/jquery.url.packed>
 //= require <jquery/plugins/jquery.cookie>
 //= require <jquery/plugins/jquery.flash>
-//= require <jquery/plugins/jquery.couch>
-//= require <data-source/couch-ds>
 //= require <helpers/flash_version_detection>
 //= require <helpers/flash_version_detection>
 //= require <helpers/flash_comm>
@@ -28,37 +26,12 @@
       console.log('ENTER init');
       try {
           var activity = new sparks.config.Activity();
-          this.setSavePath(activity);
           activity.onDocumentReady();
           activity.onFlashReady();
           sparks.activity = activity;
       }
       catch (e) {
           console.log('ERROR: init: ' + e);
-      }
-    };
-
-    this.setSavePath = function (activity) {
-
-      activity.learner_id = sparks.util.readCookie('learner_id');
-
-      if (activity.learner_id) {
-          var put_path = unescape(sparks.util.readCookie('save_path')) || 'undefined_path';
-          console.log('initActivity!: learner_id=' + activity.learner_id + ' put_path=' + put_path);
-          console.log('woo')
-          if (put_path.indexOf("couchdb") > -1){
-            var user = {"learner_id": activity.learner_id, "name": sparks.util.readCookie('student_name'),
-            "student_id": sparks.util.readCookie('student_id'), "class_id": sparks.util.readCookie('class_id')};
-            activity.setDataService(new sparks.CouchDS(put_path, user, sparks.util.readCookie('runnable_id')));
-          } else {
-            activity.setDataService(new RestDS(null, null, put_path));
-          }
-
-          function askConfirm(){
-            return "Are you sure you want to leave this page?";
-          }
-          console.log("setting onbeforeunload")
-          window.onbeforeunload = askConfirm;
       }
     };
 

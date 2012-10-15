@@ -1,0 +1,13 @@
+{
+   "_id": "series-resistances",
+   "type": "activity",
+   "sections": [
+       "series-a",
+       "series-b",
+       "series-c",
+       "series-d",
+       "series-e",
+       "series-f"
+   ],
+   "title": "Series Resistances"
+}
