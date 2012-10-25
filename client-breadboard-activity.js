@@ -1862,6 +1862,74 @@ sparks.createQuestionsCSV = function(data) {
 
 
 })();
+/*global $ sparks*/
+
+(function() {
+
+	sparks.IntelData = {};
+
+	var postDataURL = "/postData",
+
+			appId = {
+				id:      "org.concord.sparks",
+				name:    "SPARKS",
+				version: 0.1
+			},
+
+			actions = {
+				enterQuestion: "enter question",
+				submitAnswer:  "submit"
+			},
+
+			sendMessage = function (action, location, data) {
+				var postData = {
+					appId:    appId,
+					action:   action,
+					location: location
+				};
+
+				if (data) {
+					postData.data = data;
+				}
+
+				$.post(postDataURL, JSON.stringify(postData));
+			},
+
+			getCurrentLocation = function (page) {
+				var location = [],
+						section, page;
+
+				if (sparks.activity) {
+					location.push({type: "Activity", id: sparks.activity.id});
+
+					section = sparks.activityController.currentSection;
+					location.push({type: "Section", id: section.id, title: section.title});
+
+					page = page || sparks.sectionController.currentPage;
+					location.push({type: "Page", id: page.id});
+
+					location.push({type: "Question", id: page.currentQuestion.id});
+				}
+
+				return location;
+			};
+
+	sparks.IntelData.enterQuestion = function (page) {
+		sendMessage(actions.enterQuestion, getCurrentLocation(page));
+	};
+
+	sparks.IntelData.submitAnswer = function (question) {
+		sparks.questionController.gradeQuestion(question);
+		var data = {
+			response: question.answer,
+			solution: question.correct_answer,
+			feedback: question.feedback,
+			maxScore: question.points,
+			score:    question.points_earned
+		};
+		sendMessage(actions.submitAnswer, getCurrentLocation(), data);
+	};
+})();
 /*globals console sparks $ breadModel getBreadBoard */
 
 (function() {
@@ -4367,6 +4435,7 @@ sparks.createQuestionsCSV = function(data) {
 
       page.questions = sparks.questionController.createQuestionsArray(jsonPage.questions);
       page.currentQuestion = page.questions[0];
+      sparks.IntelData.enterQuestion(page);
 
       if (!!jsonPage.notes){
         var notes = sparks.mathParser.calculateMeasurement(jsonPage.notes);
@@ -4382,9 +4451,13 @@ sparks.createQuestionsCSV = function(data) {
 
     enableQuestion: function(page, question) {
       page.view.enableQuestion(question);
+
+      sparks.IntelData.enterQuestion();
     },
 
     completedQuestion: function(page) {
+      sparks.IntelData.submitAnswer(page.currentQuestion);
+
       var nextQuestion;
       for (var i = 0; i < page.questions.length-1; i++){
         if (page.questions[i] === page.currentQuestion){
