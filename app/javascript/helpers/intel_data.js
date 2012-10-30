@@ -16,7 +16,8 @@
 				enterQuestion:      "enter question",
 				submitAnswer:       "submit",
 				enterPageReport:    "enter page report",
-				enterSectionReport: "enter section report"
+				enterSectionReport: "enter section report",
+				studentError:       "student error"
 			},
 
 			sendMessage = function (action, location, data) {
@@ -81,4 +82,8 @@
 		};
 		sendMessage(actions.submitAnswer, getCurrentLocation(), data);
 	};
+
+	sparks.IntelData.studentError = function (message) {
+		sendMessage(actions.studentError, getCurrentLocation(), {message: message});
+	}
 })();

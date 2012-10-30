@@ -30,9 +30,9 @@
           this.displayText = "";
           this.update();
         },
-        
+
         currentMeasurement: null,
-        
+
         update: function () {
           if (this.redProbeConnection && this.blackProbeConnection) {
             if (this.dialPosition.indexOf('dcv_') > -1){
@@ -54,7 +54,7 @@
             this.updateWithData();
           }
         },
-        
+
         // this is called asynchronously after update() is called and qucs returns
         updateWithData: function (resultsBlob) {
           var measurement = this.currentMeasurement;
@@ -129,6 +129,7 @@
           	height: 300
           });
           sparks.logController.addEvent(sparks.LogEvent.BLEW_FUSE);
+          sparks.IntelData.studentError("Student blew DMM fuse.")
         },
 
         allConnected: function () {
