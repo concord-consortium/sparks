@@ -166,6 +166,7 @@
     },
 
     viewSectionReport: function() {
+      sparks.IntelData.enterSectionReport();
       var $report = sparks.report.view.getActivityReportView();
       this.currentPage.view.showReport($report, true);
     },

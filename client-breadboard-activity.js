@@ -1877,8 +1877,10 @@ sparks.createQuestionsCSV = function(data) {
 			},
 
 			actions = {
-				enterQuestion: "enter question",
-				submitAnswer:  "submit"
+				enterQuestion:      "enter question",
+				submitAnswer:       "submit",
+				enterPageReport:    "enter page report",
+				enterSectionReport: "enter section report"
 			},
 
 			sendMessage = function (action, location, data) {
@@ -1905,6 +1907,10 @@ sparks.createQuestionsCSV = function(data) {
 					section = sparks.activityController.currentSection;
 					location.push({type: "Section", id: section.id, title: section.title});
 
+					if (typeof page == "boolean" && !page) {
+						return location;
+					}
+
 					page = page || sparks.sectionController.currentPage;
 					location.push({type: "Page", id: page.id});
 
@@ -1916,6 +1922,14 @@ sparks.createQuestionsCSV = function(data) {
 
 	sparks.IntelData.enterQuestion = function (page) {
 		sendMessage(actions.enterQuestion, getCurrentLocation(page));
+	};
+
+	sparks.IntelData.enterPageReport = function (page) {
+		sendMessage(actions.enterPageReport, getCurrentLocation(page));
+	};
+
+	sparks.IntelData.enterSectionReport = function () {
+		sendMessage(actions.enterSectionReport, getCurrentLocation(false));
 	};
 
 	sparks.IntelData.submitAnswer = function (question) {
@@ -4485,6 +4499,7 @@ sparks.createQuestionsCSV = function(data) {
     },
 
     showReport: function(page){
+      sparks.IntelData.enterPageReport(page);
       sparks.logController.endSession();
       var sessionReport = sparks.reportController.addNewSessionReport(page);
       var $report = sparks.report.view.getSessionReportView(sessionReport);
@@ -4734,6 +4749,7 @@ sparks.createQuestionsCSV = function(data) {
     },
 
     viewSectionReport: function() {
+      sparks.IntelData.enterSectionReport();
       var $report = sparks.report.view.getActivityReportView();
       this.currentPage.view.showReport($report, true);
     },
