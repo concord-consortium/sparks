@@ -1778,6 +1778,7 @@ sparks.createQuestionsCSV = function(data) {
       var section = sparks.activityController.currentSection;
 
       $('#loading').hide();
+      this.divs.$breadboardDiv.hide();
 
       this.divs.$titleDiv.text(section.title);
 
@@ -1789,16 +1790,24 @@ sparks.createQuestionsCSV = function(data) {
       }
 
       if (!!section.circuit && !section.hide_circuit){
-        if (sparks.flash.loaded){
-          sparks.flash.loaded = false;
-          this.divs.$breadboardDiv.html('');
-        }
+        this.divs.$breadboardDiv.show();
+        this.divs.$breadboardDiv.html('');
+
+        var self = this;
         breadboardView.ready(function() {
           sparks.breadboardView = breadboardView.create("breadboard");
           sparks.breadboardView.addBattery("left_negative21,left_positive21");
-        });
+          breadModel('updateView');
 
-        breadModel('updateView');
+          sparks.sound.mute = true;
+
+          self.showDMM(section.show_multimeter);
+          self.showOScope(section.show_oscilloscope);
+
+          sparks.sound.mute = false;
+
+          sparks.activityController.currentSection.meter.update();
+        });
 
         var source = getBreadBoard().components.source;
         if (source.frequency) {
@@ -1808,14 +1817,6 @@ sparks.createQuestionsCSV = function(data) {
           this.divs.$fgDiv.show();
         }
         section.meter.reset()
-
-        console.log("will show dmm? "+section.show_multimeter)
-        this.showDMM(section.show_multimeter);
-        this.showOScope(section.show_oscilloscope);
-        this.allowMoveYellowProbe(section.allow_move_yellow_probe);
-        this.hidePinkProbe(section.hide_pink_probe);
-
-        section.meter.update();
       }
 
       this.layoutPage(true);
@@ -2069,8 +2070,6 @@ sparks.createQuestionsCSV = function(data) {
 
       $('.report').html('');
       if (!!finalReport){
-        sparks.flash.loaded = false;
-        sparks.activity.view.setFlashLoaded(false);
         $('#image').html('');
         $('#breadboard_wrapper').children().html('').hide();
       }
@@ -3782,7 +3781,9 @@ window["breadboardView"] = {
   };
   var CircuitBoard = function(id) {
     var self = this;
-    this.holder = $('#' + id).html('').append(paper).addClass('circuit-board');
+    this.holder = $('#' + id).html('').append(
+      SVGStorage.create('board')
+    ).addClass('circuit-board');
 
     this.workspace = this.holder.find("[item=components]");
     this.holes = {
@@ -3813,6 +3814,7 @@ window["breadboardView"] = {
     this.battery = null;
 
     primitive.prototype.initLeadDraggable(this);
+    primitive.prototype.initProbeDraggable(this);
     primitive.prototype.initComponentDraggable(this);
   };
 
@@ -3906,13 +3908,13 @@ window["breadboardView"] = {
   };
 
   CircuitBoard.prototype.toFront = function(component) {
-    var self = this; // resolve crash in Google Chrome by changing environment
+    var self = this;
     setTimeout(function() {
       var i = component.view.index();
       var redrawId = component.view[0].ownerSVGElement.suspendRedraw(50);
-      self.workspace.prepend(component.view.parent().children(':gt('+i+')'));
+      self.workspace.prepend(component.view.parent().children(':gt(' + i + ')'));
       component.view[0].ownerSVGElement.unsuspendRedraw(redrawId);
-    },50)
+    }, 50);
   };
 
   var CircuitBoardHole = function(elem) {
@@ -4027,7 +4029,7 @@ window["breadboardView"] = {
     this.element = new primitive.connector(this.pts, this.angle, [color, color]);
     this.connector = this.element;
     this.view.append(this.element.view, this.leads[0].view, this.leads[1].view);
-    component.prototype.drag.call(this, params.draggable);
+    component.prototype.drag.call(this, params.draggable, params.type);
   };
 
   component.inductor = function(params, holes, board) {
@@ -4055,11 +4057,14 @@ window["breadboardView"] = {
     component.prototype.drag.call(this, params.draggable);
   };
 
-  component.prototype.drag = function(draggable) {
+  component.prototype.drag = function(draggable, type) {
     if (draggable) {
       var self = this;
       this.x = 0;
       this.y = 0;
+      if (type == 'wire') {
+        this.view.find('[drag=area]').attr('display', 'inline');
+      }
       this.element.view[0].addEventListener(_mousedown, function(evt) {
         self.element.view.data('component', self);
         evt._target = this;
@@ -4193,7 +4198,7 @@ window["breadboardView"] = {
     }, p2 = {
       x : 0,
       y : 0
-    }, deg, hi,ho, hn;
+    }, deg, hi, ho, hn;
 
     board.holder[0].addEventListener(_mousedown, function(evt) {
       lead_this = $(evt.target).data('primitive-lead') || null;
@@ -4466,7 +4471,7 @@ window["breadboardView"] = {
     if (angle > 90 || angle < -90) {
       angle += 180;
     }
-    resistor.attr('transform', 'matrix(1 0 0 1 ' + parseInt((pts[0].x + pts[1].x) / 2, 10) + ' ' + parseInt((pts[0].y + pts[1].y) / 2, 10) + ') rotate(' + angle + ',132.5,132.5)');
+    resistor.attr('transform', 'matrix(1 0 0 1 ' + (parseInt((pts[0].x + pts[1].x) / 2, 10)+120) + ' ' + parseInt((pts[0].y + pts[1].y) / 2, 10) + ') rotate(' + angle + ',132.5,132.5)');
 
     band.each(function(i) {
       if (i != (colors.length - 1)) {
@@ -4505,10 +4510,6 @@ window["breadboardView"] = {
   };
 
   primitive.prototype.initProbeDraggable = function(board) {
-    if (primitive.prototype._initProbeDraggable) {
-      return;
-    }
-
     var active, lead_new, lead_old, lead_init, point;
     var s_pos, c_pos, x, y, dx, dy, coeff = 20;
 
@@ -4567,15 +4568,12 @@ window["breadboardView"] = {
         active.dy = y;
         if (lead_new) {
           active.setState(lead_new);
-        } else
-        if (active.lead) {
+        } else if (active.lead) {
           active.lead = null;
         }
         active = null;
       }
     }, false);
-
-    primitive.prototype._initProbeDraggable = true;
   };
 
   primitive.probe = function(board, params) {
@@ -4614,7 +4612,6 @@ window["breadboardView"] = {
       }
     }
 
-    primitive.prototype.initProbeDraggable(board);
   };
 
   primitive.probe.prototype.setState = function(lead) {
@@ -4673,7 +4670,6 @@ window["breadboardView"] = {
       });
       this.view.bind('mouseleave', function() {
         self.help.hide();
-        self.zoomOut();
       });
     }
 
@@ -4787,18 +4783,16 @@ window["breadboardView"] = {
   };
 
   primitive.mmbox.prototype.zoomOut = function() {
-    var self = this;
     this.item.attr('transform', 'scale(0.50)');
     this.over.show();
-    self.zoom = 0;
+    this.zoom = 0;
   };
 
   primitive.mmbox.prototype.zoomIn = function() {
-    var self = this;
     this.item.attr('transform', 'scale(1.00)');
     this.help.hide();
     this.over.hide();
-    self.zoom = 1;
+    this.zoom = 1;
   };
 
   primitive.btbox = function(board) {
@@ -4851,10 +4845,13 @@ window["breadboardView"] = {
   };
   var setConnectorView = function(elem, pts, deg) {
     var trn = 'matrix(1 0 0 1 ' + parseInt(pts[0].x, 10) + ' ' + parseInt(pts[0].y, 10) + ') rotate(' + deg + ',130,130)';
-    var leadLenght = 560;
+    var leadLenght = 560, coeff = 0.6;
     var dx = pts[0].x - pts[1].x, dy = pts[0].y - pts[1].y;
     var l = Math.sqrt(dx * dx + dy * dy) - leadLenght * 2;
-    var path = 'M 0 0 h ' + l / 0.6;
+    var path = 'M 0 0 h ' + l / coeff;
+    if (l > 0) {
+      elem.find('[drag=area]').attr('width', l / coeff);
+    }
     elem.attr('transform', trn);
     elem.find('[type=line]').each(function() {
       this.setAttribute('d', path);
@@ -4973,10 +4970,10 @@ window["breadboardView"] = {
 
   /* board object */
 
-  var $ready = false; // flag, all critical objects built
-  var $stack = []; // stack of callback functions
+  var $ready = false;
+  var $stack = [];
 
-  board.util.require(["../../common/images/sparks.breadboard.svg"], function(data) {
+  board.util.require(["common/images/sparks.breadboard.svg"], function(data) {
     paper = $(data["sparks.breadboard"]);
     SVGStorage = new SVGStorage(paper);
     $ready = true;
@@ -6372,9 +6369,6 @@ window["breadboardView"] = {
 
     sparks.breadboardComm.connectionMade = function(component, hole) {
       var section = sparks.activityController.currentSection;
-      if (hole === "left_positive21" || hole === "left_negative21") {
-        hole = hole.replace("2", "");
-      }
       if (!!hole){
         breadModel('unmapHole', hole);
       }
@@ -6386,9 +6380,6 @@ window["breadboardView"] = {
 
     sparks.breadboardComm.connectionBroken = function(component, hole) {
       var section = sparks.activityController.currentSection;
-      if (hole === "left_positive21" || hole === "left_negative21") {
-        hole = hole.replace("2", "");
-      }
       var newHole = breadModel('getGhostHole', hole+"ghost");
 
       breadModel('mapHole', hole, newHole.nodeName());
@@ -6401,6 +6392,7 @@ window["breadboardView"] = {
     sparks.breadboardComm.probeAdded = function(meter, color, location) {
       var section = sparks.activityController.currentSection;
       section.meter.setProbeLocation("probe_"+color, location);
+      sparks.sound.play(sparks.sound.click)
     };
 
     sparks.breadboardComm.probeRemoved = function(meter, color) {
@@ -7596,7 +7588,7 @@ window["breadboardView"] = {
           props.UID = interfaces.getUID(!!props.UID ? props.UID : props.kind);
 
           if (props.UID === "source" && !props.connections){
-            props.connections = "left_positive1,left_negative1";
+            props.connections = "left_positive21,left_negative21";
           }
 
           var newComponent = breadBoard.component(props);
@@ -8546,7 +8538,9 @@ window["breadboardView"] = {
 
       clearSignal: function(channel) {
         delete this.signals[channel];
-        this.view.removeTrace(channel);
+        if (this.view) {
+          this.view.removeTrace(channel);
+        }
       },
 
       setHorizontalScale: function(scale) {
@@ -9670,6 +9664,7 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
   sparks.activity_base_url = "activities/bb-activities/";
   sparks.activity_images_base_url = "activities/images/";
   sparks.tutorial_base_url = "tutorials/";
+  sparks.soundFiles = {click: "common/sounds/click.ogg"}
 
   window._gaq = window._gaq || [];      // in case this script loads before the GA queue is created
 
@@ -9692,6 +9687,8 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
     if (!activityName){
       activityName = "series-interpretive";
     }
+
+    this.loadSounds();
 
     console.log("loading "+activityName);
 
@@ -9737,5 +9734,30 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
       window.onbeforeunload = null;
       window.location.href = "http://sparks.portal.concord.org";
     });
+  };
+
+  this.loadSounds = function () {
+    var soundName, audio;
+
+    sparks.sound = {};
+
+    sparks.sound.mute = false;
+
+    sparks.sound.play = function (sound) {
+      if (!sparks.sound.mute) {
+        sound.play();
+      }
+    }
+
+    for (soundName in sparks.soundFiles) {
+      audio = new Audio();
+      audio.src = sparks.soundFiles[soundName];
+      Audio.prototype.playIfNotMuted = function() {
+        if (!sparks.sound.mute) {
+          this.play();
+        }
+      }
+      sparks.sound[soundName] = audio;
+    }
   };
 })();
