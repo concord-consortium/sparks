@@ -1880,7 +1880,8 @@ sparks.createQuestionsCSV = function(data) {
 				enterQuestion:      "enter question",
 				submitAnswer:       "submit",
 				enterPageReport:    "enter page report",
-				enterSectionReport: "enter section report"
+				enterSectionReport: "enter section report",
+				studentError:       "student error"
 			},
 
 			sendMessage = function (action, location, data) {
@@ -1943,6 +1944,10 @@ sparks.createQuestionsCSV = function(data) {
 		};
 		sendMessage(actions.submitAnswer, getCurrentLocation(), data);
 	};
+
+	sparks.IntelData.studentError = function (message) {
+		sendMessage(actions.studentError, getCurrentLocation(), {message: message});
+	}
 })();
 /*globals console sparks $ breadModel getBreadBoard */
 
@@ -7558,6 +7563,7 @@ sparks.createQuestionsCSV = function(data) {
           	height: 300
           });
           sparks.logController.addEvent(sparks.LogEvent.BLEW_FUSE);
+          sparks.IntelData.studentError("Student blew DMM fuse.")
         },
 
         allConnected: function () {
