@@ -70,6 +70,7 @@
     },
 
     showReport: function(page){
+      sparks.IntelData.enterPageReport(page);
       sparks.logController.endSession();
       var sessionReport = sparks.reportController.addNewSessionReport(page);
       var $report = sparks.report.view.getSessionReportView(sessionReport);

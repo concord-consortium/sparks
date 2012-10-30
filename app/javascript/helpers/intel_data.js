@@ -13,8 +13,10 @@
 			},
 
 			actions = {
-				enterQuestion: "enter question",
-				submitAnswer:  "submit"
+				enterQuestion:      "enter question",
+				submitAnswer:       "submit",
+				enterPageReport:    "enter page report",
+				enterSectionReport: "enter section report"
 			},
 
 			sendMessage = function (action, location, data) {
@@ -43,6 +45,10 @@
 					section = sparks.activityController.currentSection;
 					location.push({type: "Section", id: section.id, title: section.title});
 
+					if (typeof page == "boolean" && !page) {
+						return location;
+					}
+
 					page = page || sparks.sectionController.currentPage;
 					location.push({type: "Page", id: page.id});
 
@@ -54,6 +60,14 @@
 
 	sparks.IntelData.enterQuestion = function (page) {
 		sendMessage(actions.enterQuestion, getCurrentLocation(page));
+	};
+
+	sparks.IntelData.enterPageReport = function (page) {
+		sendMessage(actions.enterPageReport, getCurrentLocation(page));
+	};
+
+	sparks.IntelData.enterSectionReport = function () {
+		sendMessage(actions.enterSectionReport, getCurrentLocation(false));
 	};
 
 	sparks.IntelData.submitAnswer = function (question) {
