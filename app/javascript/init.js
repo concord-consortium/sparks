@@ -9,6 +9,7 @@
 //= require <jquery/plugins/jquery.event.drag-2.0.min>
 //= require <helpers/util>
 //= require <helpers/unit>
+//= require <helpers/intel_data>
 //= require <models/activity>
 //= require <models/section>
 //= require <models/page>

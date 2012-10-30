@@ -19,6 +19,7 @@
 
       page.questions = sparks.questionController.createQuestionsArray(jsonPage.questions);
       page.currentQuestion = page.questions[0];
+      sparks.IntelData.enterQuestion(page);
 
       if (!!jsonPage.notes){
         var notes = sparks.mathParser.calculateMeasurement(jsonPage.notes);
@@ -34,10 +35,14 @@
 
     enableQuestion: function(page, question) {
       page.view.enableQuestion(question);
+
+      sparks.IntelData.enterQuestion();
     },
 
     // enables next question if available, or shows report otherwise
     completedQuestion: function(page) {
+      sparks.IntelData.submitAnswer(page.currentQuestion);
+
       var nextQuestion;
       for (var i = 0; i < page.questions.length-1; i++){
         if (page.questions[i] === page.currentQuestion){
