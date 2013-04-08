@@ -1397,12 +1397,12 @@ sparks.createQuestionsCSV = function(data) {
 
 	sparks.IntelData = {};
 
-	var postDataURL = "/postData",
+	var postDataURL = "http://localhost:49377",
 
 			appId = {
 				id:      "org.concord.sparks",
 				name:    "SPARKS",
-				version: 0.1
+				version: "1.0"
 			},
 
 			actions = {
