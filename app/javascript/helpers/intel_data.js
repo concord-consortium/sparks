@@ -7,9 +7,9 @@
 	var postDataURL = "http://localhost:49377",
 
 			appId = {
-				id:      "org.concord.sparks",
-				name:    "SPARKS",
-				version: "1.0"
+				app_id:      "org.concord.sparks",
+				app_name:    "SPARKS",
+				app_version: "1.0"
 			},
 
 			actions = {
@@ -22,13 +22,18 @@
 
 			sendMessage = function (action, location, data) {
 				var postData = {
-					appId:    appId,
-					action:   action,
-					location: location
+					app_id:    	 	appId.app_id,
+					app_name:    	appId.app_name,
+					app_version: 	appId.app_version,
+					action:   		action,
+					location: 		location
 				};
 
 				if (data) {
-					postData.data = data;
+					for (var key in data) {
+						if (!data.hasOwnProperty(key)) continue;
+						postData["item_"+key] = data[key];
+					}
 				}
 
 				$.post(postDataURL, JSON.stringify(postData));
