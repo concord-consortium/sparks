@@ -1871,9 +1871,9 @@ sparks.createQuestionsCSV = function(data) {
 	var postDataURL = "/postData",
 
 			appId = {
-				id:      "org.concord.sparks",
-				name:    "SPARKS",
-				version: 0.1
+				app_id:      "org.concord.sparks",
+				app_name:    "SPARKS",
+				app_version: "1.0"
 			},
 
 			actions = {
@@ -1886,13 +1886,18 @@ sparks.createQuestionsCSV = function(data) {
 
 			sendMessage = function (action, location, data) {
 				var postData = {
-					appId:    appId,
-					action:   action,
-					location: location
+					app_id:    	 	appId.app_id,
+					app_name:    	appId.app_name,
+					app_version: 	appId.app_version,
+					action:   		action,
+					location: 		location
 				};
 
 				if (data) {
-					postData.data = data;
+					for (var key in data) {
+						if (!data.hasOwnProperty(key)) continue;
+						postData["item_"+key] = data[key];
+					}
 				}
 
 				$.post(postDataURL, JSON.stringify(postData));
@@ -4475,7 +4480,25 @@ sparks.createQuestionsCSV = function(data) {
     },
 
     completedQuestion: function(page) {
-      sparks.IntelData.submitAnswer(page.currentQuestion);
+      questions = [];
+      for (var i = 0; i < page.questions.length-1; i++){
+        if (page.questions[i] === page.currentQuestion){
+          if (page.currentQuestion.isSubQuestion){
+            do {
+              questions.push(page.questions[i]);
+              i++;
+            } while (i < page.questions.length && page.questions[i].subquestionId == page.currentQuestion.subquestionId);
+            nextQuestion = page.questions[i];
+          } else {
+            questions.push(page.questions[i])
+            nextQuestion = page.questions[i+1];
+          }
+        }
+      }
+      for (var i=0; i<questions.length; i++) {
+        sparks.IntelData.submitAnswer(questions[i]);
+      }
+
 
       var nextQuestion;
       for (var i = 0; i < page.questions.length-1; i++){

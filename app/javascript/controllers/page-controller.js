@@ -41,7 +41,27 @@
 
     // enables next question if available, or shows report otherwise
     completedQuestion: function(page) {
-      sparks.IntelData.submitAnswer(page.currentQuestion);
+      // *** collect all subquestions for Intel data ***
+      questions = [];
+      for (var i = 0; i < page.questions.length-1; i++){
+        if (page.questions[i] === page.currentQuestion){
+          if (page.currentQuestion.isSubQuestion){
+            do {
+              questions.push(page.questions[i]);
+              i++;
+            } while (i < page.questions.length && page.questions[i].subquestionId == page.currentQuestion.subquestionId);
+            nextQuestion = page.questions[i];
+          } else {
+            questions.push(page.questions[i])
+            nextQuestion = page.questions[i+1];
+          }
+        }
+      }
+      for (var i=0; i<questions.length; i++) {
+        sparks.IntelData.submitAnswer(questions[i]);
+      }
+
+      // *** end Intel data ***
 
       var nextQuestion;
       for (var i = 0; i < page.questions.length-1; i++){
