@@ -1470,6 +1470,7 @@ sparks.createQuestionsCSV = function(data) {
 	sparks.IntelData.submitAnswer = function (question) {
 		sparks.questionController.gradeQuestion(question);
 		var data = {
+			question: question.shortPrompt,
 			response: question.answer,
 			solution: question.correct_answer,
 			feedback: question.feedback,
