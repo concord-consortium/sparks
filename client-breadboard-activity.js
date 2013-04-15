@@ -976,7 +976,10 @@ jQuery.cookie = function(name, value, options) {
      */
     db: function(name, db_opts) {
       db_opts = db_opts || {};
-      var rawDocs = {};
+      var rawDocs = {},
+          encodedComponentName;
+      encodedComponentName = encodeURIComponent(name);
+      if (encodedComponentName) { encodedComponentName += "/"; }
       function maybeApplyVersion(doc) {
         if (doc._id && doc._rev && rawDocs[doc._id] &&
             rawDocs[doc._id].rev == doc._rev) {
@@ -995,7 +998,7 @@ jQuery.cookie = function(name, value, options) {
       };
       return /** @lends $.couch.db */{
         name: name,
-        uri: this.urlPrefix + "/" + encodeURIComponent(name) + "/",
+        uri: this.urlPrefix + "/" + encodedComponentName,
 
         /**
          * Request compaction of the specified database.
