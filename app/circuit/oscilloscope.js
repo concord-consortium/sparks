@@ -286,11 +286,32 @@
       //
       getGoodnessOfScale: function() {
         var self = this,
-
+            timescale,
+            ampscale,
             goodnessOfScale = function(channel) {
-              var timeScale  = self.signals[channel].frequency * (self._horizontalScale * 10),            // 0-inf, best is 1
-                  ampScale   = (self.signals[channel].amplitude * 2) / (self._verticalScale[channel] * 8),
-                  timeGoodness  = timeScale > 1 ? 1/timeScale : timeScale,                                // 0-1, best is 1
+              
+              if (channel==2 || channel==1)
+              {
+                  timeScale  = self.signals[channel].frequency * (self._horizontalScale * 10);            // 0-inf, best is 1
+                  ampScale   = (self.signals[channel].amplitude * 2) / (self._verticalScale[channel] * 8);
+              }
+              else if (channel==3)//A-B
+              {
+                  timeScale = Math.abs(self.signals[1].frequency-self.signals[2].frequency);
+                  timeScale  = timeScale * (self._horizontalScale * 10);
+                  ampScale = self.signals[1].amplitude-self.signals[2].amplitude;
+                  ampScale   = (ampScale * 2) / (self._verticalScale[channel] * 8);
+              }
+              else//A+B
+              {
+                  timeScale = self.signals[1].frequency+self.signals[2].frequency;
+                  timeScale  = timeScale * (self._horizontalScale * 10);
+                  ampScale = self.signals[1].amplitude+self.signals[2].amplitude;
+                  ampScale   = (ampScale * 2) / (self._verticalScale[channel] * 8);
+                  
+              }
+              
+              var timeGoodness  = timeScale > 1 ? 1/timeScale : timeScale,                                // 0-1, best is 1
                   ampGoodness   = ampScale > 1 ? 1/ampScale : ampScale,
                   timeScore  = (timeGoodness - 0.3) / 0.5,                                                // scaled such that 0.3 = 0 and 0.8 = 1
                   ampScore   = (ampGoodness - 0.3) / 0.5,
@@ -299,7 +320,7 @@
               return ((minScore * 3) + maxScore) / 4;
             },
 
-            goodnesses = [null, null];
+            goodnesses = [null, null,null,null];
 
         if (this.signals[1]) {
           goodnesses[0] = goodnessOfScale([1]);
@@ -308,6 +329,15 @@
         if (this.signals[2]) {
           goodnesses[1] = goodnessOfScale([2]);
         }
+        if (this.signals[2] && this.signals[1] && this.showAminusB==true)
+        {
+            goodnesses[2] = goodfnessofScale([3]);
+        }
+        else if (this.signals[2] && this.signals[1] && this.showAplusB==true)
+        {
+            goodnesses[3] = goodfnessofScale([4]);
+        }
+        
         return goodnesses;
       }
 
