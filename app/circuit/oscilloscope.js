@@ -333,7 +333,7 @@
         {
             goodnesses[2] = goodfnessofScale([3]);
         }
-        else if (this.signals[2] && this.signals[1] && this.showAplusB==true)
+        if (this.signals[2] && this.signals[1] && this.showAplusB==true)
         {
             goodnesses[3] = goodfnessofScale([4]);
         }
