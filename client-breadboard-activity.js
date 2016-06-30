@@ -1528,7 +1528,7 @@ jQuery.cookie = function(name, value, options) {
 };
 /*
  * 	Easy Tooltip 1.0 - jQuery plugin
- *	written by Alen Grakalic	
+ *	written by Alen Grakalic
  *	http://cssglobe.com/post/4380/easy-tooltip--jquery-plugin
  *
  *	Copyright (c) 2009 Alen Grakalic (http://cssglobe.com)
@@ -1540,57 +1540,57 @@ jQuery.cookie = function(name, value, options) {
  *
  */
 
- 
+
 (function($) {
 
 	$.fn.easyTooltip = function(options){
-	  
+
 		// default configuration properties
-		var defaults = {	
-			xOffset: 10,		
+		var defaults = {
+			xOffset: 10,
 			yOffset: 25,
 			tooltipId: "easyTooltip",
 			clickRemove: false,
 			content: "",
 			useElement: ""
-		}; 
-			
-		var options = $.extend(defaults, options);  
+		};
+
+		var options = $.extend(defaults, options);
 		var content;
-				
-		this.each(function() {  				
-			var title = $(this).attr("title");				
-			$(this).hover(function(e){											 							   
+
+		this.each(function() {
+			var title = $(this).attr("title");
+			$(this).hover(function(e){
 				content = (options.content != "") ? options.content : title;
 				content = (options.useElement != "") ? $("#" + options.useElement).html() : content;
-				$(this).attr("title","");									  				
-				if (content != "" && content != undefined){			
-					$("body").append("<div id='"+ options.tooltipId +"'>"+ content +"</div>");		
+				$(this).attr("title","");
+				if (content != "" && content != undefined){
+					$("body").append("<div id='"+ options.tooltipId +"'>"+ content +"</div>");
 					$("#" + options.tooltipId)
 						.css("position","absolute")
 						.css("top",(e.pageY - options.yOffset) + "px")
-						.css("left",(e.pageX + options.xOffset) + "px")						
+						.css("left",(e.pageX + options.xOffset) + "px")
 						.css("display","none")
 						.fadeIn("fast")
 				}
 			},
-			function(){	
+			function(){
 				$("#" + options.tooltipId).remove();
 				$(this).attr("title",title);
-			});	
+			});
 			$(this).mousemove(function(e){
 				$("#" + options.tooltipId)
 					.css("top",(e.pageY - options.yOffset) + "px")
-					.css("left",(e.pageX + options.xOffset) + "px")					
-			});	
+					.css("left",(e.pageX + options.xOffset) + "px")
+			});
 			if(options.clickRemove){
 				$(this).mousedown(function(e){
 					$("#" + options.tooltipId).remove();
 					$(this).attr("title",title);
-				});				
+				});
 			}
 		});
-	  
+
 	};
 
 })(jQuery);
@@ -1598,8 +1598,8 @@ jQuery.cookie = function(name, value, options) {
 (function($){$.extend({tablesorter:new
 function(){var parsers=[],widgets=[];this.defaults={cssHeader:"header",cssAsc:"headerSortUp",cssDesc:"headerSortDown",cssChildRow:"expand-child",sortInitialOrder:"asc",sortMultiSortKey:"shiftKey",sortForce:null,sortAppend:null,sortLocaleCompare:true,textExtraction:"simple",parsers:{},widgets:[],widgetZebra:{css:["even","odd"]},headers:{},widthFixed:false,cancelSelection:true,sortList:[],headerList:[],dateFormat:"us",decimal:'/\.|\,/g',onRenderHeader:null,selectorHeaders:'thead th',debug:false};function benchmark(s,d){log(s+","+(new Date().getTime()-d.getTime())+"ms");}this.benchmark=benchmark;function log(s){if(typeof console!="undefined"&&typeof console.debug!="undefined"){console.log(s);}else{alert(s);}}function buildParserCache(table,$headers){if(table.config.debug){var parsersDebug="";}if(table.tBodies.length==0)return;var rows=table.tBodies[0].rows;if(rows[0]){var list=[],cells=rows[0].cells,l=cells.length;for(var i=0;i<l;i++){var p=false;if($.metadata&&($($headers[i]).metadata()&&$($headers[i]).metadata().sorter)){p=getParserById($($headers[i]).metadata().sorter);}else if((table.config.headers[i]&&table.config.headers[i].sorter)){p=getParserById(table.config.headers[i].sorter);}if(!p){p=detectParserForColumn(table,rows,-1,i);}if(table.config.debug){parsersDebug+="column:"+i+" parser:"+p.id+"\n";}list.push(p);}}if(table.config.debug){log(parsersDebug);}return list;};function detectParserForColumn(table,rows,rowIndex,cellIndex){var l=parsers.length,node=false,nodeValue=false,keepLooking=true;while(nodeValue==''&&keepLooking){rowIndex++;if(rows[rowIndex]){node=getNodeFromRowAndCellIndex(rows,rowIndex,cellIndex);nodeValue=trimAndGetNodeText(table.config,node);if(table.config.debug){log('Checking if value was empty on row:'+rowIndex);}}else{keepLooking=false;}}for(var i=1;i<l;i++){if(parsers[i].is(nodeValue,table,node)){return parsers[i];}}return parsers[0];}function getNodeFromRowAndCellIndex(rows,rowIndex,cellIndex){return rows[rowIndex].cells[cellIndex];}function trimAndGetNodeText(config,node){return $.trim(getElementText(config,node));}function getParserById(name){var l=parsers.length;for(var i=0;i<l;i++){if(parsers[i].id.toLowerCase()==name.toLowerCase()){return parsers[i];}}return false;}function buildCache(table){if(table.config.debug){var cacheTime=new Date();}var totalRows=(table.tBodies[0]&&table.tBodies[0].rows.length)||0,totalCells=(table.tBodies[0].rows[0]&&table.tBodies[0].rows[0].cells.length)||0,parsers=table.config.parsers,cache={row:[],normalized:[]};for(var i=0;i<totalRows;++i){var c=$(table.tBodies[0].rows[i]),cols=[];if(c.hasClass(table.config.cssChildRow)){cache.row[cache.row.length-1]=cache.row[cache.row.length-1].add(c);continue;}cache.row.push(c);for(var j=0;j<totalCells;++j){cols.push(parsers[j].format(getElementText(table.config,c[0].cells[j]),table,c[0].cells[j]));}cols.push(cache.normalized.length);cache.normalized.push(cols);cols=null;};if(table.config.debug){benchmark("Building cache for "+totalRows+" rows:",cacheTime);}return cache;};function getElementText(config,node){var text="";if(!node)return"";if(!config.supportsTextContent)config.supportsTextContent=node.textContent||false;if(config.textExtraction=="simple"){if(config.supportsTextContent){text=node.textContent;}else{if(node.childNodes[0]&&node.childNodes[0].hasChildNodes()){text=node.childNodes[0].innerHTML;}else{text=node.innerHTML;}}}else{if(typeof(config.textExtraction)=="function"){text=config.textExtraction(node);}else{text=$(node).text();}}return text;}function appendToTable(table,cache){if(table.config.debug){var appendTime=new Date()}var c=cache,r=c.row,n=c.normalized,totalRows=n.length,checkCell=(n[0].length-1),tableBody=$(table.tBodies[0]),rows=[];for(var i=0;i<totalRows;i++){var pos=n[i][checkCell];rows.push(r[pos]);if(!table.config.appender){var l=r[pos].length;for(var j=0;j<l;j++){tableBody[0].appendChild(r[pos][j]);}}}if(table.config.appender){table.config.appender(table,rows);}rows=null;if(table.config.debug){benchmark("Rebuilt table:",appendTime);}applyWidget(table);setTimeout(function(){$(table).trigger("sortEnd");},0);};function buildHeaders(table){if(table.config.debug){var time=new Date();}var meta=($.metadata)?true:false;var header_index=computeTableHeaderCellIndexes(table);$tableHeaders=$(table.config.selectorHeaders,table).each(function(index){this.column=header_index[this.parentNode.rowIndex+"-"+this.cellIndex];this.order=formatSortingOrder(table.config.sortInitialOrder);this.count=this.order;if(checkHeaderMetadata(this)||checkHeaderOptions(table,index))this.sortDisabled=true;if(checkHeaderOptionsSortingLocked(table,index))this.order=this.lockedOrder=checkHeaderOptionsSortingLocked(table,index);if(!this.sortDisabled){var $th=$(this).addClass(table.config.cssHeader);if(table.config.onRenderHeader)table.config.onRenderHeader.apply($th);}table.config.headerList[index]=this;});if(table.config.debug){benchmark("Built headers:",time);log($tableHeaders);}return $tableHeaders;};function computeTableHeaderCellIndexes(t){var matrix=[];var lookup={};var thead=t.getElementsByTagName('THEAD')[0];var trs=thead.getElementsByTagName('TR');for(var i=0;i<trs.length;i++){var cells=trs[i].cells;for(var j=0;j<cells.length;j++){var c=cells[j];var rowIndex=c.parentNode.rowIndex;var cellId=rowIndex+"-"+c.cellIndex;var rowSpan=c.rowSpan||1;var colSpan=c.colSpan||1
 var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];}for(var k=0;k<matrix[rowIndex].length+1;k++){if(typeof(matrix[rowIndex][k])=="undefined"){firstAvailCol=k;break;}}lookup[cellId]=firstAvailCol;for(var k=rowIndex;k<rowIndex+rowSpan;k++){if(typeof(matrix[k])=="undefined"){matrix[k]=[];}var matrixrow=matrix[k];for(var l=firstAvailCol;l<firstAvailCol+colSpan;l++){matrixrow[l]="x";}}}}return lookup;}function checkCellColSpan(table,rows,row){var arr=[],r=table.tHead.rows,c=r[row].cells;for(var i=0;i<c.length;i++){var cell=c[i];if(cell.colSpan>1){arr=arr.concat(checkCellColSpan(table,headerArr,row++));}else{if(table.tHead.length==1||(cell.rowSpan>1||!r[row+1])){arr.push(cell);}}}return arr;};function checkHeaderMetadata(cell){if(($.metadata)&&($(cell).metadata().sorter===false)){return true;};return false;}function checkHeaderOptions(table,i){if((table.config.headers[i])&&(table.config.headers[i].sorter===false)){return true;};return false;}function checkHeaderOptionsSortingLocked(table,i){if((table.config.headers[i])&&(table.config.headers[i].lockedOrder))return table.config.headers[i].lockedOrder;return false;}function applyWidget(table){var c=table.config.widgets;var l=c.length;for(var i=0;i<l;i++){getWidgetById(c[i]).format(table);}}function getWidgetById(name){var l=widgets.length;for(var i=0;i<l;i++){if(widgets[i].id.toLowerCase()==name.toLowerCase()){return widgets[i];}}};function formatSortingOrder(v){if(typeof(v)!="Number"){return(v.toLowerCase()=="desc")?1:0;}else{return(v==1)?1:0;}}function isValueInArray(v,a){var l=a.length;for(var i=0;i<l;i++){if(a[i][0]==v){return true;}}return false;}function setHeadersCss(table,$headers,list,css){$headers.removeClass(css[0]).removeClass(css[1]);var h=[];$headers.each(function(offset){if(!this.sortDisabled){h[this.column]=$(this);}});var l=list.length;for(var i=0;i<l;i++){h[list[i][0]].addClass(css[list[i][1]]);}}function fixColumnWidth(table,$headers){var c=table.config;if(c.widthFixed){var colgroup=$('<colgroup>');$("tr:first td",table.tBodies[0]).each(function(){colgroup.append($('<col>').css('width',$(this).width()));});$(table).prepend(colgroup);};}function updateHeaderSortCount(table,sortList){var c=table.config,l=sortList.length;for(var i=0;i<l;i++){var s=sortList[i],o=c.headerList[s[0]];o.count=s[1];o.count++;}}function multisort(table,sortList,cache){if(table.config.debug){var sortTime=new Date();}var dynamicExp="var sortWrapper = function(a,b) {",l=sortList.length;for(var i=0;i<l;i++){var c=sortList[i][0];var order=sortList[i][1];var s=(table.config.parsers[c].type=="text")?((order==0)?makeSortFunction("text","asc",c):makeSortFunction("text","desc",c)):((order==0)?makeSortFunction("numeric","asc",c):makeSortFunction("numeric","desc",c));var e="e"+i;dynamicExp+="var "+e+" = "+s;dynamicExp+="if("+e+") { return "+e+"; } ";dynamicExp+="else { ";}var orgOrderCol=cache.normalized[0].length-1;dynamicExp+="return a["+orgOrderCol+"]-b["+orgOrderCol+"];";for(var i=0;i<l;i++){dynamicExp+="}; ";}dynamicExp+="return 0; ";dynamicExp+="}; ";if(table.config.debug){benchmark("Evaling expression:"+dynamicExp,new Date());}eval(dynamicExp);cache.normalized.sort(sortWrapper);if(table.config.debug){benchmark("Sorting on "+sortList.toString()+" and dir "+order+" time:",sortTime);}return cache;};function makeSortFunction(type,direction,index){var a="a["+index+"]",b="b["+index+"]";if(type=='text'&&direction=='asc'){return"("+a+" == "+b+" ? 0 : ("+a+" === null ? Number.POSITIVE_INFINITY : ("+b+" === null ? Number.NEGATIVE_INFINITY : ("+a+" < "+b+") ? -1 : 1 )));";}else if(type=='text'&&direction=='desc'){return"("+a+" == "+b+" ? 0 : ("+a+" === null ? Number.POSITIVE_INFINITY : ("+b+" === null ? Number.NEGATIVE_INFINITY : ("+b+" < "+a+") ? -1 : 1 )));";}else if(type=='numeric'&&direction=='asc'){return"("+a+" === null && "+b+" === null) ? 0 :("+a+" === null ? Number.POSITIVE_INFINITY : ("+b+" === null ? Number.NEGATIVE_INFINITY : "+a+" - "+b+"));";}else if(type=='numeric'&&direction=='desc'){return"("+a+" === null && "+b+" === null) ? 0 :("+a+" === null ? Number.POSITIVE_INFINITY : ("+b+" === null ? Number.NEGATIVE_INFINITY : "+b+" - "+a+"));";}};function makeSortText(i){return"((a["+i+"] < b["+i+"]) ? -1 : ((a["+i+"] > b["+i+"]) ? 1 : 0));";};function makeSortTextDesc(i){return"((b["+i+"] < a["+i+"]) ? -1 : ((b["+i+"] > a["+i+"]) ? 1 : 0));";};function makeSortNumeric(i){return"a["+i+"]-b["+i+"];";};function makeSortNumericDesc(i){return"b["+i+"]-a["+i+"];";};function sortText(a,b){if(table.config.sortLocaleCompare)return a.localeCompare(b);return((a<b)?-1:((a>b)?1:0));};function sortTextDesc(a,b){if(table.config.sortLocaleCompare)return b.localeCompare(a);return((b<a)?-1:((b>a)?1:0));};function sortNumeric(a,b){return a-b;};function sortNumericDesc(a,b){return b-a;};function getCachedSortType(parsers,i){return parsers[i].type;};this.construct=function(settings){return this.each(function(){if(!this.tHead||!this.tBodies)return;var $this,$document,$headers,cache,config,shiftDown=0,sortOrder;this.config={};config=$.extend(this.config,$.tablesorter.defaults,settings);$this=$(this);$.data(this,"tablesorter",config);$headers=buildHeaders(this);this.config.parsers=buildParserCache(this,$headers);cache=buildCache(this);var sortCSS=[config.cssDesc,config.cssAsc];fixColumnWidth(this);$headers.click(function(e){var totalRows=($this[0].tBodies[0]&&$this[0].tBodies[0].rows.length)||0;if(!this.sortDisabled&&totalRows>0){$this.trigger("sortStart");var $cell=$(this);var i=this.column;this.order=this.count++%2;if(this.lockedOrder)this.order=this.lockedOrder;if(!e[config.sortMultiSortKey]){config.sortList=[];if(config.sortForce!=null){var a=config.sortForce;for(var j=0;j<a.length;j++){if(a[j][0]!=i){config.sortList.push(a[j]);}}}config.sortList.push([i,this.order]);}else{if(isValueInArray(i,config.sortList)){for(var j=0;j<config.sortList.length;j++){var s=config.sortList[j],o=config.headerList[s[0]];if(s[0]==i){o.count=s[1];o.count++;s[1]=o.count%2;}}}else{config.sortList.push([i,this.order]);}};setTimeout(function(){setHeadersCss($this[0],$headers,config.sortList,sortCSS);appendToTable($this[0],multisort($this[0],config.sortList,cache));},1);return false;}}).mousedown(function(){if(config.cancelSelection){this.onselectstart=function(){return false};return false;}});$this.bind("update",function(){var me=this;setTimeout(function(){me.config.parsers=buildParserCache(me,$headers);cache=buildCache(me);},1);}).bind("updateCell",function(e,cell){var config=this.config;var pos=[(cell.parentNode.rowIndex-1),cell.cellIndex];cache.normalized[pos[0]][pos[1]]=config.parsers[pos[1]].format(getElementText(config,cell),cell);}).bind("sorton",function(e,list){$(this).trigger("sortStart");config.sortList=list;var sortList=config.sortList;updateHeaderSortCount(this,sortList);setHeadersCss(this,$headers,sortList,sortCSS);appendToTable(this,multisort(this,sortList,cache));}).bind("appendCache",function(){appendToTable(this,cache);}).bind("applyWidgetId",function(e,id){getWidgetById(id).format(this);}).bind("applyWidgets",function(){applyWidget(this);});if($.metadata&&($(this).metadata()&&$(this).metadata().sortlist)){config.sortList=$(this).metadata().sortlist;}if(config.sortList.length>0){$this.trigger("sorton",[config.sortList]);}applyWidget(this);});};this.addParser=function(parser){var l=parsers.length,a=true;for(var i=0;i<l;i++){if(parsers[i].id.toLowerCase()==parser.id.toLowerCase()){a=false;}}if(a){parsers.push(parser);};};this.addWidget=function(widget){widgets.push(widget);};this.formatFloat=function(s){var i=parseFloat(s);return(isNaN(i))?0:i;};this.formatInt=function(s){var i=parseInt(s);return(isNaN(i))?0:i;};this.isDigit=function(s,config){return/^[-+]?\d*$/.test($.trim(s.replace(/[,.']/g,'')));};this.clearTableBody=function(table){if($.browser.msie){function empty(){while(this.firstChild)this.removeChild(this.firstChild);}empty.apply(table.tBodies[0]);}else{table.tBodies[0].innerHTML="";}};}});$.fn.extend({tablesorter:$.tablesorter.construct});var ts=$.tablesorter;ts.addParser({id:"text",is:function(s){return true;},format:function(s){return $.trim(s.toLocaleLowerCase());},type:"text"});ts.addParser({id:"digit",is:function(s,table){var c=table.config;return $.tablesorter.isDigit(s,c);},format:function(s){return $.tablesorter.formatFloat(s);},type:"numeric"});ts.addParser({id:"currency",is:function(s){return/^[£$€?.]/.test(s);},format:function(s){return $.tablesorter.formatFloat(s.replace(new RegExp(/[£$€]/g),""));},type:"numeric"});ts.addParser({id:"ipAddress",is:function(s){return/^\d{2,3}[\.]\d{2,3}[\.]\d{2,3}[\.]\d{2,3}$/.test(s);},format:function(s){var a=s.split("."),r="",l=a.length;for(var i=0;i<l;i++){var item=a[i];if(item.length==2){r+="0"+item;}else{r+=item;}}return $.tablesorter.formatFloat(r);},type:"numeric"});ts.addParser({id:"url",is:function(s){return/^(https?|ftp|file):\/\/$/.test(s);},format:function(s){return jQuery.trim(s.replace(new RegExp(/(https?|ftp|file):\/\//),''));},type:"text"});ts.addParser({id:"isoDate",is:function(s){return/^\d{4}[\/-]\d{1,2}[\/-]\d{1,2}$/.test(s);},format:function(s){return $.tablesorter.formatFloat((s!="")?new Date(s.replace(new RegExp(/-/g),"/")).getTime():"0");},type:"numeric"});ts.addParser({id:"percent",is:function(s){return/\%$/.test($.trim(s));},format:function(s){return $.tablesorter.formatFloat(s.replace(new RegExp(/%/g),""));},type:"numeric"});ts.addParser({id:"usLongDate",is:function(s){return s.match(new RegExp(/^[A-Za-z]{3,10}\.? [0-9]{1,2}, ([0-9]{4}|'?[0-9]{2}) (([0-2]?[0-9]:[0-5][0-9])|([0-1]?[0-9]:[0-5][0-9]\s(AM|PM)))$/));},format:function(s){return $.tablesorter.formatFloat(new Date(s).getTime());},type:"numeric"});ts.addParser({id:"shortDate",is:function(s){return/\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}/.test(s);},format:function(s,table){var c=table.config;s=s.replace(/\-/g,"/");if(c.dateFormat=="us"){s=s.replace(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/,"$3/$1/$2");}else if(c.dateFormat=="uk"){s=s.replace(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/,"$3/$2/$1");}else if(c.dateFormat=="dd/mm/yy"||c.dateFormat=="dd-mm-yy"){s=s.replace(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2})/,"$1/$2/$3");}return $.tablesorter.formatFloat(new Date(s).getTime());},type:"numeric"});ts.addParser({id:"time",is:function(s){return/^(([0-2]?[0-9]:[0-5][0-9])|([0-1]?[0-9]:[0-5][0-9]\s(am|pm)))$/.test(s);},format:function(s){return $.tablesorter.formatFloat(new Date("2000/01/01 "+s).getTime());},type:"numeric"});ts.addParser({id:"metadata",is:function(s){return false;},format:function(s,table,cell){var c=table.config,p=(!c.parserMetadataName)?'sortValue':c.parserMetadataName;return $(cell).metadata()[p];},type:"numeric"});ts.addWidget({id:"zebra",format:function(table){if(table.config.debug){var time=new Date();}var $tr,row=-1,odd;$("tr:visible",table.tBodies[0]).each(function(i){$tr=$(this);if(!$tr.hasClass(table.config.cssChildRow))row++;odd=(row%2==0);$tr.removeClass(table.config.widgetZebra.css[odd?0:1]).addClass(table.config.widgetZebra.css[odd?1:0])});if(table.config.debug){$.tablesorter.benchmark("Applying Zebra widget",time);}}});})(jQuery);
-/*! 
- * jquery.event.drag - v 2.0.0 
+/*!
+ * jquery.event.drag - v 2.0.0
  * Copyright (c) 2010 Three Dub Media - http://threedubmedia.com
  * Open Source MIT License - http://threedubmedia.com/code/license
  */
@@ -1910,18 +1910,18 @@ var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];
         this.saveDocUID = null;
         this.saveDocRevision = null;
         this.user = null;
-        
+
         this.saveDataPath = "/couchdb/learnerdata";
-        
+
         this.activityPath = "/couchdb/activities";
     };
 
     sparks.CouchDS.prototype =
     {
-      
+
         loadActivity: function(id, callback) {
           $.couch.urlPrefix = this.activityPath;
-          $.couch.db('').openDoc(id, 
+          $.couch.db('').openDoc(id,
             {
               success: function (response) {
                 console.log("Loaded "+response._id);
@@ -1930,23 +1930,23 @@ var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];
             }
           );
         },
-        
+
         setUser: function(_user) {
           this.user = _user;
         },
-        
+
         // write the data
         save: function (_data) {
           if (!this.user){
             return;
           }
-          
+
           $.couch.urlPrefix = this.saveDataPath;
-          
+
           _data.user = this.user;
           _data.runnable_id = this.runnableId;
           _data.save_time = new Date().valueOf();
-          
+
           if (!!this.saveDocUID){
             console.log("saving with known id "+this.saveDocUID);
             _data._id = this.saveDocUID;
@@ -1954,30 +1954,30 @@ var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];
           if (!!this.saveDocRevision){
             _data._rev = this.saveDocRevision;
           }
-          
+
           var self = this;
-          $.couch.db('').saveDoc(  
-            _data,  
-            { success: function(response) { 
+          $.couch.db('').saveDoc(
+            _data,
+            { success: function(response) {
               console.log("Saved ok, id = "+response.id);
               self.saveDocUID = response.id;
               self.saveDocRevision = response.rev;
-             }}  
+             }}
           );
-          
+
         },
-        
+
         // saves and does not try to modify _rev or other data
         saveRawData: function(_data) {
           $.couch.urlPrefix = this.saveDataPath;
-          $.couch.db(this.db).saveDoc(  
-            _data,  
-            { success: function(response) { 
+          $.couch.db(this.db).saveDoc(
+            _data,
+            { success: function(response) {
               console.log("Saved ok, id = "+response.id);
-             }}  
+             }}
           );
         },
-    
+
         loadStudentData: function (activity, studentName, success, failure) {
           $.couch.urlPrefix = this.saveDataPath;
           if (!studentName){
@@ -1985,10 +1985,10 @@ var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];
           }
           var self = this;
           $.couch.db('').view(
-            "session_scores/Scores%20per%20activity", 
+            "session_scores/Scores%20per%20activity",
             {
               key:[studentName, activity],
-              success: function(response) { 
+              success: function(response) {
                 console.log("success loading");
                 console.log(response);
                 if (response.rows.length > 0){
@@ -2002,14 +2002,14 @@ var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];
             }}
           );
         },
-        
+
         loadClassData: function (activity, classId, success, failure) {
           $.couch.urlPrefix = this.saveDataPath;
           $.couch.db('').view(
-            "class_scores/Scores%20per%20class", 
+            "class_scores/Scores%20per%20class",
             {
               key:[classId, activity],
-              success: function(response) { 
+              success: function(response) {
                 if (response.rows.length > 0){
                   success(response);
                 } else {
@@ -2018,7 +2018,7 @@ var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];
             }}
           );
         },
-        
+
         loadClassDataWithLearnerIds: function (activity, studentIds, success, failure) {
           var keys = []
           for (var i=0, ii=studentIds.length; i<ii; i++){
@@ -2026,10 +2026,10 @@ var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];
           }
           $.couch.urlPrefix = this.saveDataPath;
           $.couch.db('').view(
-            "session_scores/Scores%20per%20student_id", 
+            "session_scores/Scores%20per%20student_id",
             {
               keys:keys,
-              success: function(response) { 
+              success: function(response) {
                 if (response.rows.length > 0){
                   success(response);
                 } else {
@@ -2039,7 +2039,7 @@ var firstAvailCol;if(typeof(matrix[rowIndex])=="undefined"){matrix[rowIndex]=[];
           );
         }
     };
-    
+
     sparks.couchDS = new sparks.CouchDS();
 })();
 /* FILE util.js */
@@ -3203,19 +3203,19 @@ sparks.createQuestionsCSV = function(data) {
 
 
 (function() {
-  
+
   sparks.SectionView = function(section){
     this.section = section;
   };
-  
+
   sparks.SectionView.prototype = {
-    
+
     clear: function() {
       $('#breadboard').html('');
       $('#image').html('');
       sparks.sectionController.currentPage.view.clear();
     },
-    
+
     getImageView: function() {
       var $imagediv = $("<div>").addClass("question-image");
       $imagediv.append(
@@ -3223,7 +3223,7 @@ sparks.createQuestionsCSV = function(data) {
       );
       return $imagediv;
     },
-    
+
     getImgSrc: function(fileName) {
       if (fileName.indexOf("http") > -1){
         return fileName;
@@ -3233,7 +3233,7 @@ sparks.createQuestionsCSV = function(data) {
       console.log(fileName + " appears to be a relative filename, but there is no base activity url.");
       return "";
     }
-    
+
   };
 })();
 /*globals console sparks $ breadModel getBreadBoard */
@@ -3658,16 +3658,16 @@ sparks.createQuestionsCSV = function(data) {
 
 
 (function() {
-  
+
   sparks.ReportView = function(){
   };
-  
+
   sparks.ReportView.prototype = {
-    
+
     getSessionReportView: function(sessionReport){
       var $div = $('<div>');
       $div.append(this._createReportTableForSession(sessionReport));
-      
+
       var page = sparks.sectionController.currentPage;
       var totalScore = sparks.reportController.getTotalScoreForPage(page);
       if (totalScore > -1){
@@ -3675,17 +3675,17 @@ sparks.createQuestionsCSV = function(data) {
       }
       return $div;
     },
-    
+
     getActivityReportView: function() {
       var $div = $('<div>');
       $div.append('<h1>Activity results</h1>');
-      
+
       var totalScore = 0;
       var self = this;
       var currentSection = sparks.activityController.currentSection;
-      
+
       var $table = $("<table>").addClass('finalReport');
-      
+
       $table.append(
         $('<tr>').append(
           $('<th>'),
@@ -3694,11 +3694,11 @@ sparks.createQuestionsCSV = function(data) {
           $('<th>')
         )
       );
-      
+
       var passedCurrentSection = false;
       var isNextSection = false;
       var nextSectionDidPass = false;
-      
+
       $.each(sparks.activity.sections, function(i, section){
         var isThisSection = (section === currentSection);
         if (!nextSectionDidPass && !section.visited){
@@ -3707,20 +3707,20 @@ sparks.createQuestionsCSV = function(data) {
         } else {
           isNextSection = false;
         }
-        
+
         if (section.visited) {
           var totalSectionScore = sparks.reportController.getTotalScoreForSection(section);
           var lastThreeSectionScore = sparks.reportController.getLastThreeScoreForSection(section);
           var timesRun = lastThreeSectionScore[1];
           lastThreeSectionScore = lastThreeSectionScore[0];
           totalScore += totalSectionScore;
-          
+
           var light;
           if (lastThreeSectionScore < 0.30){
             light = "common/icons/light-red.png";
-          } else if (lastThreeSectionScore < 0.90) {  
+          } else if (lastThreeSectionScore < 0.90) {
             light = "common/icons/light-off.png";
-          } else {  
+          } else {
             light = "common/icons/light-on.png";
           }
           var $img = $('<img>').attr('src', light).attr('width', 35);
@@ -3740,7 +3740,7 @@ sparks.createQuestionsCSV = function(data) {
             sparks.activityController.nextSection();
           });
         }
-        
+
         $table.append(
           $('<tr>').append(
             $('<td>').addClass(section.visited ? "" : "no_check").css('padding-left', '0px').append($img),
@@ -3750,56 +3750,56 @@ sparks.createQuestionsCSV = function(data) {
           )
         );
       });
-      
+
       $div.append($table);
-      
+
       var $score = $("<span>").css("font-size", "11pt").html("<u>You have scored <b>"+totalScore+"</b> points so far.</u>");
       $div.find('h1').after($score);
-      
+
       $div.append(this._createReportTableForCategories());
-      
+
       return $div;
     },
-    
+
     // *** It looks like this is not used anymore
     getFinalActivityReportView: function(report) {
       var $div = $('<div>');
       $div.append('<h1>Activity results</h1>');
-      
+
       var totalScore = 0;
       var self = this;
-      
+
       $.each(report.sectionReports, function(i, sectionReport){
-        
+
         $div.append('<h2>Section '+(i+1)+': '+sectionReport.sectionTitle+'</h2>');
         var pageReports = sectionReport.pageReports;
-        
+
         var $table = $("<table>");
         $.each(pageReports, function(i, pageReport){
           // $div.append('<h3>Page '+(i+1)+"</h3>");
           // var bestSessionReport = sparks.reportController.getBestSessionReport(page);
           // $div.append(self._createReportTableForSession(bestSessionReport));
           var score = sparks.reportController.getTotalScoreForPageReport(pageReport);
-          
+
           var $tr = $("<tr>");
           $tr.append("<td>Page "+(i+1)+": "+ score   +" points</td>");
           $table.append($tr);
-          
+
           totalScore += score;
-          
+
         });
         $div.append($table);
       });
-      
+
       var $score = $("<span>").css("font-size", "11pt").html("<u>"+report.user.name.replace("+", " ").trim()+" has scored <b>"+totalScore+"</b> points so far.</u>");
       $div.find('h1').after($score);
       return $div;
     },
-    
+
     _createReportTableForCategories: function() {
-      
+
       var categories = sparks.reportController.getCategories(sparks.report);
-      
+
       var $table = $("<table>").addClass('categoryReport');
       $table.append(
         $('<tr>').append(
@@ -3807,13 +3807,13 @@ sparks.createQuestionsCSV = function(data) {
           $('<th>').text("Question Categories")
         )
       );
-      
+
       $.each(categories, function(category, score){
         var $btn = $('<button>').addClass("tutorial").text("View tutorial");
         $btn.click(function(){
           sparks.tutorialController.showTutorial(score[3]);
         });
-        
+
         var light;
         switch (score[2]) {
           case 0:
@@ -3830,7 +3830,7 @@ sparks.createQuestionsCSV = function(data) {
         $img.easyTooltip({
            content: "You got "+score[2]+" out of the last "+(Math.min(score[1],3))+" questions of this type correct"
         });
-        
+
         $table.append(
           $('<tr>').append(
             $('<td>').append($img),
@@ -3841,12 +3841,12 @@ sparks.createQuestionsCSV = function(data) {
       });
       return $table;
     },
-    
+
     _createReportTableForSession: function(sessionReport) {
-      
+
       var $report = $('<table>').addClass('reportTable');
       $report.addClass((sessionReport.score == sessionReport.maxScore) ? "allCorrect" : "notAllCorrect");
-      
+
       $report.append(
         $('<tr>').append(
           $('<th>').text("Item"),
@@ -3857,7 +3857,7 @@ sparks.createQuestionsCSV = function(data) {
           $('<th>').text("Tutorials")
         )
       );
-        
+
       $.each(sessionReport.questions, function(i, question){
         if (!!question.not_scored) {
           $report.append(
@@ -3876,22 +3876,22 @@ sparks.createQuestionsCSV = function(data) {
         var score = question.points_earned;
         var feedback = "";
 
-        
+
         if(!question.feedback){
         	if (answer === '') {
-          
+
         	} else if (!question.answerIsCorrect){
         	  feedback += "The value was wrong";
         	}
         } else {
           feedback = question.feedback;
         }
-        
+
         var $tutorialButton = null;
         if (!!question.tutorial){
           $tutorialButton = $("<button>").text(question.tutorial.replace(/-/g, ' ').capFirst()).css('padding-left', "10px")
                               .css('padding-right', "10px").css('margin-left', "20px").css('width', "100px");
-          
+
           sparks.tutorialController.getTutorialTitle(question.tutorial, function(title){
             var rolloverText = "Click to view \""+title+"\"";
             $tutorialButton.easyTooltip({
@@ -3903,7 +3903,7 @@ sparks.createQuestionsCSV = function(data) {
           });
         } else {
         }
-       
+
         $report.append(
           $('<tr>').append(
             $('<td>').html(question.shortPrompt),
@@ -3915,7 +3915,7 @@ sparks.createQuestionsCSV = function(data) {
           ).addClass(question.answerIsCorrect ? "correct" : "incorrect")
         );
       });
-      
+
       if (sessionReport.bestTime > 0){
         var feedback;
         if (sessionReport.timeScore == sessionReport.maxTimeScore){
@@ -3929,7 +3929,7 @@ sparks.createQuestionsCSV = function(data) {
             feedback = "You could score more bonus points by completing this page quicker!";
           }
         }
-        
+
         $report.append(
           $('<tr>').append(
             $('<td>').html("Time taken"),
@@ -3940,7 +3940,7 @@ sparks.createQuestionsCSV = function(data) {
           ).addClass(sessionReport.timeScore == sessionReport.maxTimeScore ? "correct" : "incorrect")
         );
       }
-      
+
       if (sessionReport.score > -1){
         $report.append(
           $('<tr>').append(
@@ -3953,10 +3953,10 @@ sparks.createQuestionsCSV = function(data) {
           )
         );
       }
-      
+
       return $report;
     }
-    
+
   };
 })();
 /*globals sparks Raphael*/
@@ -12048,9 +12048,9 @@ window["breadboardView"] = {
 (function () {
 
     this.sparks.mathParser = {};
-    
+
     var p = sparks.mathParser;
-    
+
     p.calculateMeasurement = function(sum){
       if (sum === undefined || sum === null || sum === ""){
         return "";
@@ -12058,28 +12058,28 @@ window["breadboardView"] = {
       if (!isNaN(Number(sum))){
         return sum;
       }
-      
+
       answer = ""+sum;
-        
+
       var sumPattern = /\[[^\]]+\]/g  // find anything between [ ]
       var matches= answer.match(sumPattern);
-      if (!!matches){      	
+      if (!!matches){
         $.each(matches, function(i, match){
           var expression = match;
           var result = p.calculateSum(expression.substring(1, expression.length-1));
           answer = answer.replace(match,result);
         });
       }
-      
+
       // now we have e.g. "1000 V"
-      
+
       answer = sparks.unit.convertMeasurement(answer);   // convert 1000 V to 1 kiloV, for instance
-       
+
       answer = p.standardizeUnits(answer);
-       
+
       return answer;
     };
-    
+
     p.standardizeUnits = function(string) {
       string = string.replace(/ohms/gi,"&#x2126;");
       string = string.replace("micro","&#x00b5;");
@@ -12088,8 +12088,8 @@ window["breadboardView"] = {
       string = string.replace("mega","M");
       return string;
     };
-    
-    
+
+
     /*
       When passed a string such as "100 + r1.resistance / r2.nominalResistance"
       this will first assign variables for components r1 & r2, assuming
@@ -12098,24 +12098,24 @@ window["breadboardView"] = {
     */
    p.calculateSum = function(sum){
       sum = p.replaceCircuitVariables(sum);
-      
+
       var calculatedSum = eval(sum);
-          
+
       return calculatedSum;
    };
-    
-    
+
+
     p.replaceCircuitVariables = function(formula){
-      
+
       // first add all the components as circuit variables at the start of the script
       // add all breadboard components as variables
       $.each(getBreadBoard().components, function(i, component){
         formula = "var " + i + " = getBreadBoard().components['"+i+"']; " + formula;
       });
-      
+
       // add the breadboard itself as a variable
       formula = "var breadboard = getBreadBoard(); " + formula;
-      
+
       // then support old method of accessing circuit variables using ${...}
       // NOTE: This is obsolete (but tested)
       var varPattern = /\${[^}]+}/g  //  ${ X } --> value of X
@@ -12126,26 +12126,26 @@ window["breadboardView"] = {
         var variable = match.substring(2,match.length-1).split('.');
         var component = variable[0];
         var property = variable[1];
-        
-        var components = getBreadBoard().components; 
-        
+
+        var components = getBreadBoard().components;
+
         if (!components[component]){
           console.log("ERROR calculating sum: No component name '"+component+"' in circuit");
           formula = '-1';
           return;
         }
-        
+
         if (components[component][property] === undefined || components[component][property] === null){
           console.log("ERROR calculating sum: No property name '"+property+"' in component '"+component+"'");
           formula = '-1';
           return;
         }
-        
+
         var value = components[component][property];
         formula = formula.replace(match, value);
        });
       }
-      
+
       return formula;
     };
 
@@ -12155,16 +12155,16 @@ window["breadboardView"] = {
 
 
 (function () {
-    
+
     this.sparks.string = {};
-    
+
     var str = sparks.string;
-    
+
     str.strip = function (s) {
         s = s.replace(/\s*([^\s]*)\s*/, '$1');
         return s;
     };
-    
+
     // Remove a dot in the string, and then remove 0's on both sides
     // e.g. '20100' => '201', '0.0020440' => '2044'
     str.stripZerosAndDots = function (s) {
@@ -12173,27 +12173,27 @@ window["breadboardView"] = {
         s = s.replace(/(.*[^0])0*/, '$1');
         return s;
     };
-    
+
     str.stripZeros = function (s) {
         s = s.replace(/0*([^0].*)/, '$1');
         s = s.replace(/(.*[^0])0*/, '$1');
         return s;
     };
-    
-    
+
+
     String.prototype.capFirst = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
-    
+
 
 })();
 /* FILE ui.js */
 
 
 (function () {
-    
+
     this.sparks.ui = {};
-    
+
     sparks.ui.alert = function (title, msg) {
         var div = $('<div>' + msg + '</div>').attr('title', title);
         var okButton = $('<button>OK</button>)').button().addClass('dialog_button');
@@ -12203,7 +12203,7 @@ window["breadboardView"] = {
         div.append($('<p />')).append(okButton);
         div.dialog({ dialogClass: 'alert', modal: true });
     };
-    
+
 })();
 /* FILE complex_number.js */
 /*globals sparks */
@@ -14535,14 +14535,14 @@ window["breadboardView"] = {
 
 
 (function () {
-    
+
     var circuit = sparks.circuit;
 
     circuit.Resistor4band = function (id) {
         var superclass = sparks.circuit.Resistor4band.uber;
         superclass.init.apply(this, [id]);
         this.numBands = 4;
-        
+
         if (breadModel('getResOrderOfMagnitude') < 0){
           var om = this.randInt(0, 3);
           breadModel('setResOrderOfMagnitude', om);
@@ -14551,13 +14551,13 @@ window["breadboardView"] = {
         this.r_values5pct = this.filter(circuit.r_values.r_values4band5pct);
         this.r_values10pct = this.filter(circuit.r_values.r_values4band10pct);
     };
-    
+
     sparks.extend(circuit.Resistor4band, circuit.Resistor, {
 
         toleranceValues: [0.05, 0.1],
-        
+
         randomize: function (options) {
-            
+
             var value = 0;
             do {
               var ix = this.randInt(0, 1);
@@ -14574,7 +14574,7 @@ window["breadboardView"] = {
               else {
                   values = this.r_values10pct;
               }
-              
+
               var om = breadModel('getResOrderOfMagnitude');
               var extra = this.randInt(0, 1);
               om = om + extra;
@@ -14583,7 +14583,7 @@ window["breadboardView"] = {
 
               value = value * Math.pow(10,om);
             } while (!this._resistanceIsUnique(value));
-            
+
             this.nominalValue = value;
 
             if (options && options.realEqualsNominal) {
@@ -14592,10 +14592,10 @@ window["breadboardView"] = {
             else {
                 this.realValue = this.calcRealValue(this.nominalValue, this.tolerance);
             }
-            
+
             this.colors = this.getColors(this.nominalValue, this.tolerance);
         },
-        
+
         _resistanceIsUnique: function (value) {
           var components = getBreadBoard().components;
 
@@ -14608,7 +14608,7 @@ window["breadboardView"] = {
           }
           return true;
         },
-        
+
         // rvalue: resistance value
         getColors: function (ohms, tolerance) {
             var s = ohms.toString();
@@ -14646,7 +14646,7 @@ window["breadboardView"] = {
 (function () {
 
     var circuit = sparks.circuit;
-    
+
     circuit.Resistor5band = function (id) {
         var superclass = sparks.circuit.Resistor5band.uber;
         superclass.init.apply(this, [id]);
@@ -14673,10 +14673,10 @@ window["breadboardView"] = {
           this.realValue = this.calcRealValue(this.nominalValue, this.tolerance);
           this.colors = this.getColors(this.nominalValue, this.tolerance);
           //console.log('r=' + this.nominalValue + ' t=' + this.tolerance);
-          
+
           this.colors = this.getColors(this.nominalValue, this.tolerance);
         },
-        
+
         getColors: function(ohms, tolerance) {
             var s = ohms.toString();
             var decIx = s.indexOf('.'); // real location of the dot in the string
@@ -15166,11 +15166,11 @@ window["breadboardView"] = {
 
 })();
 /**
- * apMessageBox - apMessageBox is a JavaScript object designed to create quick, 
- * easy popup messages in your JavaScript applications. 
- * 
+ * apMessageBox - apMessageBox is a JavaScript object designed to create quick,
+ * easy popup messages in your JavaScript applications.
+ *
  * http://www.adampresley.com
- * 
+ *
  * This file is part of apMessageBox
  *
  * apMessageBox is free software: you can redistribute it and/or modify
@@ -15185,7 +15185,7 @@ window["breadboardView"] = {
  *
  * You should have received a copy of the GNU General Public License
  * along with apMessageBox.  If not, see <http://www.gnu.org/licenses/>.
- *  
+ *
  * @author Adam Presley
  * @copyright Copyright (c) 2010 Adam Presley
  * @param {Object} config
@@ -15211,14 +15211,14 @@ var apMessageBox = apMessageBox || {};
 	 * 	* message - The message to display
 	 * 	* callback - A method to be executed once the dialog is closed
 	 * 	* scope - The scope in which to call the callback method
-	 * 
+	 *
 	 * @author Adam Presley
 	 * @class
 	 */
 	apMessageBox = function(config)
 	{
 		/**
-		 * Initializes the message box. This uses jQuery UI to do the 
+		 * Initializes the message box. This uses jQuery UI to do the
 		 * dialog box. When the box is closed the added DOM elements
 		 * are detached from the DOM.
 		 * @author Adam Presley
@@ -15231,9 +15231,9 @@ var apMessageBox = apMessageBox || {};
 			 * dialog.
 			 */
 			__buildDOM(function() {
-			
+
 				$("#" + __config.messageEl).html(__config.message);
-				
+
 				$("#" + __config.dialogEl).dialog({
 					modal: true,
 					width: __config.width,
@@ -15259,21 +15259,21 @@ var apMessageBox = apMessageBox || {};
 					},
 					buttons: __config.buttons
 				}).css("z-index","100");
-				
+
 			});
 		};
-		
+
 		var __buildDOM = function(callback)
 		{
 			/*
 			 * Outer message containing div and message <p>
 			 */
 			var outer = $("<div />");
-			var pEl = $("<p />").attr({ 
+			var pEl = $("<p />").attr({
 				id: __config.messageEl
 			}).css({ "text-align": "left" });
 			var img = null;
-			
+
 			/*
 			 * If this is an error message attach an error icon.
 			 * Otherwise attach an information icon.
@@ -15283,7 +15283,7 @@ var apMessageBox = apMessageBox || {};
 				img = $("<img />").attr({
 					src: __config.errorImage
 				}).css({ "float": "left", "margin-right": "10px" });
-				
+
 				$(outer).append(img);
 			}
 			else
@@ -15291,15 +15291,15 @@ var apMessageBox = apMessageBox || {};
 				img = $("<img />").attr({
 					src: __config.informationImage
 				}).css({ "float": "left", "margin-right": "10px" });
-				
+
 				$(outer).append(img);
 			}
-			
+
 			/*
 			 * Append the <p> to the <div>
 			 */
 			$(outer).append(pEl);
-			
+
 			/*
 			 * Build the dialog <div>. Attach the message and icon <div>
 			 * to it, then attach the dialog <div> to the body.
@@ -15313,14 +15313,14 @@ var apMessageBox = apMessageBox || {};
 
 			$(dialogEl).append(outer);
 			$("body").append(dialogEl);
-			
+
 			/*
 			 * When all is ready execute our callback which
 			 * uses jQuery UI to do the dialog box.
 			 */
 			$(document).ready(callback);
 		};
-		
+
 		var __config = $.extend({
 			dialogEl: "messageDialog",
 			messageEl: "message",
@@ -15340,7 +15340,7 @@ var apMessageBox = apMessageBox || {};
 			}
 		}, config);
 		var __this = this;
-		
+
 		this.initialize();
 	};
 
@@ -15348,27 +15348,27 @@ var apMessageBox = apMessageBox || {};
 	{
 		var msg = new apMessageBox(config || {});
 	};
-	
+
 	apMessageBox.error = function(config)
 	{
 		var newConfig = $.extend({
 			messageType: "error",
 			title: "Error!"
 		}, config);
-		
+
 		apMessageBox.show(newConfig);
 	};
-	
+
 	apMessageBox.information = function(config)
 	{
 		var newConfig = $.extend({
 			messageType: "information",
 			title: "Notice!"
 		}, config);
-		
+
 		apMessageBox.show(newConfig);
 	};
-	
+
 })(jQuery);
 
 
@@ -15379,7 +15379,7 @@ var apMessageBox = apMessageBox || {};
 
 (function () {
     this.sparks.math = {};
-    
+
     var math = sparks.math;
 
     // Return true if number x is 10^z times y where z is an int
@@ -15429,7 +15429,7 @@ var apMessageBox = apMessageBox || {};
       }
       var order = Math.ceil(Math.log10(x)),
           factor;
-       
+
       // Divide into 2 cases to get numerically sane results (i.e., no .xxx999999s)
       if (n - order > 0) {
         // Ex. order of x = 1e-4, n = 3 sig digs: so multiply by 1e7, round, then divide by 1e7
@@ -15442,15 +15442,15 @@ var apMessageBox = apMessageBox || {};
       }
     };
 
-     // Similar to roundToSigDigits but returns number composed only of the n 
+     // Similar to roundToSigDigits but returns number composed only of the n
      // significant digits; e.g., returns 127 for 12678 when n = 3.
      math.getRoundedSigDigits = function (x, n) {
          return Math.round(x * Math.pow(10, n - math.leftMostPos(x) - 1));
      };
-     
-     
+
+
      // *** extend the Math object with useful methods ***
-     
+
      Math.log10 = function(x){
        return Math.log(x)/Math.LN10;
      };
@@ -15463,14 +15463,14 @@ var apMessageBox = apMessageBox || {};
      Math.powNdigits = function(x,n){
        return Math.pow(10,Math.floor(Math.log(x)/Math.LN10-n+1));
      };
-     
+
      // Rounds to n sig figs (including adding on trailing zeros if necessary),
      // and returns a string representation of the number.
      Math.toSigFigs = function(num, sigFigs) {
        num = num.toPrecision(sigFigs);
        return sigFigs > Math.log(num) * Math.LOG10E ? num : ""+parseFloat(num);
      };
-     
+
      Math.close = function(num, expected, perc) {
        var perc = perc || 5,
             dif = expected * (perc/100);
@@ -15485,7 +15485,7 @@ var apMessageBox = apMessageBox || {};
      Array.min = function( array ){
          return Math.min.apply( Math, array );
      };
-    
+
 })();
 (function () {
 sparks.GAHelper = {};
@@ -15501,7 +15501,7 @@ sparks.GAHelper.Category = {
 
 sparks.GAHelper.setUserLoggedIn = function (isLoggedIn) {
   var userType = isLoggedIn ? "Member" : "Visitor";
-  
+
   _gaq.push(['_setCustomVar',
     sparks.GAHelper.USER_TYPE,      // This custom var is set to slot #1.  Required parameter.
     'User Type',                    // The name of the custom variable.  Required parameter.
@@ -15626,8 +15626,8 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
 
 (function () {
 
-  sparks.activity_base_url = "/sparks-activities/";
-  sparks.activity_images_base_url = "/sparks-activities/images/";
+  sparks.activity_base_url = "sparks-activities/";
+  sparks.activity_images_base_url = "sparks-activities/images/";
   sparks.tutorial_base_url = "tutorials/";
   sparks.soundFiles = {click: "common/sounds/click.ogg"};
 
