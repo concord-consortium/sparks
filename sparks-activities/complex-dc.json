@@ -1,0 +1,67 @@
+{
+  "_id": "complex-dc",
+  "_rev": "6-57d7e49d26f73be59fd59d98cd39a8aa",
+  "title": "Troubleshooting a Series Circuit",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive24,a28",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b28,b22",
+      "resistance": 100,
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c22,c16",
+      "resistance": 200,
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "e22,e16",
+      "resistance": 200,
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "a22,a5",
+      "resistance": 400,
+      "label": "R4"
+    },
+    {
+      "type": "resistor",
+      "UID": "r5",
+      "connections": "d16,d10",
+      "resistance": 100,
+      "label": "R5"
+    },
+    {
+      "type": "resistor",
+      "UID": "r6",
+      "connections": "e10,e5",
+      "resistance": 100,
+      "label": "R6"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "b5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "pages": [
+    {
+      "questions": []
+    }
+  ]
+}

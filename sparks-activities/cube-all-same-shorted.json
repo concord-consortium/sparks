@@ -1,0 +1,168 @@
+{
+  "_id": "cube-all-same-shorted",
+  "_rev": "13-7e3e0f8c1b781257464486919cb54757",
+  "title": "Toubleshooting a 3-D circuit with a short",
+  "show_multimeter": "true",
+  "hide-circuit": "false",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "wire",
+      "connections": "left_negative24,a27"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive1,j3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "d27,g27",
+      "label": "R1",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "h27,h21",
+      "label": "R2",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d21,g21",
+      "label": "R3",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "c27,c21",
+      "label": "R4",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r5",
+      "connections": "d9,g9",
+      "label": "R5",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r6",
+      "connections": "h9,h3",
+      "label": "R6",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r7",
+      "connections": "d3,g3",
+      "label": "R7",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r8",
+      "connections": "c9,c3",
+      "label": "R8",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r9",
+      "connections": "j27,j9",
+      "label": "R9",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r10",
+      "connections": "i21,i3",
+      "label": "10",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r11",
+      "connections": "b27,b9",
+      "label": "11",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r12",
+      "connections": "a21,a3",
+      "label": "12",
+      "resistance": 100
+    }
+  ],
+  "faults": [
+    {
+      "type": "shorted",
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "notes": "Hint: which resistor has no voltage drop across it?",
+      "questions": [
+        {
+          "prompt": "This is a complicated circuit. The 12 resistors are connected along the edges of a cube -- each resistor is connected to exactly three others. The voltage is applied at two diagonal corners of the cube. To make it easier we've made all the resistors the same (100 ohms) and one of them, <i>and only one,</i> is shorted (not open). Your job is to figure out which one. (Note: R10, R11, and R12 are simply denoted as 10, 11, and 12, respectively, because there is no room on the resistor graphic for three-character labels. <br> Which resistor is shorted?",
+          "subquestions": [
+            {
+              "shortPrompt": "Which resistor is shorted?",
+              "options": [
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R2"
+                },
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R3"
+                },
+                {
+                  "option": "R4"
+                },
+                {
+                  "option": "R5"
+                },
+                {
+                  "option": "R6"
+                },
+                {
+                  "option": "R7"
+                },
+                {
+                  "option": "R8"
+                },
+                {
+                  "option": "R9"
+                },
+                {
+                  "option": "10"
+                },
+                {
+                  "option": "11"
+                },
+                {
+                  "option": "12"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 5000,
+              "scoring": "var badResistorName = breadboard.getFault().label; var rightAnswer = 'You got it!'; var wrongAnswer = 'No, that is not the faulty resistor.'; var nullAnswer = 'You did not answer the question!'; question.correct_answer = badResistorName; if (question.answer == '') {question.feedback = nullAnswer} else if (question.answer === badResistorName) {question.points_earned = 5000; question.feedback = rightAnswer} else {question.feedback = wrongAnswer}",
+              "category": "Serious troubleshooting"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

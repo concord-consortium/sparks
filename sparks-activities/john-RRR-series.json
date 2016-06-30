@@ -1,0 +1,59 @@
+{
+  "_id": "john-RRR-series",
+  "_rev": "2-4a604336682fd01be3fad87f1cf1b44e",
+  "title": "Measuring a Resistive Series Circuit",
+  "show_multimeter": "true",
+  "show_oscilloscope": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        10,
+        10000,
+        101
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "1000",
+      "connections": "b17,b23",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "2000",
+      "connections": "c11,c17",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "resistance": "3000",
+      "connections": "b11,b5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive2,a5"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>R<sub>2</sub></b> = [r2.resistance] ohms<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [r3.resistance] ohms<br>&nbsp;&nbsp; <b>V<sub>P</sub></b> = [source.amplitude] volts<br>&nbsp;&nbsp; <b>f<sub>source</sub></b> = [source.frequencies] Hz",
+      "questions": [
+        {
+          "prompt": "In this series resistance circuit, measure <b>V<sub>P-P</sub>, V<sub>P</sub>,</b> and <b>V<sub>RMS</sub>,</b> and the voltage dividing that occurs with AC."
+        }
+      ]
+    }
+  ]
+}

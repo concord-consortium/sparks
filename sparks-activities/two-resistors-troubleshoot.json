@@ -1,0 +1,80 @@
+{
+  "_id": "two-resistors-troubleshoot",
+  "_rev": "20-e185035d3ad9cb5eff6715bbfd832952",
+  "title": "Troubleshooting two resistors in series",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b20,b14",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "d14,d8",
+      "label": "R2"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a20"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a8"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This time there are only two resistors, but believe it or not the problem is actually harder than when there were three! That's because it is hard to tell the difference between one resistor being shorted and the other being open. Hint: you'll have to make a current measurement.",
+          "subquestions": [
+            {
+              "shortPrompt": "Which resistor is bad?",
+              "prompt": "Which resistor is bad?",
+              "options": [
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R2"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 100,
+              "scoring": "var badResistorName = breadboard.getFault().label; var rightAnswer = 'You got it!'; var wrongAnswer = 'No, that is not the faulty resistor.'; var nullAnswer = 'You did not answer the question!'; question.correct_answer = badResistorName; if (question.answer == '') {question.feedback = nullAnswer} else if (question.answer === badResistorName) {question.points_earned = 100; question.feedback = rightAnswer} else {question.feedback = wrongAnswer}",
+              "category": "Series troubleshooting"
+            },
+            {
+              "prompt": "Is it shorted or open?",
+              "shortPrompt": "Is it shorted or open?",
+              "options": [
+                {
+                  "option": "Shorted"
+                },
+                {
+                  "option": "Open"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 20,
+              "scoring": "var natureOfFault; if ((${r1.resistance} > 1e12)||(${r2.resistance} > 1e12)) {natureOfFault = 'Open'} else if ((${r1.resistance} < 1e-5)||(${r2.resistance} < 1e-5)) {natureOfFault = 'Shorted'}; if (question.answer === natureOfFault) {question.points_earned = 20} question.correct_answer = natureOfFault",
+              "category": "Series troubleshooting"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

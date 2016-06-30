@@ -1,0 +1,79 @@
+{
+  "_id": "series-b",
+  "_rev": "10-af9733f6e6f326ffcd36e99d66b8f4b0",
+  "nextSection": "series-c1",
+  "title": "Understanding Series Resistances",
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "Consider the three breadboards above, using the same battery voltage and light bulbs. Which statement best <b>explains the different bulb brightness?</b>",
+          "shortPrompt": "More bulbs, less light",
+          "radio": "true",
+          "correct_answer": "A",
+          "tutorial": "tutorial-2",
+          "options": [
+            {
+              "option": "More bulbs in series means less current, and so, less light output.",
+              "points": 5,
+              "feedback": "Bravo! The total resistance increases with additional bulbs. Ohm’s Law tells us that the battery will then deliver less current. And that means less power output by each bulb."
+            },
+            {
+              "option": "More bulbs in series means less voltage from the battery, and so, less light output.",
+              "feedback": "No, the battery will always deliver about the same voltage. Try again."
+            },
+            {
+              "option": "More bulbs in series means less total resistance, and so, less light output.",
+              "feedback": "No, actually resistors in   series will add their values. The total resistance when connected in series is greater. How will that make the circuit behave? Try again."
+            },
+            {
+              "option": "More bulbs in series quickly shorts out the battery, and so, soon the bulbs quit emitting light.",
+              "feedback": "No, more resistors in series will reduce the current and so the battery will last longer.  Try again."
+            }
+          ]
+        },
+        {
+          "prompt": "If you were to <b>lift one of the leads</b> from the right-hand bulb in <i>Case 2</i>, what will happen?",
+          "shortPrompt": "Breaking the circuit",
+          "radio": "true",
+          "correct_answer": "A",
+          "tutorial": "tutorial-1",
+          "options": [
+            {
+              "option": "The current will stop, and so all the bulbs would go out.",
+              "points": 5,
+              "feedback": "That's right! The battery current must flow through all the parts of a series circuit, so breaking the circuit means zero current, and so no light.<br><br>You can advance to the next level."
+            },
+            {
+              "option": "All the voltage will be across the other bulb, so it will get brighter and the right-hand bulb will go out.",
+              "feedback": "No, when one lead is lifted, the current stops, and so none of the bulbs will light up. Try again."
+            },
+            {
+              "option": "All the voltage will be across the right-hand bulb, so it will get brighter and the left-hand bulb will go out.",
+              "feedback": "No, when one lead is lifted, the current stops, and so none of the bulbs will light up. Try again."
+            },
+            {
+              "option": "All the current will flow through the left-hand bulb, so it will get brighter.",
+              "feedback": "No, when one lead is lifted, the current stops, and so none of the bulbs will light up."
+            },
+            {
+              "option": "Since the total resistance is less, the bulbs will get brighter.",
+              "feedback": "No, when one lead is lifted, the current stops, and so none of the bulbs will light up. The total resistance has nothing to do with this. Try again."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "image": "circuit-b-1-a.jpg",
+  "hide_circuit": true,
+  "COMMENT": "10 points",
+  "_attachments": {
+    "circuit-b-1-a.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 2,
+      "length": 111318,
+      "stub": true
+    }
+  }
+}

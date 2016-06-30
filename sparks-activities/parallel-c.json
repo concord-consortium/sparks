@@ -1,0 +1,271 @@
+{
+  "_id": "parallel-c",
+  "_rev": "38-3260408b48306db46ad1f1f5264f2429",
+  "title": "Calculating Total Circuit R (Parallel)",
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [sparks.unit.convertMeasurement(r1.nominalResistance + 'Ω')]<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [sparks.unit.convertMeasurement(r2.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [sparks.unit.convertMeasurement(r3.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>E</b> = 9.00 volts",
+      "questions": [
+        {
+          "prompt": "Using the rated resistance values in the circuit shown above,<br>what is the circuit's <b>total resistance?</b><br>",
+          "shortPrompt": "Total resistance of parallel resistors",
+          "tutorial": "tutorial-9",
+          "category": "Calculating resistance",
+          "options": [
+            {
+              "option": "[Math.toSigFigs(cMath.rNominalParallel('r1','r2','r3'),3)] ohms",
+              "points": 20,
+              "feedback": "That's right! You correctly calculated the total resistance of these resistors connected in parallel."
+            },
+            {
+              "option": "[Math.toSigFigs(cMath.rNominalSeries('r1','r2','r3')/3,3)] ohms",
+              "feedback": "You need to use the formula for <b>parallel</b> resistances. Check the tutorial if you need help."
+            },
+            {
+              "option": "[Math.toSigFigs(987.7*cMath.rNominalParallel('r1','r2','r3'),3)] ohms",
+              "feedback": "You seem to have made an error in the formula for parallel resistances. Check the tutorial if you need help."
+            },
+            {
+              "option": "[Math.toSigFigs(cMath.rNominalSeries('r1','r2','r3'),3)] ohms",
+              "feedback": "Oops! You used the formula for series resistances. These resistors are in parallel. Look over the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(Math.PI*2*cMath.rNominalParallel('r1','r2','r3'),3)] ohms",
+              "feedback": "You need to use the formula for parallel resistances. Check the tutorial if you need help."
+            },
+            {
+              "option": "[Math.toSigFigs(Math.PI/3*cMath.rNominalParallel('r1','r2','r3'),3)] ohms",
+              "feedback": "That's close, but not correct. Check your math, or maybe the tutorial can help."
+            },
+            {
+              "option": "[Math.toSigFigs(10.314*cMath.rNominalSeries('r1','r2','r3'),3)] ohms",
+              "feedback": "You need to use the formula for parallel resistances. Check the tutorial if you need help."
+            },
+            {
+              "option": "[Math.toSigFigs(10.314*cMath.rNominalParallel('r1','r2','r3'),3)] ohms",
+              "points": 5,
+              "feedback": "Did you perhaps make a mistake with the multipliers for k-ohms or M-ohms? Check your math, or maybe the tutorial can help."
+            }
+          ]
+        },
+        {
+          "prompt": "What is the <b>current</b> the battery will supply?<br><i>(Hint: Use the total resistance from above.)</i><br>",
+          "shortPrompt": "Total current in parallel circuit",
+          "tutorial": "tutorial-4",
+          "category": "Using Ohms Law",
+          "options": [
+            {
+              "option": "[Math.toSigFigs(9/cMath.rNominalParallel('r1','r2','r3'),3)] A",
+              "points": 20,
+              "feedback": "That's right! The circuit current is just the battery voltage divided by the total resistance."
+            },
+            {
+              "option": "[Math.toSigFigs(cMath.rNominalParallel('r1','r2','r3')/9000,3)] A",
+              "feedback": "You seem to be making an error using the formula for calculating current. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(9/r1.nominalResistance,3)] A",
+              "tutorial": "tutorial-9",
+              "feedback": "No, you must use the <b>total parallel</b> resistance value to make this calculation, not just R1. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(9/r2.nominalResistance,3)] A",
+              "tutorial": "tutorial-9",
+              "feedback": " No, you must use the <b>total parallel</b> resistance value to make this calculation, not just R2. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(9/r3.nominalResistance,3)] A",
+              "tutorial": "tutorial-9",
+              "feedback": " No, you must use the <b>total parallel</b> resistance value to make this calculation, not just R3. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+              "tutorial": "tutorial-9",
+              "feedback": "No, you must use the total <b>parallel</b> resistance value, not <b>series,</b> to make this calculation. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(27/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+              "tutorial": "tutorial-9",
+              "feedback": "No, you must use the formula for the total parallel resistance value to make this calculation. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(0.9/cMath.rNominalParallel('r1','r2','r3')*(1+Math.random()/10),3)] A",
+              "feedback": "Ooops! The value is close, but did you use the wrong multiplier for the units?"
+            }
+          ]
+        },
+        {
+          "prompt": "Using the rated resistance values in the circuit shown above,<br>what should be the current through each resistor?",
+          "subquestions": [
+            {
+              "prompt": "&nbsp;&nbsp;Through <b>R<sub>1</sub></b>:",
+              "shortPrompt": "R1 current",
+              "tutorial": "tutorial-11",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(9/r1.nominalResistance,3)] A",
+                  "points": 20,
+                  "feedback": "Right! The current through R1 is just the voltage across it divided by its resistance."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/r2.nominalResistance,3)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R1."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/r3.nominalResistance,3)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R1."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+                  "feedback": "No, that's the current value as if these resistors were in series. Note that these are in <b>parallel.</b>"
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalParallel('r1','r2','r3'),3)] A",
+                  "feedback": "No, that's the value for the entire circuit current, not just R1."
+                },
+                {
+                  "option": "[Math.toSigFigs(9*r1.nominalResistance/cMath.rNominalSeries('r1','r2','r3') / (99-10*Math.random()),3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9*r1.nominalResistance/100000,3)] A",
+                  "feedback": "Are you using Ohm’s Law correctly? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[ Math.toSigFigs(r1.nominalResistance/9/10000,3)] A",
+                  "feedback": "Are you using Ohm’s Law correctly? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Through <b>R<sub>2</sub></b>:",
+              "shortPrompt": "R2 current",
+              "tutorial": "tutorial-11",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(9/r2.nominalResistance,3)] A",
+                  "points": 20,
+                  "feedback": "Right! The current through R2 is just the voltage across it divided by its resistance."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/r1.nominalResistance,3)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R2."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/r3.nominalResistance,3)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R2."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+                  "feedback": "No, that's the current value as if these resistors were in series. Note that these are in <b>parallel.</b>"
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalParallel('r1','r2','r3'),3)] A",
+                  "feedback": "No, that's the value for the entire circuit current, not just R1."
+                },
+                {
+                  "option": "[Math.toSigFigs(9*r2.nominalResistance/cMath.rNominalSeries('r1','r2','r3') / (99-10*Math.random()),3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9*r2.nominalResistance/100000,3)] A",
+                  "feedback": "Are you using Ohm’s Law correctly? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[ Math.toSigFigs(r2.nominalResistance/9/10000,3)] A",
+                  "feedback": "Are you using Ohm’s Law correctly? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Through <b>R<sub>3</sub></b>:",
+              "shortPrompt": "R3 current",
+              "tutorial": "tutorial-11",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(9/r3.nominalResistance,3)] A",
+                  "points": 20,
+                  "feedback": "Right! The current through R3 is just the voltage across it divided by its resistance."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/r2.nominalResistance,3)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R3."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/r1.nominalResistance,3)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R3."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+                  "feedback": "No, that's the current value as if these resistors were in series. Note that these are in <b>parallel.</b>"
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalParallel('r1','r2','r3'),3)] A",
+                  "feedback": "No, that's the value for the entire circuit current, not just R1."
+                },
+                {
+                  "option": "[Math.toSigFigs(9*r3.nominalResistance/cMath.rNominalSeries('r1','r2','r3') / (99-10*Math.random()),3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9*r3.nominalResistance/100000,3)] A",
+                  "feedback": "Are you using Ohm’s Law correctly? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[ Math.toSigFigs(r3.nominalResistance/9/10000,3)] A",
+                  "feedback": "Are you using Ohm’s Law correctly? If unsure, check out the tutorial."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "image": "parallel-circuit-schematic.jpg",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive20,a23",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d11,d5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "COMMENT": "75 pts: 10 pts for each calc + 25 if < 60 sec",
+  "hide_circuit": true,
+  "_attachments": {
+    "parallel-circuit-schematic.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 3,
+      "length": 10560,
+      "stub": true
+    }
+  }
+}

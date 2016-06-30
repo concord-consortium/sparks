@@ -1,0 +1,132 @@
+{
+  "_id": "bridge-circuit-sam",
+  "_rev": "9-a46344b3524d5a2dcfb1cc3c358cdeb1",
+  "title": "Troubleshooting a bridge circuit",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_negative23,a24"
+    },
+    {
+      "type": "wire",
+      "UID": "w6",
+      "connections": "left_positive6,b12"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "a18,a12",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "b24,b18",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d24,d18",
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "e18,e12",
+      "label": "R4"
+    },
+    {
+      "type": "resistor",
+      "UID": "r5",
+      "connections": "c20,c14",
+      "label": "R5"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "e24,e20"
+    },
+    {
+      "type": "wire",
+      "UID": "w3",
+      "connections": "d14,d12"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 90,
+        "worst": 240,
+        "points": 100,
+        "threshold": 450
+      },
+      "notes": "INCORRECT CIRCUIT ABOVE...UNDER DEVELOPMENT<br>Unfortunately, the internal battery of the DMM is dead, so the DMM's resistance-measuring function is not working.",
+      "questions": [
+        {
+          "prompt": "One of these resistors in this bridge circuit is bad. Your job is to identify which one, and whether it is <i>shorted</i> or <i>open</i>.",
+          "subquestions": [
+            {
+              "prompt": "Which resistor is bad?",
+              "shortPrompt": "Which resistor is bad?",
+              "radio": "true",
+              "options": [
+                {
+                  "option": "<b>R<sub>1</sub></b>",
+                  "feedback": "You picked R1."
+                },
+                {
+                  "option": "<b>R<sub>2</sub></b>",
+                  "feedback": "You picked R2."
+                },
+                {
+                  "option": "<b>R<sub>3</sub></b>",
+                  "feedback": "You picked R3."
+                },
+                {
+                  "option": "<b>R<sub>4</sub></b>",
+                  "feedback": "You picked R4."
+                },
+                {
+                  "option": "<b>R<sub>5</sub></b>",
+                  "feedback": "You picked R5."
+                }
+              ],
+              "keepOrder": "true",
+              "points": 250,
+              "scoring": "var badResistorName;if ((${r1.resistance} > 1e12)||(${r1.resistance} < 1e-5))   {badResistorName = '<b>R<sub>1</sub></b>'}  else if ((${r2.resistance} > 1e12)||(${r2.resistance} < 1e-5))   {badResistorName = '<b>R<sub>2</sub></b>' } else if ((${r3.resistance} > 1e13)||(${r3.resistance} < 1e-5))   {badResistorName = '<b>R<sub>3</sub></b>' } else if ((${r4.resistance} > 1e14)||(${r4.resistance} < 1e-5))   {badResistorName = '<b>R<sub>4</sub></b>' } else if ((${r5.resistance} > 1e12)||(${r5.resistance} < 1e-5))   {badResistorName = '<b>R<sub>5</sub></b>'};if (question.answer === badResistorName)   {question.points_earned = 250;  question.feedback = 'Yes! Resistor ' + question.answer + ' was bad.';} else if (question.answer.length > 0)   {question.feedback = 'No. ' + question.answer + ' was actually good!';} else {question.feedback = 'You did not even guess!?'};question.correct_answer = badResistorName"
+            },
+            {
+              "prompt": "Is it shorted or open?",
+              "shortPrompt": "Is it shorted or open?",
+              "radio": "true",
+              "options": [
+                {
+                  "option": "Shorted"
+                },
+                {
+                  "option": "Open"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 200,
+              "scoring": "var natureOfFault; var faultDescription; if (  (${r1.resistance} > 1e12)||  (${r2.resistance} > 1e12)||  (${r3.resistance} > 1e12)||  (${r4.resistance} > 1e12)||  (${r5.resistance} > 1e12) ) {natureOfFault = 'Open'} else if (  (${r1.resistance} < 1e-5)||  (${r2.resistance} < 1e-5)||  (${r3.resistance} < 1e-5)||  (${r4.resistance} < 1e-5)||  (${r5.resistance} < 1e-5) ) {natureOfFault = 'Shorted'}; if (natureOfFault == 'Shorted') {faultDescription = 'a shorted';} else {faultDescription = 'an open'}; if (question.answer == natureOfFault)  {question.points_earned = 200;    question.feedback = 'Right! This circuit had ' + faultDescription +' resistor.';} else if (question.answer.length > 0)   {question.feedback = 'No, this circuit had ' + faultDescription + ' resistor.';} else {question.feedback = 'You did not even guess!?'}; question.correct_answer = natureOfFault"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "_id": "pauls-new-test",
+  "_rev": "222-b85adbc679ec9543f63af1477b8b4df0",
+  "title": "Paul's new test",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "a23,a17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "b17,b11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d17,d11",
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "c11,b5",
+      "label": "R4"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,b5"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "notes": "Here's where we explain what's going on.",
+      "questions": [
+        {
+          "prompt": "One of these resistors is bad. Which one is it?",
+          "options": [
+            {
+              "option": "R1"
+            },
+            {
+              "option": "R2"
+            },
+            {
+              "option": "R3"
+            },
+            {
+              "option": "R4"
+            }
+          ],
+          "keepOrder": "true",
+          "points": 100,
+          "scoring": "var badResistorName = breadboard.getFault().label; var rightAnswer = 'You got it!'; var wrongAnswer = 'No, that is not the faulty resistor.'; var nullAnswer = 'You did not answer the question!'; question.correct_answer = badResistorName; if (question.answer == '') {question.feedback = nullAnswer} else if (question.answer === badResistorName) {question.points_earned = 100; question.feedback = rightAnswer} else {question.feedback = wrongAnswer}",
+          "category": [
+            "troubleshooting",
+            "series-parallel"
+          ]
+        },
+        {
+          "prompt": "Is it shorted or open?",
+          "options": [
+            {
+              "option": "Shorted"
+            },
+            {
+              "option": "Open"
+            }
+          ],
+          "keepOrder": "true",
+          "points": 250,
+          "scoring": "var natureOfFault = 'Unknown'; var nullAnswer = 'You did not answer the question!'; var singleRightAnswer = 'Correct, but you did not identify the faulty resistor.'; var doubleRightAnswer = 'Well done! You got them both right, but you did not get the bonus because you took more than five measurements.'; var bonusAnswer = 'Excellent! You solved the problem in fewer than five measurements.  You get 200 bonus points!'; var wrongAnswerShorted = 'No the resistor was open, not shorted.'; var wrongAnswerOpen = 'No the resistor was shorted, not open.'; if(breadboard.getFault().open) {natureOfFault = 'Open'} else if(breadboard.getFault().shorted) {natureOfFault = 'Shorted'}; question.correct_answer = natureOfFault;  if(question.answer == '') {question.feedback = nullAnswer} else if (question.answer === natureOfFault) {if(sparks.sparksSectionController.currentPage.questions[0].points_earned > 9) {if(log.measurements() < 5) {question.points_earned = 250; question.feedback = bonusAnswer} else {question.points_earned = 50; question.feedback = doubleRightAnswer}} else {question.points_earned = 25; question.feedback = singleRightAnswer}} else if (natureOfFault === 'Open') {question.feedback = wrongAnswerOpen} else if (natureOfFault === 'Shorted') {question.feedback = wrongAnswerShorted}; console.log('Number of measurements = ' + log.measurements()); console.log('correct answer = ' + sparks.sparksSectionController.currentPage.questions[0].correct_answer + ' ' + question.correct_answer)"
+        }
+      ]
+    }
+  ]
+}

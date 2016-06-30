@@ -1,0 +1,375 @@
+{
+  "_id": "parallel-e-2",
+  "_rev": "9-1a3b6f2f9e41514b1a1a240dcecd2558",
+  "title": "Measuring V and I in Parallel Circuits",
+  "image": "parallel-schematic-small.jpg",
+  "circuit": [
+    {
+      "type": "wire",
+      "connections": "left_positive20,b16"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "a16,a10",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c16,c10",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "e16,e10",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,b10"
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 60,
+        "worst": 180,
+        "points": 80,
+        "threshold": 120
+      },
+      "notes": "Unfortunately, the internal battery of the DMM is dead, so the DMM is unable to measure resistance.",
+      "questions": [
+        {
+          "prompt": "For breadboarded circuit above, use the DMM to measure the current through each resistor.",
+          "subquestions": [
+            {
+              "prompt": "&nbsp;&nbsp;Through <b>R<sub>1</sub></b>:",
+              "shortPrompt": "R1 current",
+              "options": [
+                {
+                  "option": "[ if (r1.resistance<120){r1.resistance=r1.resistance*10;''}else{''};if (r2.resistance<120){r2.resistance=r2.resistance*10;''}else{''};if (r3.resistance<120){r3.resistance=r3.resistance*10;''}else{''};var R1 = r1.resistance;Math.toSigFigs(9/R1,3)] A",
+                  "points": 15,
+                  "feedback": "Right! This is the current through R1."
+                },
+                {
+                  "option": "[var R2 = r2.resistance;Math.toSigFigs(9/R2,3)] A",
+                  "points": 0,
+                  "feedback": "Oops! You picked the current through another resistor, not R1."
+                },
+                {
+                  "option": "[var R3 = r3.resistance;Math.toSigFigs(9/R3,3)] A",
+                  "points": 0,
+                  "feedback": "Oops! You picked the current through another resistor, not R1."
+                },
+                {
+                  "option": "[var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R2+1/R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you seem to have lifted the power lead and actually measured the current through R2 and R3. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R1+1/R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you seem to have lifted the power lead and actually measured the current through R1 and R3. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance;Math.toSigFigs(9*(1/R1+1/R2),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you seem to have lifted the power lead and actually measured the current through R1 and R2. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R1+1/R2+1/R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, this is the current for the entire circuit current. You need to lift just the R1 lead to find its current. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*R1/(R1+R2+R3)/(99-10*Math.random()),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Through <b>R<sub>2</sub></b>:",
+              "shortPrompt": "R2 current",
+              "options": [
+                {
+                  "option": "[var R1 = r1.resistance;Math.toSigFigs(9/R1,3)] A",
+                  "points": 0,
+                  "feedback": "Oops! You picked the current through another resistor, not R2."
+                },
+                {
+                  "option": "[var R2 = r2.resistance;Math.toSigFigs(9/R2,3)] A",
+                  "points": 15,
+                  "feedback": "Right! This is the current through R2."
+                },
+                {
+                  "option": "[var R3 = r3.resistance;Math.toSigFigs(9/R3,3)] A",
+                  "points": 0,
+                  "feedback": "Oops! You picked the current through another resistor, not R2."
+                },
+                {
+                  "option": "[var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R2+1/R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you seem to have lifted the power lead and actually measured the current through R2 and R3. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R1+1/R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you seem to have lifted the power lead and actually measured the current through R1 and R3. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance;Math.toSigFigs(9*(1/R1+1/R2),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you seem to have lifted the power lead and actually measured the current through R1 and R2. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R1+1/R2+1/R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, this is the current for the entire circuit current. You need to lift just the R2 lead to find its current. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*R1/(R1+R2+R3)/(99-10*Math.random()),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Through <b>R<sub>3</sub></b>:",
+              "shortPrompt": "R3 current",
+              "options": [
+                {
+                  "option": "[var R1 = r1.resistance;Math.toSigFigs(9/R1,3)] A",
+                  "points": 0,
+                  "feedback": "Oops! You picked the current through another resistor, not R3."
+                },
+                {
+                  "option": "[var R2 = r2.resistance;Math.toSigFigs(9/R2,3)] A",
+                  "points": 0,
+                  "feedback": "Oops! You picked the current through another resistor, not R3."
+                },
+                {
+                  "option": "[var R3 = r3.resistance;Math.toSigFigs(9/R3,3)] A",
+                  "points": 15,
+                  "feedback": "Right! This is the current through R3."
+                },
+                {
+                  "option": "[var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R2+1/R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you seem to have lifted the power lead and actually measured the current through R2 and R3. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R1+1/R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you seem to have lifted the power lead and actually measured the current through R1 and R3. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance;Math.toSigFigs(9*(1/R1+1/R2),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you seem to have lifted the power lead and actually measured the current through R1 and R2. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R1+1/R2+1/R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, this is the current for the entire circuit current. You need to lift just the R3 lead to find its current. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*R1/(R1+R2+R3)/(99-10*Math.random()),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "prompt": "Using your measured current values, what is each resistor's actual resistance?",
+          "subquestions": [
+            {
+              "prompt": "&nbsp;&nbsp;<b>R<sub>1</sub></b>:",
+              "shortPrompt": "R1 resistance",
+              "options": [
+                {
+                  "option": "[var R1 = r1.resistance;Math.toSigFigs(R1,3)] ohm",
+                  "points": 25,
+                  "feedback": "Right! This is the resistance of R1."
+                },
+                {
+                  "option": "[var R2 = r2.resistance;Math.toSigFigs(R2,3)] ohm",
+                  "points": 0,
+                  "feedback": "Oops! You picked the resistance of another resistor, not R1."
+                },
+                {
+                  "option": "[var R3 = r3.resistance;Math.toSigFigs(R3,3)] ohm",
+                  "points": 0,
+                  "feedback": "Oops! You picked the resistance of another resistor, not R1."
+                },
+                {
+                  "option": "[var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(1/(1/R2+1/R3),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R3 = r3.resistance;Math.toSigFigs(1/(1/R1+1/R3),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance;Math.toSigFigs(1/(1/R1+1/R2),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(1/(1/R1+1/R2+1/R3),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used the current for the whole circuit, and so you chose the resistance for the entire circuit resistance. The tutorial should help you correctly measure the current for just one resistor."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(R1/(R1+R2+R3)/(99-10*Math.random()),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;<b>R<sub>2</sub></b>:",
+              "shortPrompt": "R2 resistance",
+              "options": [
+                {
+                  "option": "[var R1 = r1.resistance;Math.toSigFigs(R1,3)] ohm",
+                  "points": 0,
+                  "feedback": "Oops! You picked the resistance of another resistor, not R2."
+                },
+                {
+                  "option": "[var R2 = r2.resistance;Math.toSigFigs(R2,3)] ohm",
+                  "points": 25,
+                  "feedback": "Right! This is the resistance of R2."
+                },
+                {
+                  "option": "[var R3 = r3.resistance;Math.toSigFigs(R3,3)] ohm",
+                  "points": 0,
+                  "feedback": "Oops! You picked the resistance of another resistor, not R2."
+                },
+                {
+                  "option": "[var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(1/(1/R2+1/R3),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R3 = r3.resistance;Math.toSigFigs(1/(1/R1+1/R3),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance;Math.toSigFigs(1/(1/R1+1/R2),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(1/(1/R1+1/R2+1/R3),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used the current for the whole circuit, and so you chose the resistance for the entire circuit resistance. The tutorial should help you correctly measure the current for just one resistor."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(R1/(R1+R2+R3)/(99-10*Math.random()),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;<b>R<sub>3</sub></b>:",
+              "shortPrompt": "R3 resistance",
+              "options": [
+                {
+                  "option": "[var R1 = r1.resistance;Math.toSigFigs(R1,3)] ohm",
+                  "points": 0,
+                  "feedback": "Oops! You picked the resistance of another resistor, not R3."
+                },
+                {
+                  "option": "[var R2 = r2.resistance;Math.toSigFigs(R2,3)] ohm",
+                  "points": 0,
+                  "feedback": "Oops! You picked the resistance of another resistor, not R3."
+                },
+                {
+                  "option": "[var R3 = r3.resistance;Math.toSigFigs(R3,3)] ohm",
+                  "points": 25,
+                  "feedback": "Right! This is the resistance of R3."
+                },
+                {
+                  "option": "[var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(1/(1/R2+1/R3),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R3 = r3.resistance;Math.toSigFigs(1/(1/R1+1/R3),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance;Math.toSigFigs(1/(1/R1+1/R2),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(1/(1/R1+1/R2+1/R3),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used the current for the whole circuit, and so you chose the resistance for the entire circuit resistance. The tutorial should help you correctly measure the current for just one resistor."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(R1/(R1+R2+R3)/(99-10*Math.random()),3)] ohm",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "COMMENT": "80 pts bonus for time < 60 sec; 15 pts each current, 25 pts each R-value;. Max score: 200 pts.",
+  "nextSection": "parallel-f-1",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "_attachments": {
+    "parallel-schematic-small.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 2,
+      "length": 14100,
+      "stub": true
+    }
+  }
+}

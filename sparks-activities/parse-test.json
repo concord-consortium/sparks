@@ -1,0 +1,98 @@
+{
+  "_id": "parse-test",
+  "_rev": "20-ec22f4f2c2a7a1647799933a00896241",
+  "title": "Parsing test",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        1000
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "inductance": "0.002",
+      "connections": "b11,b17",
+      "label": "L1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "C1",
+      "capacitance": "0.002",
+      "connections": "c17,c23",
+      "label": "L1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "The answer to all these questions is 5.01 kV. Try some variations on this answer. The script will find reasonable variations of number+units, check the existance of units, and check that the value is (by default) within 5% of the actual answer.",
+          "subquestions": [
+            {
+              "prompt": "",
+              "shortPrompt": "Try to get 5.01 kV",
+              "points": 100,
+              "correct_answer": "5.01 kV",
+              "scoring": "var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, 5010); var unitsExist = !!parsedAnswer.units; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'}; question.points_earned = (valueCorrect ? 50 : 0) + (unitsCorrect ? 50 : 0); question.feedback = (valueCorrect ? 'You got the value correct' : 'You did not get the value correct') + (unitsCorrect ? ' and you got the units correct' : ' and you did not get the units correct');"
+            },
+            {
+              "prompt": "",
+              "shortPrompt": "Try to get 5.01 kV",
+              "points": 100,
+              "correct_answer": "5.01 kV",
+              "scoring": "var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, 5010); var unitsExist = !!parsedAnswer.units; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'}; question.points_earned = (valueCorrect ? 50 : 0) + (unitsCorrect ? 50 : 0); question.feedback = (valueCorrect ? 'You got the value correct' : 'You did not get the value correct') + (unitsCorrect ? ' and you got the units correct' : ' and you did not get the units correct');"
+            },
+            {
+              "prompt": "",
+              "shortPrompt": "Try to get 5.01 kV",
+              "points": 100,
+              "correct_answer": "5.01 kV",
+              "scoring": "var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, 5010); var unitsExist = !!parsedAnswer.units; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'}; question.points_earned = (valueCorrect ? 50 : 0) + (unitsCorrect ? 50 : 0); question.feedback = (valueCorrect ? 'You got the value correct' : 'You did not get the value correct') + (unitsCorrect ? ' and you got the units correct' : ' and you did not get the units correct');"
+            },
+            {
+              "prompt": "",
+              "shortPrompt": "Try to get 5.01 kV",
+              "points": 100,
+              "correct_answer": "5.01 kV",
+              "scoring": "var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, 5010); var unitsExist = !!parsedAnswer.units; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'}; question.points_earned = (valueCorrect ? 50 : 0) + (unitsCorrect ? 50 : 0); question.feedback = (valueCorrect ? 'You got the value correct' : 'You did not get the value correct') + (unitsCorrect ? ' and you got the units correct' : ' and you did not get the units correct');"
+            },
+            {
+              "prompt": "",
+              "shortPrompt": "Try to get 5.01 kV",
+              "points": 100,
+              "correct_answer": "5.01 kV",
+              "scoring": "var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, 5010); var unitsExist = !!parsedAnswer.units; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'}; question.points_earned = (valueCorrect ? 50 : 0) + (unitsCorrect ? 50 : 0); question.feedback = (valueCorrect ? 'You got the value correct' : 'You did not get the value correct') + (unitsCorrect ? ' and you got the units correct' : ' and you did not get the units correct');"
+            },
+            {
+              "prompt": "",
+              "shortPrompt": "Try to get 5.01 kV",
+              "points": 100,
+              "correct_answer": "5.01 kV",
+              "scoring": "var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, 5010); var unitsExist = !!parsedAnswer.units; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'}; question.points_earned = (valueCorrect ? 50 : 0) + (unitsCorrect ? 50 : 0); question.feedback = (valueCorrect ? 'You got the value correct' : 'You did not get the value correct') + (unitsCorrect ? ' and you got the units correct' : ' and you did not get the units correct');"
+            },
+            {
+              "prompt": "",
+              "shortPrompt": "Try to get 5.01 kV",
+              "points": 100,
+              "correct_answer": "5.01 kV",
+              "scoring": "var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, 5010); var unitsExist = !!parsedAnswer.units; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'}; question.points_earned = (valueCorrect ? 50 : 0) + (unitsCorrect ? 50 : 0); question.feedback = (valueCorrect ? 'You got the value correct' : 'You did not get the value correct') + (unitsCorrect ? ' and you got the units correct' : ' and you did not get the units correct');"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

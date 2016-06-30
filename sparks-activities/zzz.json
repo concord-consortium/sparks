@@ -1,0 +1,119 @@
+{
+  "_id": "zzz",
+  "_rev": "70-8656f68f372ca4e92dd92ca9a10bd4b5",
+  "title": "Measuring a circuit with an alternating voltage source and two resistors in series",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        10,
+        100000,
+        1001
+      ],
+      "amplitude": 16.97
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "500",
+      "connections": "b11,b17",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative19,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>R<sub>2</sub></b> = [r2.resistance] ohms<br>&nbsp;&nbsp;",
+      "questions": [
+        {
+          "prompt": "This is a simple circuit that you've seen many times before. It consists of just two resistances in series, but instead of being driven by a battery, this circuit is connected to a device called a function generator. The function generator produces an alternating voltage at a frequency that you can adjust. Measure the voltages below (hint: remember to set the digital multimeter to AC voltage!) and click to import the multimeter reading to the answer box.",
+          "shortPrompt": "Voltage measurements",
+          "tutorial": "tutorial-16",
+          "subquestions": [
+            {
+              "prompt": "What is the voltage across R1?",
+              "shortPrompt": "Voltage across R1",
+              "show_read_multimeter_button": true,
+              "points": 100,
+              "tutorial": "tutorial-16",
+              "scoring": "if(question.answer != null) {/*the student answered the question*/question.answer = Math.round(10 * question.answer)/10; sparks.vars.V = Math.round(10 * source.amplitude/Math.sqrt(2))/10; sparks.vars.V1 = Math.round(10 * sparks.vars.V * r1.resistance/(r1.resistance + r2.resistance))/10; sparks.vars.V2 = Math.round(10 * sparks.vars.V * r2.resistance/(r1.resistance + r2.resistance))/10; if (Math.abs(sparks.vars.V1 - question.answer) < .01){question.points_earned = 100; question.feedback = 'Excellent!'} else if(Math.abs(sparks.vars.V2 - question.answer) < .01) {question.feedback = 'No, that is the voltage across R2.'; question.points_earned = 0} else if (Math.abs(sparks.vars.V - question.answer) < .01){question.feedback = 'No, that is the voltage across both resistors.'; question.points_earned = 0} else if (Math.abs(question.answer) < .0001){question.feedback = 'Make sure the DMM is set to measure AC voltage before you make the measurement.'; question.points_earned = 0}; question.correct_answer = sparks.vars.V1 + ' volts'} else {question.feedback = 'You did not make this measurement.'}"
+            },
+            {
+              "prompt": "What is the voltage across R2?",
+              "shortPrompt": "Voltage across R2",
+              "show_read_multimeter_button": true,
+              "points": 100,
+              "tutorial": "tutorial-16",
+              "scoring": "if(question.answer != null) {question.answer = Math.round(10 * question.answer)/10; sparks.vars.V = Math.round(10 * source.amplitude/Math.sqrt(2))/10; sparks.vars.V1 = Math.round(10 * sparks.vars.V * r1.resistance/(r1.resistance + r2.resistance))/10; sparks.vars.V2 = Math.round(10 * sparks.vars.V * r2.resistance/(r1.resistance + r2.resistance))/10; if (Math.abs(sparks.vars.V2 - question.answer) < .01){question.points_earned = 100; question.feedback = 'Excellent!'} else if(Math.abs(sparks.vars.V1 - question.answer) < .01) {question.feedback = 'No, that is the voltage across R1.'; question.points_earned = 0} else if (Math.abs(sparks.vars.V - question.answer) < .01){question.feedback = 'No, that is the voltage across both resistors.'; question.points_earned = 0} else if (Math.abs(question.answer) < .0001){question.feedback = 'Make sure the DMM is set to measure AC voltage before you make the measurement.'; question.points_earned = 0}; question.correct_answer = sparks.vars.V2 + ' volts'} else {question.feedback = 'You did not make this measurement.'}"
+            },
+            {
+              "prompt": "What is the total voltage across R1 and R2?",
+              "shortPrompt": "Voltage across R1 and R2",
+              "show_read_multimeter_button": true,
+              "points": 100,
+              "tutorial": "tutorial-16",
+              "scoring": "if(question.answer != null) {question.answer = Math.round(10 * question.answer)/10; sparks.vars.V = Math.round(10 * source.amplitude/Math.sqrt(2))/10; sparks.vars.V1 = Math.round(10 * sparks.vars.V * r1.resistance/(r1.resistance + r2.resistance))/10; sparks.vars.V2 = Math.round(10 * sparks.vars.V * r2.resistance/(r1.resistance + r2.resistance))/10; if (Math.abs(sparks.vars.V - question.answer) < .01){question.points_earned = 100; question.feedback = 'Excellent!'} else if(Math.abs(sparks.vars.V2 - question.answer) < .01) {question.feedback = 'No, that is the voltage across R2.'; question.points_earned = 0} else if (Math.abs(sparks.vars.V1 - question.answer) < .01){question.feedback = 'No, that is the voltage across R1.'; question.points_earned = 0} else if (Math.abs(question.answer) < .0001){question.feedback = 'Make sure the DMM is set to measure AC voltage before you make the measurement.'; question.points_earned = 0}; question.correct_answer = sparks.vars.V + ' volts'} else {question.feedback = 'You did not make this measurement.'}"
+            }
+          ]
+        },
+        {
+          "prompt": "The function generator can provide alternating voltage at many different frequencies. Try changing the frequency and see what happens. (Hint: click on the thumbnail of the function generator and move the slider to change the frequency.) Does changing the frequency affect the measurements you just made?",
+          "shortPrompt": "Effect of frequency on voltage drops",
+          "keepOrder": "true",
+          "tutorial": "tutorial-20",
+          "options": [
+            {
+              "option": "None of my measurements change when I change the frequency.",
+              "points": 50,
+              "feedback": "Right! Changing the frequency has no effect on the voltage drop across a resistor."
+            },
+            {
+              "option": "Some of my measurements change when I change the frequency, but not all.",
+              "points": 0,
+              "feedback": "Actually, that is not so. Try again and see!"
+            },
+            {
+              "option": "All of my measurements change when I change the frequency.",
+              "points": 0,
+              "feedback": "Actually, that is not so. Try again and see!"
+            }
+          ]
+        },
+        {
+          "prompt": "One last question: do the voltage drops across the two individual resistors always add up to the total voltage drop (across both resistors), regardless of the frequency?",
+          "shortPrompt": "Addition of voltage drops",
+          "keepOrder": "true",
+          "options": [
+            {
+              "option": "Yes",
+              "points": 50,
+              "feedback": "That's right! Even though this is an alternating voltge source, the voltages across the two resistors always add up to the total voltage applied -- just as they did with the battery."
+            },
+            {
+              "option": "No",
+              "points": 0,
+              "feedback": "You said that the voltages across the two resistors didn't add up to the total voltage applied. That's not true, try again."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

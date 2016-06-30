@@ -1,0 +1,106 @@
+{
+  "_id": "y4-RLC2",
+  "_rev": "22-1854a4d7ee69f2ca028d5e55b14d6933",
+  "title": "Measuring RLC Series circuit Resonance",
+  "show_multimeter": "true",
+  "show_oscilloscope": "true",
+  "allow_move_yellow_probe": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 16.9706,
+      "initialFrequency": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c17,c23",
+      "label": "R"
+    },
+    {
+      "type": "capacitor",
+      "UID": "C1",
+      "impedance": 5,
+      "referenceFrequency": "159155",
+      "comment": "at this freq, C = 1/X, in microfarads",
+      "connections": "b11,b17",
+      "label": "C"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "impedance": 2,
+      "referenceFrequency": "159.155",
+      "comment": "at this freq, L = X, in milliHenrys",
+      "connections": "c5,c11",
+      "label": "L"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive4,a5"
+    }
+  ],
+  "image": "y4-RLC1-caption.gif",
+  "pages": [
+    {
+      "notes": "For this circuit: <br> &nbsp;&nbsp; <b>R</b> = [sparks.unit.convertMeasurement(r1.resistance + ' ohms')] <br> &nbsp;&nbsp; <b>C</b> = [sparks.vars.convertNano(sparks.vars.C,'f')]<br> &nbsp;&nbsp; <b>L</b> = [sparks.vars.convertNano(sparks.vars.L,'H')] ",
+      "questions": [
+        {
+          "prompt": "You've seen that the voltages in an AC circuit can vary with the frequency, depending on the circuit components. In the RLC circuit here, as the frequency varies, what is the <b>maximum DMM voltage measured across the capacitor?</b> (Hint: Use the oscilloscope to &quot;see&quot; <b>V<sub>C</sub></b>. Select the closest value below.)",
+          "shortPrompt": "Find V<sub>C</sub> maximum",
+          "tutorial": "tutorial-27",
+          "radio": "true",
+          "keepOrder": "true",
+          "points": 100,
+          "options": [
+            {
+              "option": "[/* --- DEFINE FUNCTIONS --- */ sparks.vars.fXC = function (C, f) { return (1 / (2 * Math.PI * C * f)); }; sparks.vars.fXL = function (L, f) { return (2 * Math.PI * L * f); }; sparks.vars.fZ = function (r, x) { return (Math.sqrt(r * r + x * x)); }; sparks.vars.fV = function (v, x, z) { return (Math.round(10 * v * x / z) / 10); }; sparks.vars.pctDiff = function (n1, n2) { return (Math.round(100 * Math.abs(n2 - n1) / n2 * 100) / 100 + '% diff'); }; /* --- RECALC FUNCTION AT FREQ f */ sparks.vars.Recalc = function (f) { sparks.vars.XC = sparks.vars.fXC(sparks.vars.C, f); sparks.vars.XL = sparks.vars.fXL(sparks.vars.L, f); sparks.vars.Z = sparks.vars.fZ(sparks.vars.R, sparks.vars.XL - sparks.vars.XC); sparks.vars.VR = sparks.vars.fV(sparks.vars.VS, sparks.vars.R, sparks.vars.Z); sparks.vars.VC = sparks.vars.fV(sparks.vars.VS, sparks.vars.XC, sparks.vars.Z); sparks.vars.VL = sparks.vars.fV(sparks.vars.VS, sparks.vars.XL, sparks.vars.Z); sparks.vars.freqs.push(f); console.log('Recalc: at f = ' + sparks.unit.convertMeasurement(f + 'Hz') + ': R =' + sparks.unit.convertMeasurement(sparks.vars.R + 'ohms') + ', XC = ' + sparks.unit.convertMeasurement(sparks.vars.XC + 'ohms') + ', XL = ' + sparks.unit.convertMeasurement(sparks.vars.XL + 'ohms') + ', Z = ' + sparks.unit.convertMeasurement(sparks.vars.Z + 'ohms')); console.log('Voltages VS = ' + sparks.unit.convertMeasurement(sparks.vars.VS + 'V') + ', VR = ' + sparks.unit.convertMeasurement(sparks.vars.VR + 'V') + ', VC = ' + sparks.unit.convertMeasurement(sparks.vars.VC + 'V') + ', VL = ' + sparks.unit.convertMeasurement(sparks.vars.VL + 'V')); }; /* --- CONVERT SMALL C and L VALUES --- */ sparks.vars.convertNano = function (x, unit) { console.log('ConvertNano: x=' + x); if (Math.log10(x) < -7) { /* --- HANDLE NANO --- */ roundedNanoX = Math.round(100 * x * 1e9) / 100; return (roundedNanoX + ' n' + unit); } else if (Math.log10(x) < -6) { /* --- HANDLE 0.1 micro --- */ roundedMicroX = Math.round(1000 * x * 1e6) / 1000; return (roundedMicroX + ' &mu;' + unit); } else /* --- ALL OTHERS --- */ { convertedMeasX = sparks.unit.convertMeasurement(x + unit); return (convertedMeasX); } }; /*--- DEFINE RANDOM AMPLITUDE --- */ /* --- DEBUGGING-fix-starting-value--- source.amplitude = Math.round(Math.random() * 30 + 16); ---*/ /* --- STARTING VALUES --- */ sparks.vars.VS = source.amplitude / Math.sqrt(2); sparks.vars.R = r1.resistance; sparks.vars.C = C1.getCapacitance(); sparks.vars.L = L1.getInductance(); sparks.vars.R1Loc = r1.getNodes(); sparks.vars.C1Loc = C1.getNodes(); sparks.vars.L1Loc = L1.getNodes(); sparks.vars.freqs = new Array(); sparks.vars.Resonance = 1 / (2 * Math.PI * Math.sqrt(sparks.vars.L * sparks.vars.C)); console.log('Calculate values at resonance frequency...'); sparks.vars.Recalc(sparks.vars.Resonance); /* --- save values at resonance --- */ sparks.vars.VCmax = sparks.vars.VC; sparks.vars.VLmax = sparks.vars.VL; sparks.vars.VRmax = sparks.vars.VR; sparks.vars.Recalc(source.initialFrequency); /* --- last value here is the choice to display --- */ sparks.unit.convertMeasurement(sparks.vars.VCmax + 'V'); ]",
+              "points": 100,
+              "feedback": "Right! This is the maximum voltage, measured at the resonant frequency for this circuit."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.VS*0.906 + 'V');]",
+              "feedback": "No."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.VS*0.707 + 'V');]",
+              "feedback": "No."
+            },
+            {
+              "option": "3",
+              "feedback": "No."
+            },
+            {
+              "option": "4",
+              "feedback": "No."
+            },
+            {
+              "option": "5",
+              "feedback": "No."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "_attachments": {
+    "y4-RLC1-caption.gif": {
+      "content_type": "image/gif",
+      "revpos": 3,
+      "length": 4940,
+      "stub": true
+    }
+  }
+}

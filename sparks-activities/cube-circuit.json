@@ -1,0 +1,101 @@
+{
+  "_id": "cube-circuit",
+  "_rev": "66-f453466c8a8133814bade8f3d6d2e072",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_negative24,a27"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "left_positive1,j3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "d27,g27",
+      "label": "R1",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "h27,h21",
+      "label": "R2",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d21,g21",
+      "label": "R3",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "c27,c21",
+      "label": "R4",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r5",
+      "connections": "d9,g9",
+      "label": "R5",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r6",
+      "connections": "h9,h3",
+      "label": "R6",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r7",
+      "connections": "d3,g3",
+      "label": "R7",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r8",
+      "connections": "c9,c3",
+      "label": "R8",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r9",
+      "connections": "j27,j9",
+      "label": "R9",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r10",
+      "connections": "i21,i3",
+      "label": "10",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r11",
+      "connections": "b27,b9",
+      "label": "11",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r12",
+      "connections": "a21,a3",
+      "label": "12",
+      "resistance": 1000
+    }
+  ]
+}

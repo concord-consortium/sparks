@@ -1,0 +1,35 @@
+{
+  "_id": "script-test",
+  "_rev": "4-4377cc7b9df62f1eb528a2c67fb2c73e",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "b2,b3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "200",
+      "connections": "b3,b4"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "What is the resistance of R1?"
+        },
+        {
+          "prompt": "What is the resistance of R2?",
+          "options": [
+            1,
+            2,
+            3
+          ]
+        }
+      ]
+    }
+  ]
+}

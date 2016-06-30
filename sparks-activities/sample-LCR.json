@@ -1,0 +1,61 @@
+{
+  "_id": "sample-LCR",
+  "_rev": "13-d2b24353de64e24a05d510418cac8749",
+  "title": "Sample LCR Circuit",
+  "show_multimeter": false,
+  "show_oscilloscope": true,
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "connections": "d17,d11",
+      "label": "L1",
+      "inductance": 0.001
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "connections": "g25,e11",
+      "label": "L1",
+      "inductance": 0.001
+    },
+    {
+      "type": "capacitor",
+      "UID": "C1",
+      "connections": "b11,b5",
+      "label": "C1",
+      "capacitance": 0.000001
+    },
+    {
+      "type": "capacitor",
+      "UID": "C1",
+      "connections": "c11,c5",
+      "label": "C1",
+      "capacitance": 0.000001
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive3,a5"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample LCR circuit"
+        }
+      ]
+    }
+  ]
+}

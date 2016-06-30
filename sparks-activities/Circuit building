@@ -1,0 +1,21 @@
+ {
+  "_id": "circuit-playground",
+  "_rev": "16-34bed54aed70a044eaaaa92f020207e5",
+  "title": "Building a circuit from scratch",
+  "show_multimeter": "true",
+"show_oscilloscope": "true",
+  "showComponentDrawer": "true",
+  "circuit": [
+{
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 10
+    }
+]
+}

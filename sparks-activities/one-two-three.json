@@ -1,0 +1,36 @@
+{
+  "_id": "one-two-three",
+  "_rev": "7-7576f99eb1959f5dbb98dab2631fb56e",
+  "title": "ONR-proposal-measuring-current-graphic",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": 1206,
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "e17,e11",
+      "resistance": 910000,
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,a11"
+    }
+  ]
+}

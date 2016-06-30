@@ -1,0 +1,97 @@
+{
+  "_id": "series-f-1",
+  "_rev": "145-e8224cf453227f9a9b67f569e98f3279",
+  "title": "Troubleshooting a Series Circuit",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "e17,e11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "c11,c5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,a5"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 20,
+        "worst": 45,
+        "points": 100,
+        "threshold": 200
+      },
+      "notes": "Unfortunately, this DMM's resistance function is broken.",
+      "questions": [
+        {
+          "prompt": "One of the resistors is bad: either <i>shorted</i> or <i>open</i>.",
+          "subquestions": [
+            {
+              "prompt": "<hr>Which resistor is bad?",
+              "shortPrompt": "Which resistor is bad?",
+              "radio": "true",
+              "keepOrder": "true",
+              "points": 100,
+              "options": [
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R2"
+                },
+                {
+                  "option": "R3"
+                }
+              ],
+              "scoring": "var numVMeasures = log.uniqueVMeasurements(); var numIMeasures = log.uniqueIMeasurements(); var badResistorName = breadboard.getFault().label; question.points_earned = 0; question.correct_answer = badResistorName; if (question.answer == badResistorName && (numVMeasures>=1 || numIMeasures>=2)) {question.points_earned = 100; question.feedback = 'Yes! Resistor ' + question.answer + ' was bad.';} else if (question.answer == badResistorName) {question.feedback = 'Yes, resistor ' + question.answer + ' was bad, but you <b>must measure to find that, not guess.</b>';} else if (question.answer.length > 0 && (numVMeasures>=1 || numIMeasures>=2)) {question.feedback = 'No. ' + question.answer + ' was actually good!';} else if (question.answer.length > 0) {question.feedback = 'You must make a measurement to troubleshoot a circuit, not just guess.';} else if ((numVMeasures + numIMeasures) > 0) {question.feedback = 'You did not even try an educated guess!?'} else {question.feedback = 'You need to measure the circuit to find the faulty resistor.'}"
+            },
+            {
+              "prompt": "<hr>Is it shorted or open?",
+              "shortPrompt": "Shorted or open?",
+              "radio": "true",
+              "keepOrder": "true",
+              "points": 50,
+              "options": [
+                {
+                  "option": "Shorted"
+                },
+                {
+                  "option": "Open"
+                }
+              ],
+              "scoring": "var question1points = sparks.sparksSectionController.currentPage.questions[0].points_earned; var natureOfFault = 'Unknown'; var faultDescription = 'an unknown'; var numMeasures = log.uniqueVMeasurements() + log.uniqueIMeasurements();  if (r1.open||r2.open||r3.open) {natureOfFault = 'Open'; faultDescription = 'an open'} else if (r1.shorted||r2.shorted||r3.shorted) {natureOfFault = 'Shorted'; faultDescription = 'a shorted'}; question.correct_answer = natureOfFault; if (question.answer == natureOfFault && (numMeasures >= 1) && (numMeasures <=2) && (question1points > 0)) {question.points_earned = 100; question.feedback = 'Bravo! You found the ' + natureOfFault +' resistor, using amazing powers of deduction and very few measurements. You earned EXTRA bonus points!';} else if (question.answer == natureOfFault && (numMeasures >= 3) && (question1points > 0)) {question.points_earned = 50; question.feedback = 'Right! This circuit had ' + faultDescription + ' resistor. Can you do it with fewer measurements?';} else if (question.answer == natureOfFault && (numMeasures >= 1) && (question1points == 0)) {question.points_earned = 25; question.feedback = 'Yes, this circuit had ' + faultDescription + ' resistor, but you did not identify it.';} else if (question.answer == natureOfFault && (numMeasures == 0)) {question.points_earned = 0; question.feedback = 'Yes, this circuit had ' + faultDescription + ' resistor, but you <b>must measure to find that, not just guess!</b>';} else if (question.answer.length > 0 && (numMeasures >=1)) {question.feedback = 'No, this circuit had ' + faultDescription + ' resistor.';} else if (question.answer.length > 0) {question.feedback = 'You must make a measurement to troubleshoot a circuit, not just guess.';} else if (numMeasures > 0) {question.feedback = 'You did not even try an educated guess!?'} else {question.feedback = 'You need to measure the circuit to find the faulty resistor.'}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

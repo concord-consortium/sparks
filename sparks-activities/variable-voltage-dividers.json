@@ -1,0 +1,13 @@
+{
+  "_id": "variable-voltage-dividers",
+  "_rev": "9-02fa7318f6be9bb3bae985d0197f9ed5",
+  "type": "activity",
+  "sections": [
+    "y1-RR",
+    "zzy",
+    "zzx",
+    "zzrrdmmoscope",
+    "zzrcserieswithoscope"
+  ],
+  "title": "Dividing variable voltage with series circuits"
+}

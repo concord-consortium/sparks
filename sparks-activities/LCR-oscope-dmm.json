@@ -1,0 +1,62 @@
+{
+  "_id": "LCR-oscope-dmm",
+  "_rev": "7-d7940d250cd037c59213ef8552bef687",
+  "title": "Sample LCR Circuit with OScope and DMM",
+  "show_multimeter": true,
+  "show_oscilloscope": true,
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        5000,
+        100000,
+        500
+      ],
+      "amplitude": [
+        0,
+        20,
+        18
+      ]
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "connections": "d17,d11",
+      "label": "L1",
+      "inductance": 0.001
+    },
+    {
+      "type": "capacitor",
+      "UID": "C1",
+      "connections": "b11,b5",
+      "label": "C1",
+      "capacitance": 0.000001
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive3,a5"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample LCR circuit"
+        }
+      ]
+    }
+  ]
+}

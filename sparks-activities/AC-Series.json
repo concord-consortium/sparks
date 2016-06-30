@@ -1,0 +1,11 @@
+{
+  "_id": "AC-Series",
+  "_rev": "1-91a75a8b6ab939b4ea180f6fe6dac96f",
+  "type": "activity",
+  "sections": [
+    "y1-RR",
+    "y2-RL",
+    "y3-RC"
+  ],
+  "title": "AC Voltages with Series Components"
+}

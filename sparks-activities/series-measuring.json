@@ -1,0 +1,10 @@
+{
+  "_id": "series-measuring",
+  "_rev": "5-3521ec9084c89440e11af45da84b4076",
+  "type": "activity",
+  "sections": [
+    "series-d",
+    "series-e-test",
+    "series-f"
+  ]
+}

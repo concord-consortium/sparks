@@ -1,0 +1,134 @@
+{
+  "_id": "zz-test-2",
+  "_rev": "42-ac764cc916e6f59ab286e90fd66ce06b",
+  "title": "Testing scope and sequence of sparks.vars variables and functions",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": [
+        "uniform",
+        100,
+        390
+      ],
+      "connections": "b15,b21",
+      "label": "R1"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "[ if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' N1'; console.log('From N1: ' + sparks.vars.x); source.amplitude = 1*Math.SQRT2; source.initialFrequency = 6000; '']<b>Timing of scripts and vars <br><font size=-2>KEY:</b> <br>O1a: Option pg 1 qa <br>O1b: Option pg 1 qb <br>N1: Notes pg 1 <br>B1a: BeforeScr pg 1 qa <br>B1bi: BeforeScr pg 1 qb subq i <br>S1bi: Scoring pg 1 qb subq i <br>S1bii: Scoring pg 1 qb subq ii <br>and so on.</font><br><font color=red> x: [sparks.vars.x;]</font><br> ",
+      "questions": [
+        {
+          "prompt": "PAGE 1, Qa: Scripts in what locations have run at this time?",
+          "shortPrompt": "Page 1, Qa ",
+          "beforeScript": "if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' B1a'; console.log('From B1a: ' + sparks.vars.x);  source.amplitude = 11*Math.SQRT2; r1.label = 'B1a' ",
+          "scoring": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' S1a'; console.log('From S1a: ' + sparks.vars.x); question.feedback = 'S1a: ' + sparks.vars.x; ",
+          "radio": "true",
+          "options": [
+            {
+              "option": " [if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' O1a'; console.log('From O1a: ' + sparks.vars.x); source.amplitude = 101*Math.SQRT2; '']x: [sparks.vars.x;]",
+              "points": 100
+            }
+          ]
+        },
+        {
+          "prompt": "PAGE 1, Qb: Scripts in what locations have run at this time?",
+          "shortPrompt": "Page 1, Qb",
+          "beforeScript": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' B1b'; console.log('From B1b: ' + sparks.vars.x);  source.amplitude = 12*Math.SQRT2; r1.label = 'B1b' ",
+          "scoring": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' S1b'; console.log('From S1b: ' + sparks.vars.x); question.feedback = 'S1b: ' + sparks.vars.x; ",
+          "radio": "true",
+          "options": [
+            {
+              "option": " [if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' O1b'; console.log('From O1b: ' + sparks.vars.x);source.amplitude = 102*Math.SQRT2;'']x: [sparks.vars.x;]",
+              "points": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "notes": "[ if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' N2'; console.log('From N2: ' + sparks.vars.x); source.amplitude = 2*Math.SQRT2; '']<b>Timing of scripts and vars<br><font size=-2>KEY:</b><br>O1a: page 1 Option 1<br>O1b: page 1 Option 2<br>N1: page 1 Notes 1<br>B1a: page 1 BeforeScript 1<br>B1b: page 1 BeforeScript 2<br>S1a: page 1 Scoring 1<br>S1b: page 1 Scoring 2<br>and so on.</font><br><font color=red> x: [sparks.vars.x;]</font><br> ",
+      "questions": [
+        {
+          "prompt": "PAGE 2, Qa: Scripts in what locations have run at this time?",
+          "shortPrompt": "Page 2, Qa",
+          "beforeScript": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' B2a'; console.log('From B2a: ' + sparks.vars.x); source.amplitude = 21*Math.SQRT2; ",
+          "scoring": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' S2a'; console.log('From S2a: ' + sparks.vars.x); question.feedback = 'S2a: ' + sparks.vars.x; ",
+          "radio": "true",
+          "options": [
+            {
+              "option": " [if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' O2a'; console.log('From O2a: ' + sparks.vars.x); source.amplitude = 201*Math.SQRT2;  '']x: [sparks.vars.x;]",
+              "points": 100
+            }
+          ]
+        },
+        {
+          "prompt": "PAGE 2, Qb (with subquestions): Scripts in what locations have run at this time?",
+          "shortPrompt": "Page 2, Qb",
+          "beforeScript": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' B2b'; console.log('From B2b: ' + sparks.vars.x);   source.amplitude = 22*Math.SQRT2; ",
+          "subquestions": [
+            {
+              "prompt": "PAGE 2, SubQb1: Scripts in what locations have run at this time?",
+              "shortPrompt": "Page 2, Qbi",
+              "beforeScript": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' B2bi'; console.log('From B2bi: ' + sparks.vars.x);   source.amplitude = 22*Math.SQRT2; ",
+              "radio": "true",
+              "options": [
+                {
+                  "option": " [if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' O2bi'; console.log('From O2bi: ' + sparks.vars.x); source.amplitude = 202*Math.SQRT2;  '']x: [sparks.vars.x;]",
+                  "points": 100
+                }
+              ],
+              "scoring": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' S2bi'; console.log('From S2bi: ' + sparks.vars.x); question.feedback = 'S2bi: ' + sparks.vars.x; "
+            },
+            {
+              "prompt": "PAGE 2, SubQb2: Scripts in what locations have run at this time?",
+              "shortPrompt": "Page 2, Qb2",
+              "beforeScript": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' B2bii'; console.log('From B2bii: ' + sparks.vars.x);   source.amplitude = 22*Math.SQRT2; ",
+              "radio": "true",
+              "options": [
+                {
+                  "option": " [if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' O2bii'; console.log('From O2bii: ' + sparks.vars.x); source.amplitude = 202*Math.SQRT2;  '']x: [sparks.vars.x;]",
+                  "points": 100
+                }
+              ],
+              "scoring": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' S2bii'; console.log('From S2bii: ' + sparks.vars.x); question.feedback = 'S2bii: ' + sparks.vars.x; "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "notes": "[ if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' N3'; console.log('From N3: ' + sparks.vars.x); source.amplitude = 3*Math.SQRT2; '']<b>Timing of scripts and vars<br><font size=-2>KEY:</b><br>O1a: page 1 Option 1<br>O1b: page 1 Option 2<br>N1: page 1 Notes 1<br>B1a: page 1 BeforeScript 1<br>B1b: page 1 BeforeScript 2<br>S1a: page 1 Scoring 1<br>S1b: page 1 Scoring 2<br>and so on.</font><br><font color=red> x: [sparks.vars.x;]</font><br> ",
+      "questions": [
+        {
+          "prompt": "PAGE 3, Qa: Scripts in what locations have run at this time?",
+          "shortPrompt": "Page 3, Qa",
+          "beforeScript": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' B3a'; console.log('From B3a: ' + sparks.vars.x);  source.amplitude = 31*Math.SQRT2; ",
+          "scoring": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' S3a'; console.log('From S3a: ' + sparks.vars.x); question.feedback = 'S3a: ' + sparks.vars.x; ",
+          "radio": "true",
+          "options": [
+            {
+              "option": " [if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' O3a'; console.log('From O3a: ' + sparks.vars.x); source.amplitude = 301*Math.SQRT2; '']x: [sparks.vars.x;]",
+              "points": 100
+            }
+          ]
+        },
+        {
+          "prompt": "PAGE 3, Qb: Scripts in what locations have run at this time?",
+          "shortPrompt": "Page 3, Qb",
+          "beforeScript": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' B3b'; console.log('From B3b: ' + sparks.vars.x);  source.amplitude = 32*Math.SQRT2; ",
+          "scoring": " if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' S3b'; console.log('From S3b: ' + sparks.vars.x); question.feedback = 'S3b: ' + sparks.vars.x; ",
+          "radio": "true",
+          "options": [
+            {
+              "option": " [if(!sparks.vars.x) sparks.vars.x = ''; sparks.vars.x = sparks.vars.x + ' O3b'; console.log('From O3b: ' + sparks.vars.x); source.amplitude = 302*Math.SQRT2; '']x: [sparks.vars.x;]",
+              "points": 100
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

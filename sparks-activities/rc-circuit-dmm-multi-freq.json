@@ -1,0 +1,50 @@
+{
+  "_id": "rc-circuit-dmm-multi-freq",
+  "_rev": "23-05d577b4ccda51061721074141225338",
+  "title": "RC Circuit with DMM",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        200000,
+        1001
+      ],
+      "amplitude": 141.4
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "b17,b23",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "1e-7",
+      "connections": "c11,c17",
+      "label": "C1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample RC circuit"
+        }
+      ]
+    }
+  ]
+}

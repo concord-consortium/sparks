@@ -1,0 +1,38 @@
+{
+  "_id": "ac-voltage",
+  "_rev": "24-1fbaa56041b6db18265164645f8f3178",
+  "title": "Variable Voltage",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "frequency generator",
+      "UID": "source",
+      "initialFrequency": 1000,
+      "voltage": 5
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive13,a17"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample LCR circuit"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "_id": "rc-circuit",
+  "_rev": "8-ab96b3a8671f3d489e0ea7dcf11dc8b6",
+  "title": "RC Circuit with oscilloscope",
+  "show_oscilloscope": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        15920
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "10",
+      "connections": "b17,b23",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "1e-7",
+      "connections": "c11,c17",
+      "label": "C1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample RC circuit"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "_id": "rl-circuit-dmm-multi-freq",
+  "_rev": "6-3372d788fb89f4d16365c7cbb437c647",
+  "title": "RL Circuit with DMM",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        10,
+        200000,
+        1001
+      ],
+      "amplitude": 141.4
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "b17,b23",
+      "label": "R1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "inductance": ".0008",
+      "connections": "c11,c17",
+      "label": "L1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample RC circuit"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "_id": "y4-RLCscope-TEST",
+  "_rev": "4-05ae438727b753e849916cb52a27f10f",
+  "title": "Measuring RLC Series circuit with DMM and Oscilloscope",
+  "show_multimeter": "true",
+  "show_oscilloscope": "true",
+  "allow_move_yellow_probe": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 16.97,
+      "initialFrequency": 10000
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "10",
+      "connections": "c17,c23",
+      "label": "R"
+    },
+    {
+      "type": "capacitor",
+      "UID": "C1",
+      "capacitance": "1.0e-07",
+      "connections": "b11,b17",
+      "label": "C"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "inductance": "0.001",
+      "connections": "c5,c11",
+      "label": "L"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "10",
+      "connections": "h17,h23",
+      "label": "R"
+    },
+    {
+      "type": "capacitor",
+      "UID": "C2",
+      "capacitance": "1.0e-07",
+      "connections": "h11,h5",
+      "label": "C"
+    },
+    {
+      "type": "inductor",
+      "UID": "L2",
+      "inductance": "0.001",
+      "connections": "g11,g17",
+      "label": "L"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive4,a5"
+    },
+    {
+      "type": "wire",
+      "connections": "e23,f23"
+    },
+    {
+      "type": "wire",
+      "connections": "e5,f5"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "[ /* --- DEFINE FUNCTIONS --- */ sparks.vars.fXC = function (C, f) { return (1/(2 * Math.PI * C * f)); }; sparks.vars.fXL = function (L, f) { return (2 * Math.PI * L * f); }; sparks.vars.fZ = function (r, x) { return (Math.sqrt(r * r + x * x)); }; sparks.vars.fV = function (v, x, z) { return (Math.round(10 * v * x / z) / 10); }; sparks.vars.pctDiff = function (n1, n2) { return (Math.round(100 * Math.abs(n2 - n1) / n2 * 100) / 100 + '% diff'); }; /* --- RECALC FUNCTION AT FREQ f */ sparks.vars.Recalc = function (f) { sparks.vars.XC = sparks.vars.fXC(sparks.vars.C, f); sparks.vars.XL = sparks.vars.fXL(sparks.vars.L, f); sparks.vars.Z = sparks.vars.fZ(sparks.vars.R, sparks.vars.XL - sparks.vars.XC); sparks.vars.VR = sparks.vars.fV(sparks.vars.VS, sparks.vars.R, sparks.vars.Z); sparks.vars.VC = sparks.vars.fV(sparks.vars.VS, sparks.vars.XC, sparks.vars.Z); sparks.vars.VL = sparks.vars.fV(sparks.vars.VS, sparks.vars.XL, sparks.vars.Z); sparks.vars.freqs.push(f); console.log('unrounded VC =' + sparks.vars.VC); console.log('Recalc: at f = ' + sparks.unit.convertMeasurement(f + 'Hz') + ', XC = ' + sparks.unit.convertMeasurement(sparks.vars.XC + 'ohms') + ', XL = ' + sparks.unit.convertMeasurement(sparks.vars.XL + 'ohms') + ', Z = ' + sparks.unit.convertMeasurement(sparks.vars.Z + 'ohms')); console.log('Predicted VR = ' + sparks.unit.convertMeasurement(sparks.vars.VR + 'V') + ', VC = ' + sparks.unit.convertMeasurement(sparks.vars.VC + 'V') + ', VL = ' + sparks.unit.convertMeasurement(sparks.vars.VL + 'V')); }; /* --- CONVERT SMALL C and L VALUES --- */ sparks.vars.convertNano = function (x, unit) { if (Math.log10(x) < -6) { /* --- HANDLE NANO --- */ roundedNanoX = Math.round(100 * x * 1e9) / 100; return (roundedNanoX + ' n' + unit); } else /* --- ALL OTHERS --- */ { return (sparks.unit.convertMeasurement(x + unit)); } }; /*--- DEFINE RANDOM AMPLITUDE --- */ /* --- CONSTANT FOR TEST source.amplitude = Math.round(Math.random() * 30 + 16); --- */ /* --- STARTING VALUES --- */ sparks.vars.VS = source.amplitude / Math.sqrt(2); sparks.vars.R = r1.resistance; /* --- we will make R1 = R2 --- */ sparks.vars.C = C1.getCapacitance();/* --- we will make C1 = C2 --- */ sparks.vars.L = L1.getInductance(); /* --- we will make L1 = L2 --- */ sparks.vars.Resonance = 1 / (2 * Math.PI * Math.sqrt(sparks.vars.L * sparks.vars.C)); sparks.vars.R1Loc = r1.getNodes(); sparks.vars.C1Loc = C1.getNodes(); sparks.vars.L1Loc = L1.getNodes(); sparks.vars.R2Loc = r2.getNodes(); sparks.vars.C2Loc = C2.getNodes(); sparks.vars.L2Loc = L2.getNodes(); sparks.vars.freqs = new Array(); sparks.vars.Recalc(source.initialFrequency); ''] For this circuit: <br>&nbsp;&nbsp; <b>R1</b> and <b>R2</b> = [sparks.unit.convertMeasurement(r1.resistance + ' ohms')] <br>&nbsp;&nbsp; <b>C1</b> and <b>C2</b> = [sparks.vars.convertNano(sparks.vars.C,'f')] <br>&nbsp;&nbsp; <b>L1</b> and <b>L2</b> = [sparks.vars.convertNano(sparks.vars.L,'H')] ",
+      "questions": [
+        {
+          "prompt": "Here are two series circuits, on the top and bottom half of a breadboard. A function generator powers both: an AC power supply delivering <b>V<sub>PS</sub></b>. Both circuits have the same resistor <b>R</b>, capacitor <b>C</b>, and inductor <b>L</b>, but notice that <b>L</b> and <b>C</b> are reversed in each circuit. By varying the power supply frequency, you can explore how the frequency response of this RLC circuit. (Hint: You can use the DMM anywhere in the circuit, or the oscilloscope probes to measure with respect to circuit ground.)<hr>",
+          "shortPrompt": "Measure with DMM",
+          "subquestions": [
+            {
+              "prompt": "Using the DMM, measure the RMS voltage from the power supply, and across each component: first, at a <b>frequency near 1 kHz</b>. (Hint: Connect the DMM probes, adjust the DMM (if needed), and click <i>Read Multimeter</i> button.)<br>&nbsp;Supply voltage <b>V<sub>PS</sub></b>&nbsp;&nbsp;&nbsp;",
+              "shortPrompt": "Measure V<sub>PS</sub>",
+              "show_read_multimeter_button": "true",
+              "points": 10,
+              "beforeScript": "/* --- BEFORESCRIPT --- */ /* --- DEFINE FUNCTIONS --- */ sparks.vars.fChange = function (f) { /* --- HOW MANY FREQ CHANGES? --- */ z = 0; y = f.sort(); len = y.length; for (var i = 1; i < len; i++) { if (y[i] > y[i - 1]) { z++; } } return (z); }; /* --- CHECK IF MEASUREMENTS MADE --- */ sparks.vars.didMeasureComponent = function (meta, component) { if(component == 'PS') {nodes = 'gnd,powerPosL';} else nodes = component.getNodes(); /* --- allow for right half connected with wires at L5 and L23 --- */ if (nodes.indexOf('L5') >-1) {nodes+= ',R5,powerPosL';} else if (nodes.indexOf('R5') >-1) {nodes+= ',L5,powerPosL';} else if (nodes.indexOf('powerPosL') >-1) {nodes+= ',L5,R5';} if (nodes.indexOf('L23') >-1) {nodes+= ',R23,gnd';} else if (nodes.indexOf('R23') >-1) {nodes+= ',L23,gnd';} else if (nodes.indexOf('gnd') >-1) {nodes+= ',L23,R23';} if(component == 'PS') {console.log('didMeasureComponent: checking: did you measure PS via ' + nodes + ' ?');} else {console.log('didMeasureComponent: checking: did you measure ' + component.UID + ' via ' + nodes + ' ?');} return (nodes.indexOf(meta.redProbe) > -1 && nodes.indexOf(meta.blackProbe) > -1 && meta.redProbe !== meta.blackProbe); /* --- RETURNS BOOLEAN RESULT --- */ }; /* --- CHECK PROBE PLACEMENTS ---*/ sparks.vars.dbugProbes = function (meta) { console.log('blackProbe: ' + meta.blackProbe + ' redProbe: ' + meta.redProbe); if (sparks.vars.didMeasureComponent(meta, r1)) { console.log('Measured R1 where R = ' + sparks.vars.R + ' ohms'); return ('R1'); } else if (sparks.vars.didMeasureComponent(meta, r2)) { console.log('Measured R2 where R = ' + sparks.vars.R + ' ohms'); return ('R2'); } else if (sparks.vars.didMeasureComponent(meta, C1)) { console.log('Measured C1 where C = ' + sparks.vars.C + ' f'); return ('C1'); } else if (sparks.vars.didMeasureComponent(meta, C2)) { console.log('Measured C2 where C = ' + sparks.vars.C + ' f'); return ('C2'); } else if (sparks.vars.didMeasureComponent(meta, L1)) { console.log('Measured L1 where L = ' + sparks.vars.L + ' H'); return ('L1'); } else if (sparks.vars.didMeasureComponent(meta, L2)) { console.log('Measured L2 where L = ' + sparks.vars.L + ' H'); return ('L2'); } else if (sparks.vars.didMeasureComponent(meta, 'PS')) { console.log('Measured PS where VS = ' + sparks.vars.VS + ' V'); return ('PS'); } else { console.log('NOT measuring R or C or L or PS'); return (-1); } }; /* --- CHECK DMM MEASURE OF COMPONENT x STORED IN QUESTION q, COMPARE TO target VOLTAGE --- */ sparks.vars.checkMeasurement = function (q, target, x) { console.log('====== CheckMeasurement comparing target: ' + target + ' with measured value ' + q.meta.val + ' for: ' + x); console.log(q); q.correct_answer = Math.round(10 * target) / 10; q.points_earned = 0; /* --- CHECK PROBES AND DMM SETUP --- */ if (!q.meta.units && !q.meta.val) { /* --- NO MEASUREMENT --- */ if (q.meta.blackProbe && q.meta.redProbe) { /* --- PROBES PLACED BUT NO READING TAKEN--- */ q.feedback = 'Use the <b><i>Read Multimeter</i></b> button to record your circuit measurements.'; } else /* --- PROBES NOT PLACED AND NO READING TAKEN--- */ { q.feedback = 'Connect the DMM probes and use the <b><i>Read Multimeter</i></b> button to measure the circuit.'; } } else if (!q.meta.amplitude && isNaN(q.meta.val)) { /* --- PROBES NOT PLACED IN CIRCUIT --- */ q.feedback = 'Connect both DMM probes to your circuit to make measurements.'; } else if (q.meta.dmmDial != 'acv_200' && q.meta.dmmDial != 'acv_750') { /* --- PROBES PLACED BUT BAD DMM KNOB SET --- */ q.feedback = 'Use the DMM set to measure <b>AC voltages.</b>'; if (q.meta.val !== null && !isNaN(q.meta.val)) { /* --- GOT A READING ALBEIT BAD --- */ q.answer = sparks.unit.convertMeasurement(Math.round(10000 * q.meta.val) / 10000 + ' ' + q.meta.units); } } else /* --- CHECK ACV READING --- */ { q.answer = Math.round(10 * q.meta.val) / 10; if (!q.meta.frequency) { /* --- FREQ NOT CHANGED, SO USE INIT FREQ --- */ sparks.vars.Freq = source.initialFrequency; } else { /* --- USE CURRENT FREQ VALUE --- */ sparks.vars.Freq = sparks.unit.convertMeasurement(q.meta.frequency + 'Hz'); } probePlacement = sparks.vars.dbugProbes(q.meta); console.log('probes placed across: ' + probePlacement); /* --- CONVERT R1 or R2 to R, C1 or C2 to C, and L1 or L2 to L --- */ if(probePlacement != 'PS' && probePlacement) { if(probePlacement == 'R1' || probePlacement == 'R2') { console.log('so we are measuring R'); probePlacement = 'R';} else if(probePlacement == 'C1' || probePlacement == 'C2') { console.log('so we are measuring C'); probePlacement = 'C';} else if(probePlacement == 'L1' || probePlacement == 'L2') { console.log('so we are measuring L'); probePlacement = 'L';} else console.log('probes not across known component, but at ' + probePlacement); } if (probePlacement == x) /* --- YES, PROBES ACROSS x ---*/ { console.log('Yes! Probes across ' + x + ' as desired. Checking measurements...'); if (q.meta.dmmDial == 'acv_200') { /* --- DMM KNOB ON ACV_200 ---*/ if (close(target, q.answer, 15 / target)) { q.correct_answer = q.answer; if (sparks.vars.fChange(sparks.vars.freqs) > 0) { /* --- BRAVO! ---*/ q.points_earned = 10; q.feedback = 'Excellent! You measured <b>V<sub>' + x + '</sub></b> at ' + sparks.vars.Freq; } else { /* --- NO CHANGE OF FREQ ---*/ q.points_earned = 2; q.feedback = 'You measured well, but not at a different frequency, as directed.'; } } else { /* --- UKNOWN RESULT ---*/ q.feedback = 'The DMM appears to have malfunctioned. Sorry! Try again?'; } } else { /* --- DMM KNOB ON ACV_750 ---*/ if (close(Math.round(target), q.answer, 20 / target)) { /* --- MEASURE IS CLOSE ---*/ if (q.shortPrompt.indexOf('low') > 0 || (q.shortPrompt.indexOf('high') > 0 && sparks.vars.fChange(sparks.vars.freqs) > 0) || q.shortPrompt.indexOf('upply') > 0) { /* --- ALMOST RIGHT AND FREQ CHANGED OK ---*/ q.points_earned = 2; q.feedback = 'Essentially right, but you need to <b>use the most precise scale</b> on the DMM for precision.'; } else { /* --- NO CHANGE OF FREQ ---*/ q.feedback = 'You need to use a more precise DMM setting, and at a different frequency, as directed.'; } } else { /* --- MEASURE IS NOT CLOSE ---*/ q.feedback = 'You placed the probes in the right place, but should use a more precise DMM setting. Sorry!'; } } } else if (probePlacement) { /* --- PROBES ACROSS WRONG COMPONENT --- */ if (close(target, q.answer, 15 / target)) { /* --- VALUE ACROSS WRONG COMPONENT IS CLOSE ---*/ console.log('close value, but bad probe placement: across ' + probePlacement + ', not across ' + x); q.feedback = 'No, even though the measures appear close, you did not measure across ' + x + '.'; } else { /* --- VALUE IS NOT CLOSE ---*/ q.feedback = 'No, you need to measure across ' + x + ' to find <b>V<sub>' + x + '</sub></b>.'; } } else { /* --- PROBE PLACEMENTS UNKNOWN ---*/ q.feedback = 'What happened? You did not appear to measure across <b>' + x + '</b>.'; } q.correct_answer = sparks.unit.convertMeasurement(q.correct_answer + 'V'); q.answer = sparks.unit.convertMeasurement(q.answer + q.meta.units); if (q.points_earned > 0) { sparks.vars.Score++; } } console.log('V' + x + ' @ ' + sparks.vars.Freq + ': Meas = ' + q.answer + ' Actual = ' + sparks.unit.convertMeasurement(target + 'V') + ' ' + sparks.vars.pctDiff(q.meta.val, target)); return; }; /* --- END CHECK MEASUREMENT --- */ /* --- END BEFORESCRIPT --- */ ",
+              "scoring": "sparks.vars.Recalc(question.meta.frequency); sparks.vars.checkMeasurement(question, sparks.vars.VS, 'PS');"
+            },
+            {
+              "prompt": "&nbsp;Resistor voltage <b>V<sub>R</sub></b>&nbsp;&nbsp;&nbsp;",
+              "shortPrompt": "Measure V<sub>R</sub>",
+              "show_read_multimeter_button": "true",
+              "points": 10,
+              "scoring": "sparks.vars.Recalc(question.meta.frequency); sparks.vars.checkMeasurement(question, sparks.vars.VR, 'R');"
+            },
+            {
+              "prompt": "&nbsp;Capacitor voltage <b>V<sub>C</sub></b>&nbsp;&nbsp;&nbsp;",
+              "shortPrompt": "Measure V<sub>C</sub>",
+              "show_read_multimeter_button": "true",
+              "points": 10,
+              "scoring": "sparks.vars.Recalc(question.meta.frequency); sparks.vars.checkMeasurement(question, sparks.vars.VC, 'C');"
+            },
+            {
+              "prompt": "&nbsp;Inductor voltage <b>V<sub>L</sub></b>&nbsp;&nbsp;&nbsp;",
+              "shortPrompt": "Measure V<sub>L</sub>",
+              "show_read_multimeter_button": "true",
+              "points": 10,
+              "scoring": "sparks.vars.Recalc(question.meta.frequency); sparks.vars.checkMeasurement(question, sparks.vars.VL, 'L');"
+            }
+          ]
+        },
+        {
+          "prompt": "Vary the power supply frequency, and using either the oscilloscope or the DMM, observe the effect on <b>V<sub>R</sub></b>. Which of the following statements best completes the sentence that describes the effect of various frequencies on <b>V<sub>R</sub></b>: <b>As you increase the frequency in an RLC circuit...</b>",
+          "shortPrompt": "Measure with DMM",
+          "points": 100,
+          "options": [
+            {
+              "option": "the voltage across the resistor increases to a maximum, and then decreases.",
+              "points": 100
+            },
+            {
+              "option": "the voltage across the resistor decreases to a minimum, and then increases."
+            },
+            {
+              "option": "the voltage across the resistor and capacitor decrease, while the inductor voltage rises greatly."
+            },
+            {
+              "option": "the voltage across the resistor and inductor decrease, while the capacitor voltage rises greatly."
+            },
+            {
+              "option": "the voltage across the resistor remains constant, as the capacitor and inductor balance each other."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

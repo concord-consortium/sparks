@@ -1,0 +1,85 @@
+{
+  "_id": "series-parallel-f",
+  "_rev": "21-a716b9dc687e9fb6f8754c2a1a769dfe",
+  "title": "Troubleshooting a Series-Parallel Circuit",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c21,c15",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "b15,b9",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d15,d9",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,b21"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,c9"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 45,
+        "worst": 90,
+        "points": 150,
+        "threshold": 150
+      },
+      "notes": "Labeled values:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [sparks.unit.convertMeasurement(r1.nominalResistance + 'Ω')]<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [sparks.unit.convertMeasurement(r2.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [sparks.unit.convertMeasurement(r3.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>E</b> = 9.00 volts<br><br>Unfortunately, the resistance function on your meter is broken, so you can only measure voltage and current.",
+      "questions": [
+        {
+          "prompt": "One of the resistors above is defective. Which one?",
+          "keepOrder": "true",
+          "points": 300,
+          "tutorial": "tutorial-19",
+          "radio": "true",
+          "options": [
+            {
+              "option": "R1 is open"
+            },
+            {
+              "option": "R1 is shorted"
+            },
+            {
+              "option": "R2 is open"
+            },
+            {
+              "option": "R2 is shorted"
+            },
+            {
+              "option": "R3 is open"
+            },
+            {
+              "option": "R3 is shorted"
+            }
+          ],
+          "scoring": "var badR = 'scoring-series-parallel-f'; var numVMeasures = log.uniqueVMeasurements(); var numIMeasures = log.uniqueIMeasurements(); if (r1.open) { badR = 'R1 is open'; } else if (r1.shorted) { badR = 'R1 is shorted'; } else if (r2.open) { badR = 'R2 is open'; } else if (r2.shorted) { badR = 'R2 is shorted'; } else if (r3.open) { badR = 'R3 is open'; } else if (r3.shorted) { badR = 'R3 is shorted'; } question.correct_answer = badR; if (question.answer == badR && (numVMeasures < 1) && (numIMeasures < 1)) { question.points_earned = 50; question.feedback = 'Wow...good guess! Next time, use the DMM to troubleshoot the circuit.'; } else if ((numVMeasures < 1) && (numIMeasures < 1)) { question.points_earned = 0; question.feedback = 'Guessing? You need to use the DMM to troubleshoot the circuit.'; } else if (question.answer == badR && (numVMeasures < 4) && (numIMeasures < 3)) { question.points_earned = 400; question.feedback = 'Bravo! And you did it with amazingly few measurements! Do it again and rack up the points!'; } else if (question.answer == badR && (numVMeasures < 6) && (numIMeasures < 3)) { question.points_earned = 300; question.feedback = 'Yes!! Good work! Want to try again and do it with even fewer voltage measurements?'; } else if (question.answer == badR && (numVMeasures < 4) && (numIMeasures > 2)) { question.points_earned = 300; question.feedback = 'Yes!! But did you learn anything by all those current measurements? Try again, making only voltage measurements.'; } else if (question.answer == badR) { question.points_earned = 150; question.feedback = 'Yes! Why not try again, and see if you can do it with fewer measurements?'; } else { question.feedback = 'No, ' + badR + ' in this circuit. Check the tutorial for some tips on troubleshooting series-parallel circuits.'; }"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "_id": "series-parallel-series-troubleshoot",
+  "_rev": "32-99d93be087469937d730aa2613b754ae",
+  "title": "Troubleshooting a four-resistor circuit",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "b17,b11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d17,d11",
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "c11,c5",
+      "label": "R4"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,a5"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "One, <i>and only one,</i> of these resistors is either open or shorted.",
+          "subquestions": [
+            {
+              "prompt": "Which resistor is the bad one?",
+              "shortPrompt": "Which resistor is the bad one?",
+              "options": [
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R2"
+                },
+                {
+                  "option": "R3"
+                },
+                {
+                  "option": "R4"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 400,
+              "scoring": "var badResistorName; var bonusAnswer = 'Hurray! You got the right answer in fewer than 5 measurements. You get 5 bonus points.'; var rightAnswer = 'You got the right answer but you made too many measurements so no bonus points for you!'; var wrongAnswer = 'No, that is not the bad resistor. Try again.';if ((${r1.resistance} > 1e12)||(${r1.resistance} < 1e-5)) {badResistorName = 'R1'}  else if ((${r2.resistance} > 1e12)||(${r2.resistance} < 1e-5)) { badResistorName = 'R2' } else if ((${r3.resistance} > 1e12)||(${r3.resistance} < 1e-5)) { badResistorName = 'R3' } else if ((${r4.resistance} > 1e12)||(${r4.resistance} < 1e-5)) { badResistorName = 'R4' }; if ((question.answer === badResistorName) & (log.measurements() < 5)) {question.points_earned = 400; question.feedback = bonusAnswer} else if((question.answer === badResistorName) & (log.measurements() > 4)) {question.points_earned = 300; question.feedback = rightAnswer} else question.feedback = wrongAnswer; question.correct_answer = badResistorName;"
+            },
+            {
+              "prompt": "Is it shorted or open?",
+              "shortPrompt": "Is it shorted or open?",
+              "options": [
+                {
+                  "option": "Shorted"
+                },
+                {
+                  "option": "Open"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 50,
+              "scoring": "var natureOfFault; if ((${r1.resistance} > 1e12)||(${r2.resistance} > 1e12)||(${r3.resistance} > 1e12)||(${r4.resistance} > 1e12)) {natureOfFault = 'Open'} else if ((${r1.resistance} < 1e-5)||(${r2.resistance} < 1e-5)||(${r3.resistance} < 1e-5)||(${r4.resistance} < 1e-5)) {natureOfFault = 'Shorted'}; if (question.answer === natureOfFault) {question.points_earned = 50} question.correct_answer = natureOfFault"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

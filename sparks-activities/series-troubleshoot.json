@@ -1,0 +1,90 @@
+{
+  "_id": "series-troubleshoot",
+  "_rev": "35-db27409343d5c17591093c53db483e50",
+  "title": "Troubleshooting three resistors in series",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "d17,d11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "b11,b5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive3,a5"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "One, <i>and only one,</i> of these resistors is bad. Your job is to identify the faulted resistor and determine whether it is shorted or open. Extra bonus points for doing it without lifting a lead!",
+          "subquestions": [
+            {
+              "prompt": "Which resistor is bad?",
+              "shortPrompt": "Which resistor is bad?",
+              "options": [
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R2"
+                },
+                {
+                  "option": "R3"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 100,
+              "scoring": "var badResistorName = breadboard.getFault().label; var rightAnswer = 'You got it!'; var wrongAnswer = 'No, that is not the faulty resistor.'; var nullAnswer = 'You did not answer the question!'; question.correct_answer = badResistorName; if (question.answer == '') {question.feedback = nullAnswer} else if (question.answer === badResistorName) {question.points_earned = 100; question.feedback = rightAnswer} else {question.feedback = wrongAnswer}",
+              "category": "Series troubleshooting"
+            },
+            {
+              "prompt": "Is it shorted or open?",
+              "shortPrompt": "Is it shorted or open?",
+              "options": [
+                {
+                  "option": "Shorted"
+                },
+                {
+                  "option": "Open"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 500,
+              "scoring": "var nullAnswer = 'You did not answer the question!'; var singleRightAnswer = 'Correct, but you did not identify the faulty resistor.'; var doubleRightNoBonus = 'Well done! You got them both right, but you did not get a bonus because you took more than five measurements and you lifted a lead.'; var measurementBonusAnswer = 'Excellent! You solved the problem in fewer than five measurements but you lifted a lead.  You get 200 bonus points but you could have gotten 400.'; var breaksBonusAnswer = 'Excellent!  You solved the problem without lifting a lead but you used more than four measurements. You get 200 bonus points but you could have gotten 400.'; var doubleBonusAnswer = 'Excellent! You solved the problem in fewer than five measurements and without lifting a lead. You get 400 bonus points!'; var wrongAnswerShorted = 'No the resistor was open, not shorted.'; var wrongAnswerOpen = 'No the resistor was shorted, not open.'; var wrongResistor = 'You got the fault right, but on the wrong resistor! That could have been a lucky guess. Try again.'; if (breadboard.getFault().open) { natureOfFault = 'Open' } else if (breadboard.getFault().shorted) { natureOfFault = 'Shorted' }; question.correct_answer = natureOfFault; if (question.answer == '') { question.feedback = nullAnswer } else if (question.answer === natureOfFault) { if (sparks.sparksSectionController.currentPage.questions[0].points_earned > 99) { if (log.measurements() < 5) { if (log.connectionBreaks() == 0) { question.points_earned = 500; question.feedback = doubleBonusAnswer; } else if (log.connectionBreaks > 0) { question.points_earned = 250; question.feedback = measurementBonusAnswer; } } else if (log.measurements() > 4) { if (log.connectionBreaks() == 0) { question.points_earned = 250; question.feedback = breaksBonusAnswer; } else if (log.connectionBreaks > 0) { question.points_earned = 150; question.feedback = doubleRightNoBonus; } } } else { question.points_earned = 150; question.feedback = wrongResistor; } } else if (natureOfFault === 'Open') { question.points_earned = 0; question.feedback = wrongAnswerOpen } else if (natureOfFault === 'Shorted') { question.points_earned = 0; question.feedback = wrongAnswerShorted } console.log('Number of measurements = ' + log.measurements()); console.log('correct answer = ' + sparks.sparksSectionController.currentPage.questions[0].correct_answer + ' ' + question.correct_answer); var leadLifts = log.connectionBreaks(); console.log('Number of lead lifts = ' + leadLifts)",
+              "category": "Series troubleshooting"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

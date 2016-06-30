@@ -1,0 +1,47 @@
+{
+  "_id": "ac-power-source-dmm",
+  "_rev": "41-5a83ca82378ee1941ef95767564d3a1c",
+  "title": "AC Power source with DMM",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        1000
+      ],
+      "amplitude": 100
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": 0.000001,
+      "connections": "c23,c17",
+      "label": "C1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": 100,
+      "connections": "d17,d11",
+      "label": "R1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive13,a11"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample AC circuit"
+        }
+      ]
+    }
+  ]
+}

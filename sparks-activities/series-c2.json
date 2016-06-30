@@ -1,0 +1,319 @@
+{
+  "_id": "series-c2",
+  "_rev": "5-fedb1ad30544135b58afe27d7c774924",
+  "title": "Calculating Voltage and Current in a Series Circuit",
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [sparks.unit.convertMeasurement(r1.nominalResistance + 'Ω')]<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [sparks.unit.convertMeasurement(r2.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [sparks.unit.convertMeasurement(r3.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>E</b> = 9.00 volts",
+      "questions": [
+        {
+          "prompt": "Using the rated resistance values in the circuit shown above,<br>what should be the voltages across and currents through each resistor? (Hint:&nbsp;Use&nbsp;your&nbsp;formula&nbsp;for the total series resistance.)",
+          "subquestions": [
+            {
+              "prompt": "<hr>For <b>R<sub>1</sub></b>:<br>&nbsp;&nbsp;Voltage ",
+              "shortPrompt": "R1 voltage",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(r1.nominalResistance*9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "points": 5,
+                  "feedback": "Right! That's the portion of the total voltage dropped across R1."
+                },
+                {
+                  "option": "[Math.toSigFigs(r2.nominalResistance*9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "feedback": "Oops! That's the voltage for R2 instead of R1. Did you use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[Math.toSigFigs(r3.nominalResistance*9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "feedback": "Oops! That's the voltage for R3 instead of R1. Did you use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Are you using the correct formula for calculating voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9*R1/(R2+R3),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Did you make an arithmetic error? If unsure, maybe the tutorial can help."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3-Math.min(R1,R2,R3))*(1+Math.random()/10),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/(2+Math.floor(Math.random()*5)),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, maybe the tutorial can help."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3)/(2+Math.floor(Math.random()*5)),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right method to calculate this? If unsure, maybe the tutorial can help."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Current ",
+              "shortPrompt": "R1 current",
+              "tutorial": "tutorial-4",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+                  "points": 5,
+                  "feedback": "Right! The whole circuit current passes through this (and every) series resistor."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3') * r1.nominalResistance / 100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3') * r2.nominalResistance / 100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3') * r3.nominalResistance / 100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3-Math.min(R1,R2,R3))*(1+Math.random()/10),3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9*R1/(R2+R3),3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/(2+Math.floor(Math.random()*5))/100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3)/(2+Math.floor(Math.random()*5))/10,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "<hr>For <b>R<sub>2</sub></b>:<br>&nbsp;&nbsp;Voltage ",
+              "shortPrompt": "R2 voltage",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(r2.nominalResistance*9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "points": 5,
+                  "feedback": "Right! That's the portion of the total voltage dropped across R2."
+                },
+                {
+                  "option": "[Math.toSigFigs(r1.nominalResistance*9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "feedback": "Oops! That's the voltage for R1 instead of R2. Did you use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[Math.toSigFigs(r3.nominalResistance*9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "feedback": "Oops! That's the voltage for R3 instead of R2. Did you use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Are you using the correct formula for calculating voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3-Math.min(R1,R2,R3))*(1+Math.random()/10),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9*R2/(R1+R3),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Did you make an arithmetic error? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[ Math.toSigFigs(9/(2+Math.floor(Math.random()*5)),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3)/(2+Math.floor(Math.random()*5)),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right method to calculate this? If unsure, maybe the tutorial can help."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Current ",
+              "shortPrompt": "R2 current",
+              "tutorial": "tutorial-4",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+                  "points": 5,
+                  "feedback": "Right! The whole circuit current passes through this (and every) series resistor."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3') * r1.nominalResistance / 100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3') * r2.nominalResistance / 100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3') * r3.nominalResistance / 100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3-Math.min(R1,R2,R3))*(1+Math.random()/10),3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9*R2/(R1+R3),3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/(2+Math.floor(Math.random()*5))/100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3)/(2+Math.floor(Math.random()*5))/10,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "<hr>For <b>R<sub>3</sub></b>:<br>&nbsp;&nbsp;Voltage ",
+              "shortPrompt": "R3 voltage",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(r3.nominalResistance*9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "points": 5,
+                  "feedback": "Right! That's the portion of the total voltage dropped across R3."
+                },
+                {
+                  "option": "[Math.toSigFigs(r2.nominalResistance*9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "feedback": "Oops! That's the voltage for R2 instead of R3. Did you use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[Math.toSigFigs(r1.nominalResistance*9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "feedback": "Oops! That's the voltage for R1 instead of R3. Did you use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Are you using the correct formula for calculating voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3-Math.min(R1,R2,R3))*(1+Math.random()/10),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9*R3/(R1+R2),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Did you make an arithmetic error? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[ Math.toSigFigs(9/(2+Math.floor(Math.random()*5)),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3)/(2+Math.floor(Math.random()*5)),3)] V",
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right method to calculate this? If unsure, maybe the tutorial can help."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Current ",
+              "shortPrompt": "R3 current",
+              "tutorial": "tutorial-4",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+                  "points": 5,
+                  "feedback": "Right! The whole circuit current passes through this (and every) series resistor."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3') * r1.nominalResistance / 100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3') * r2.nominalResistance / 100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3') * r3.nominalResistance / 100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3-Math.min(R1,R2,R3))*(1+Math.random()/10),3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9*R3/(R1+R2),3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs(9/(2+Math.floor(Math.random()*5))/100,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(9/(R1+R2+R3)/(2+Math.floor(Math.random()*5))/10,3)] A",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "image": "series-schematic.jpg",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive20,a23",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d11,d5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "COMMENT": "30 pts: 10 pts for each R to calc V & I )",
+  "hide_circuit": true,
+  "nextSection": "series-d",
+  "_attachments": {
+    "series-schematic.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 2,
+      "length": 15883,
+      "stub": true
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "_id": "rc-faults",
+  "_rev": "9-f5e91728565a6ab96878ec92155b71a5",
+  "title": "RC Circuit with faults",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        1000,
+        2000,
+        3000,
+        10000
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "inductance": "0.001",
+      "connections": "b11,b17",
+      "label": "L1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "C1",
+      "capacitance": "1e-7",
+      "connections": "c17,c23",
+      "label": "L1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "faults": [
+    {
+      "type": "shorted",
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample RL circuit"
+        }
+      ]
+    }
+  ]
+}

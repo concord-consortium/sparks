@@ -1,0 +1,147 @@
+{
+  "_id": "zzrrdmmoscope",
+  "_rev": "30-174d6899aea305adb4524f97d39955d4",
+  "title": "Two resistors in series, AC source, DMM and Oscilloscope",
+  "show_multimeter": "true",
+  "show_oscilloscope": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        1000000,
+        1001
+      ],
+      "amplitude": 16.97
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "770",
+      "connections": "b11,b17",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "240",
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "resistance": "240",
+      "connections": "h11,h17",
+      "label": "R4"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "resistance": "770",
+      "connections": "g17,g23",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative19,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative23,f23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive6,f11"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>R<sub>2</sub></b> = [r2.resistance] ohms<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [r3.resistance] ohms<br>&nbsp;&nbsp; <b>R<sub>4</sub></b> = [r4.resistance] ohms<br>&nbsp;&nbsp;",
+      "questions": [
+        {
+          "prompt": "The circuit on the top half of the breadboard is the same one you saw before, the one on the bottom half has the same resistors but in the reverse order. And this time you've got an oscillscope in addition to the digital multimeter. This activity will help you understand how the oscilloscope and the multimeter measure voltage.<br><br>First click on the function generator and set the frequency, then measure the voltage across R1 (or R4 -- they're the same) using the multimeter. (You can read the labels on the resistors by mousing over them.)",
+          "shortPrompt": "DMM V1 measurement",
+          "show_read_multimeter_button": true,
+          "points": 400,
+          "tutorial": "tutorial-16",
+          "scoring": "question.answer = Math.round(10 * question.answer)/10; sparks.vars.Vrms = Math.round(10 * source.amplitude/Math.sqrt(2))/10; sparks.vars.V1 = Math.round(10 * sparks.vars.Vrms * r1.resistance/(r1.resistance + r2.resistance))/10; sparks.vars.V2 = Math.round(10 * sparks.vars.Vrms * r2.resistance/(r1.resistance + r2.resistance))/10; sparks.vars.V3 = Math.round(10 * sparks.vars.Vrms * r3.resistance/(r3.resistance + r4.resistance))/10;sparks.vars.V4 = Math.round(10 * sparks.vars.Vrms * r4.resistance/(r3.resistance + r4.resistance))/10; question.correct_answer = sparks.vars.V1 + ' volts';if(question.answer != null) {if (Math.abs(sparks.vars.V1 - question.answer) < .01){question.points_earned = 400; question.feedback = 'Excellent!'} else if(Math.abs(sparks.vars.V2 - question.answer) < .01) {question.feedback = 'No, that is the voltage across R2 or R3.'; question.points_earned = 0} else if(Math.abs(sparks.vars.V3 - question.answer) < .01) {question.feedback = 'No, that is the voltage across R2 or R3.'; question.points_earned = 0} else if (Math.abs(sparks.vars.Vrms - question.answer) < .01){question.feedback = 'No, that is the voltage across both resistors.'; question.points_earned = 0} else if (Math.abs(question.answer) < .0001){question.feedback = 'Make sure the DMM is set to measure AC voltage before you make the measurement.'; question.points_earned = 0};} else {question.feedback = 'You did not make this measurement.'}"
+        },
+        {
+          "prompt": "Now measure the voltage across R2 using the multimeter.",
+          "shortPrompt": "DMM V2 measurement",
+          "show_read_multimeter_button": true,
+          "points": 400,
+          "tutorial": "tutorial-16",
+          "scoring": "sparks.vars.Vrms = Math.round(10 * source.amplitude/Math.sqrt(2))/10; sparks.vars.V1 = Math.round(10 * sparks.vars.Vrms * r1.resistance/(r1.resistance + r2.resistance))/10; sparks.vars.V2 = Math.round(10 * sparks.vars.Vrms * r2.resistance/(r1.resistance + r2.resistance))/10; sparks.vars.V3 = Math.round(10 * sparks.vars.Vrms * r3.resistance/(r3.resistance + r4.resistance))/10;sparks.vars.V4 = Math.round(10 * sparks.vars.Vrms * r4.resistance/(r3.resistance + r4.resistance))/10; question.correct_answer = sparks.vars.V2 + ' volts'; question.answer = Math.round(10 * question.answer)/10; if(question.answer != null) {if (Math.abs(sparks.vars.V2 - question.answer) < .01){question.points_earned = 400; question.feedback = 'Excellent!'} else if(Math.abs(sparks.vars.V1 - question.answer) < .01) {question.feedback = 'No, that is the voltage across R1 or R4.'; question.points_earned = 0} else if(Math.abs(sparks.vars.V4 - question.answer) < .01) {question.feedback = 'No, that is the voltage across R1 or R4.'; question.points_earned = 0} else if (Math.abs(sparks.vars.Vrms - question.answer) < .01){question.feedback = 'No, that is the voltage across both resistors.'; question.points_earned = 0} else if (Math.abs(question.answer) < .0001){question.feedback = 'Make sure the DMM is set to measure AC voltage before you make the measurement.'; question.points_earned = 0};} else {question.feedback = 'You did not make this measurement.'}"
+        },
+        {
+          "prompt": "Now try making the same two measurements using the oscilloscope. Note that the oscilloscope has only one probe, not two. It measures voltages with respect to a ground voltage. The oscilloscope and the function generator share a common ground which is connected to the black lead of the function generator.<br> <br>Place the oscilloscope probe so that it measures the voltage across R1 and enter the peak voltage below:",
+          "shortPrompt": "Oscope V1 measurement",
+          "tutorial": "tutorial-21",
+          "options": [
+            {
+              "option": "17 volts",
+              "points": 0,
+              "feedback": "No, that's the peak voltage across both resistors."
+            },
+            {
+              "option": "4 volts",
+              "points": 200,
+              "feedback": "Correct!"
+            },
+            {
+              "option": "13 volts",
+              "points": 0,
+              "feedback": "No, that's the peak voltage across R2 and R3."
+            }
+          ]
+        },
+        {
+          "prompt": "You can't measure the voltage across R2 with the oscilloscope unless you change the circuit! This is because the oscilloscope only measures voltages to ground. At the moment you can't move the resistors around on the breadboatd, but that's why we provided you with that lower circuit -- R3 and R4 and the same as R2 and R1, respectively, but they're in the reverse order, so you can measure the voltage across R3 and it will be the same as that across R2. Measure the voltage across R3 with the oscilloscope.",
+          "shortPrompt": "Oscope V3 measurement",
+          "tutorial": "tutorial-21",
+          "options": [
+            {
+              "option": "17 volts",
+              "points": 0,
+              "feedback": "No, that's the peak voltage across both resistors."
+            },
+            {
+              "option": "13 volts",
+              "points": 200,
+              "feedback": "Correct!"
+            },
+            {
+              "option": "4 volts",
+              "points": 0,
+              "feedback": "No, that's the peak voltage across R1 and R4."
+            }
+          ]
+        },
+        {
+          "prompt": "Is the peak voltage across the resistors, as measured with the oscilloscope, the same as the voltage measured with the multimeter?",
+          "shortPrompt": "Peak vs. rms voltage",
+          "options": [
+            {
+              "option": "Yes",
+              "points": 0,
+              "feedback": "No! The multimeter measures a kind of average voltage (the root-mean-square voltage), not the peak voltage. The multimeter reading is approximately 70% of the oscilloscope measurement."
+            },
+            {
+              "option": "No",
+              "points": 50,
+              "feedback": "That's right! The multimeter measures a kind of average voltage (it's called the root-mean-square voltage), not the peak voltage. The multimeter reading is approximately 70% of the oscilloscope measurement."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

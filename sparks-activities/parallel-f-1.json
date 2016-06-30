@@ -1,0 +1,86 @@
+{
+  "_id": "parallel-f-1",
+  "_rev": "179-95f8fae0828121df82561cffd504448b",
+  "title": "Troubleshooting Parallel Circuits",
+  "circuit": [
+    {
+      "type": "wire",
+      "connections": "left_positive20,b16"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "a16,a10",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c16,c10",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "e16,e10",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,b10"
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 60,
+        "worst": 180,
+        "points": 150,
+        "threshold": 150
+      },
+      "notes": "Design values:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.nominalResistance] ohms<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [r2.nominalResistance] ohms<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [r3.nominalResistance] ohms<br>&nbsp;&nbsp; <b>E</b> = 9.00 volts<br><br>Unfortunately, the internal battery of the DMM is dead, so the DMM is unable to measure resistance.",
+      "questions": [
+        {
+          "prompt": "The circuit above does not have a short, but one of the resistors is somehow defective. Which of the following describes the defective resistor?",
+          "shortPrompt": "Defective resistor",
+          "radio": "true",
+          "keepOrder": "true",
+          "points": 150,
+          "options": [
+            {
+              "option": "R1 is open[if (r1.resistance<120) {r1.resistance=r1.resistance*10; r1.nominalResistance = r1.nominalResistance*10}; if (r2.resistance<120) {r2.resistance=r2.resistance*10; r2.nominalResistance = r2.nominalResistance*10}; if (r3.resistance<120) {r3.resistance=r3.resistance*10; r3.nominalResistance = r3.nominalResistance*10}; var upval = 13.146; var downval = 0.0735; var rand_case = Math.floor(Math.random()*9); switch (rand_case) { case 0: r1.resistance=1e20; r1.open=true; break; case 1: if (r1.resistance*downval>120){r1.resistance=r1.resistance*downval} else {r1.resistance=r1.resistance*upval}; break; case 2: r1.resistance=r1.resistance*upval; break; case 3: r2.resistance=1e20; r2.open=true; break; case 4: if (r2.resistance*downval>120){r2.resistance=r2.resistance*downval} else {r2.resistance=r2.resistance*upval}; break; case 5: r2.resistance=r2.resistance*upval; break; case 6: r3.resistance=1e20; r3.open=true; break; case 7: if (r3.resistance*downval>120){r3.resistance=r3.resistance*downval} else {r3.resistance=r3.resistance*upval}; break; case 8: r3.resistance=r3.resistance*upval; break; default: break; };  '']"
+            },
+            {
+              "option": "R1 is far too small"
+            },
+            {
+              "option": "R1 is far too large"
+            },
+            {
+              "option": "R2 is open"
+            },
+            {
+              "option": "R2 is far too small"
+            },
+            {
+              "option": "R2 is far too large"
+            },
+            {
+              "option": "R3 is open"
+            },
+            {
+              "option": "R3 is far too small"
+            },
+            {
+              "option": "R3 is far too large"
+            }
+          ],
+          "scoring": "var badRName = 'Dunno'; var isOpen = ' is open'; var isBig = ' is far too large'; var isSmall = ' is far too small'; var ratioR1 = r1.resistance/r1.nominalResistance; var ratioR2 = r2.resistance/r2.nominalResistance; var ratioR3 = r3.resistance/r3.nominalResistance; var defect = ''; var numVMeasures = log.uniqueVMeasurements(); var numIMeasures = log.uniqueIMeasurements(); if (r1.open||ratioR1>5||ratioR1<.2) {badRName = 'R1'} else if (r2.open||ratioR2>5||ratioR2<.2) {badRName = 'R2'} else if (r3.open||ratioR3>5||ratioR3<.2) {badRName = 'R3'}; if (r1.open||r2.open||r3.open) {defect = 'open'} else {defect ='far too '; if (Math.max(ratioR1, ratioR2, ratioR3)>12) {defect = defect + 'large'} else {defect = defect + 'small'} }; question.correct_answer = badRName + ' is ' + defect; if (question.answer == question.correct_answer && (numVMeasures<2) && (numIMeasures<4) && (numIMeasures>0)) {question.points_earned = 250; question.feedback = 'Bravo! ' + badRName + ' was indeed ' + defect + ' and you did it with amazingly few measurements to earn BONUS points!'} else if (question.answer == question.correct_answer && (numVMeasures>1)) {question.points_earned = 150; question.feedback = 'Yes!! ' + badRName + ' was indeed ' + defect + ', but did you learn anything by making all those voltage measurements? You should be able to solve this type problem with only current measurements.'} else if (question.answer == question.correct_answer && (numIMeasures>3)) {question.points_earned = 150; question.feedback = 'Yes! ' + badRName + ' was indeed ' + defect + '. Why not try again, and see if you can do it with fewer measurements?'} else if (question.answer == question.correct_answer && (numIMeasures<1)) {question.points_earned = 20; question.feedback = 'Well, yes, ' + badRName + ' was indeed ' + defect + ', but current measurements are needed to detect this kind of problem. You earned a few points for being a good guesser!! Try again and earn full points!'} else if (!(question.answer == question.correct_answer) && ( (numIMeasures>1) || (numVMeasures>1))) {question.points_earned = 0; question.feedback = 'Sorry, but ' + badRName + ' was the bad resistor in this circuit. Check the tutorial for some tips on measuring parallel circuits.'} else { question.points_earned = 0; question.feedback = 'You must make some measurements to find the defective resistor. Check the tutorial for some tips on measuring parallel circuits.'}"
+        }
+      ]
+    }
+  ],
+  "COMMENT": "150 pts to identify fault; 150 pts; Bonus for time < 120 sec; 100 pts for few meas.; Max score: 400 pts.",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r"
+}

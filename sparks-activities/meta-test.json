@@ -1,0 +1,72 @@
+{
+  "_id": "meta-test",
+  "_rev": "21-25d7cc4cc8ade34dcaebffc97ed5c12c",
+  "title": "Question scripts with circuit state",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "linear",
+        10,
+        20,
+        5
+      ],
+      "amplitude": [
+        10,
+        20
+      ]
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "500",
+      "connections": "b11,b17",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative19,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>R<sub>2</sub></b> = [r2.resistance] ohms<br>&nbsp;&nbsp;",
+      "questions": [
+        {
+          "prompt": "Change the frequency. What did you set it to?",
+          "scoring": "actualFrequency = question.meta.frequency; if (question.answer == actualFrequency) {question.points_earned = 1} question.correct_answer=actualFrequency; question.feedback = 'The actual frequency was '+actualFrequency"
+        },
+        {
+          "prompt": "Change the amplitude. What did you set it to?",
+          "scoring": "actualAmplitude = question.meta.amplitude; if (question.answer == actualAmplitude) {question.points_earned = 1} question.correct_answer=actualAmplitude; question.feedback = 'The actual amplitude was '+actualAmplitude"
+        },
+        {
+          "prompt": "Warning! Note that for questions with multiple subquestions there is only one submit button. The question.meta information will be the same for all subquestions when the student hits the button.",
+          "subquestions": [
+            {
+              "prompt": "Change the frequency once, record the value",
+              "scoring": "actualFrequency = question.meta.frequency; if (question.answer == actualFrequency) {question.points_earned = 1} question.correct_answer=actualFrequency; question.feedback = 'You should not have gotten this right, because the frequency changed after you entered your answer. When you hit submit, the frequency was  '+actualFrequency"
+            },
+            {
+              "prompt": "Now change the frequency again, record the value",
+              "scoring": "actualFrequency = question.meta.frequency; if (question.answer == actualFrequency) {question.points_earned = 1} question.correct_answer=actualFrequency; question.feedback = 'The frequency after the second question was '+actualFrequency"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

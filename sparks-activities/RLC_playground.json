@@ -1,0 +1,156 @@
+{
+  "_id": "RLC_playground",
+  "_rev": "22-a202695c4de0dcc41a942fa9ffdb00ba",
+  "title": "Measuring an RLC Series Circuit with DMM and Oscilloscope",
+  "show_multimeter": "false",
+  "show_oscilloscope": "true",
+  "allow_move_yellow_probe": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 16.97,
+      "initialFrequency": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "200",
+      "connections": "b11,b17",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "resistance": "300",
+      "connections": "c5,c11",
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "resistance": "100",
+      "connections": "i17,i23",
+      "label": "R4"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "2.0e-07",
+      "connections": "h11,h17",
+      "label": "C"
+    },
+    {
+      "type": "inductor",
+      "UID": "l1",
+      "inductance": "2.0e-03",
+      "connections": "i5,i11",
+      "label": "L"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,f23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive4,f5"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative19,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive5,a5"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [Math.round(r1.resistance)] ohms<br>&nbsp;&nbsp; <b>R<sub>2</sub></b> = [Math.round(r2.resistance)] ohms<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [Math.round(r3.resistance)] ohms<br>&nbsp;&nbsp; <b>R<sub>4</sub></b> = [Math.round(r4.resistance)] ohms<br>&nbsp;&nbsp; <b>C<sub>1</sub></b> = [Math.round(10*c1.capacitance * 1000000)/10] microf<br>&nbsp;&nbsp; <b>L<sub>1</sub></b> =[ Math.round(10*l1.inductance * 1000) / 10] milihenries",
+      "questions": [
+        {
+          "prompt": "Use the function generator to change the frequency and measure the voltages across all the different components using either the multimeter or the oscilloscope (or both). Then answer the questions below.<br><br>",
+          "subquestions": [
+            {
+              "radio": "true",
+              "prompt": "Does the voltage across R<sub>1</sub> change when you change the frequency?",
+              "shortPrompt": "Does the voltage across R<sub>1</sub> change when you change the frequency?",
+              "options": [ 
+                {
+                "option": "Yes",
+                "feedback": "That's not right. Try again."
+                },
+                {
+                "option": "No",
+                "points": 50,
+                "feedback": "Correct!"
+                }
+              ]
+            },
+            {
+              "radio": "true",
+              "prompt": "Does the voltage across R<sub>4</sub> change when you change the frequency?",
+              "shortPrompt": "Does the voltage across R<sub>4</sub> change when you change the frequency?",
+              "options": [ 
+                {
+                "option": "No",
+                "feedback": "That's not right. Try again."
+                },
+                {
+                "option": "Yes",
+                "points": 50,
+                "feedback": "Correct!"
+                }
+              ]
+            },
+            {
+              "radio": "true",
+              "prompt": "Do the voltages across R<sub>1</sub>, R<sub>2</sub>, and R<sub>3</sub> add up to the voltage put out by the function generator?",
+              "shortPrompt": "Do the voltages across R<sub>1</sub>, R<sub>2</sub>, and R<sub>3</sub> add up to the voltage put out by the function generator?",
+              "options": [ 
+                {
+                "option": "No",
+                "feedback": "That's not right. Try again."
+                },
+                {
+                "option": "Yes",
+                "points": 100,
+                "feedback": "Correct!"
+                }
+              ]
+            },
+            {
+              "radio": "true",
+              "prompt": "Do the voltages across R<sub>4</sub>, C, and L add up to the voltage put out by the function generator?",
+              "shortPrompt": "Do the voltages across R<sub>4</sub>, C, and L add up to the voltage put out by the function generator?",
+              "options": [ 
+                {
+                "option": "Yes",
+                "feedback": "That's not right. Try again."
+                },
+                {
+                "option": "No",
+                "points": 100,
+                "feedback": "Correct!"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

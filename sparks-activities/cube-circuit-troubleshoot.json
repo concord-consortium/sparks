@@ -1,0 +1,174 @@
+{
+  "_id": "cube-circuit-troubleshoot",
+  "_rev": "79-07e4d0f745a2824a8204966c3c6ab9e1",
+  "title": "Toubleshooting a 3-D circuit",
+  "show_multimeter": "true",
+  "hide-circuit": "false",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "wire",
+      "connections": "left_positive20,b23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,g8"
+    },
+    {
+      "type": "resistor",
+      "connections": "h25,e23",
+      "label": "R1",
+      "uid": "r1"
+    },
+    {
+      "type": "resistor",
+      "connections": "i25,f20",
+      "label": "R2",
+      "uid": "r2"
+    },
+    {
+      "type": "resistor",
+      "connections": "h20,e18",
+      "label": "R3",
+      "uid": "r3"
+    },
+    {
+      "type": "resistor",
+      "connections": "d23,d18",
+      "label": "R4",
+      "uid": "r4"
+    },
+    {
+      "type": "resistor",
+      "connections": "c23,c16",
+      "label": "R5",
+      "uid": "r5"
+    },
+    {
+      "type": "resistor",
+      "connections": "a16,a10",
+      "label": "R6",
+      "uid": "r6"
+    },
+    {
+      "type": "resistor",
+      "connections": "b10,b18",
+      "label": "R7",
+      "uid": "r7"
+    },
+    {
+      "type": "resistor",
+      "connections": "h8,c10",
+      "label": "R8",
+      "uid": "r8"
+    },
+    {
+      "type": "resistor",
+      "connections": "j20,j8",
+      "label": "R9",
+      "uid": "r9"
+    },
+    {
+      "type": "resistor",
+      "connections": "i13,i8",
+      "label": "10",
+      "uid": "r10"
+    },
+    {
+      "type": "resistor",
+      "connections": "j25,h13",
+      "label": "11",
+      "uid": "r11"
+    },
+    {
+      "type": "resistor",
+      "connections": "d16,g13",
+      "label": "12",
+      "uid": "r12"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "open",
+        "shorted"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "notes": "Cheat: [breadboard.getFault().label] is [var natureOfFault = 'unknown'; if (breadboard.getFault().open) { natureOfFault = 'open' } else if (breadboard.getFault().shorted) { natureOfFault = 'shorted'} natureOfFault].",
+      "questions": [
+        {
+          "prompt": "One, <i>and only one,</i> of these resistors is bad. Your job is to identify the faulted resistor and determine whether it is shorted or open. (Note: R10, R11, and R12 are simply denoted as 10, 11, and 12, respectively, because there is no room on the resistor graphic for three-character labels.",
+          "subquestions": [
+            {
+              "shortPrompt": "Which resistor is bad?",
+              "options": [
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R2"
+                },
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R3"
+                },
+                {
+                  "option": "R4"
+                },
+                {
+                  "option": "R5"
+                },
+                {
+                  "option": "R6"
+                },
+                {
+                  "option": "R7"
+                },
+                {
+                  "option": "R8"
+                },
+                {
+                  "option": "R9"
+                },
+                {
+                  "option": "10"
+                },
+                {
+                  "option": "11"
+                },
+                {
+                  "option": "12"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 1000,
+              "scoring": "var badResistorName = breadboard.getFault().label; var rightAnswer = 'You got it!'; var wrongAnswer = 'No, that is not the faulty resistor.'; var nullAnswer = 'You did not answer the question!'; question.correct_answer = badResistorName; if (question.answer == '') {question.feedback = nullAnswer} else if (question.answer === badResistorName) {question.points_earned = 1000; question.feedback = rightAnswer} else {question.feedback = wrongAnswer}",
+              "category": "Serious troubleshooting"
+            },
+            {
+              "shortPrompt": "Is it shorted or open?",
+              "options": [
+                {
+                  "option": "shorted"
+                },
+                {
+                  "option": "open"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 100,
+              "scoring": "var natureOfFault = 'unknown'; var rightAnswer = 'You got it!'; var wrongAnswer = 'No, that is not the right fault.'; var nullAnswer = 'You did not answer the question!'; if (breadboard.getFault().open) { natureOfFault = 'open' } else if (breadboard.getFault().shorted) { natureOfFault = 'shorted'} question.correct_answer = natureOfFault; if (question.answer == '') {question.feedback = nullAnswer} else if (question.answer === natureOfFault) {question.points_earned = 100; question.feedback = rightAnswer} else {question.feedback = wrongAnswer}",
+              "category": "Serious troubleshooting"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "_id": "zzrclserieswithoscope",
+  "_rev": "49-325e0bcffb5b328b51e20097c37504ad",
+  "title": "Measuring an RCL circuit with an oscilloscope",
+  "show_oscilloscope": "true",
+  "allow_move_yellow_probe": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 16.97
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "10",
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "1.0e-07",
+      "connections": "b11,b17",
+      "label": "C1"
+    },
+    {
+      "type": "inductor",
+      "UID": "l1",
+      "inductance": "0.001",
+      "connections": "c5,c11",
+      "label": "L1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "10",
+      "connections": "h17,h23",
+      "label": "R2"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c2",
+      "capacitance": "1.0e-07",
+      "connections": "h11,h5",
+      "label": "C2"
+    },
+    {
+      "type": "inductor",
+      "UID": "l2",
+      "inductance": "0.001",
+      "connections": "g11,g17",
+      "label": "L2"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive5,a5"
+    },
+    {
+      "type": "wire",
+      "connections": "e23,f23"
+    },
+    {
+      "type": "wire",
+      "connections": "e5,f5"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>The resistors have resistance </b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>The capacitors have capacitance </b> = [c1.capacitance] farads<br>&nbsp;&nbsp;<b>The inductors have inductance </b> = [l1.inductance] henries",
+      "questions": [
+        {
+          "prompt": "Here is a circuit consisting of a resistor, a capacitor, and an inductor in series. We've reproduced the circuit twice, reversing the order of the capacitor and the inductor so that you can measure the voltage across either one.<br>First measure the voltage across the resistor and vary the frequency. Notice that the voltage varies as you change the frequency.",
+          "shortPrompt": "Voltage measurements",
+          "subquestions": [
+            {
+              "prompt": "What frequency maximizes the voltage across R1 (for the top circuit)?",
+              "shortPrompt": "Resonance frequency for top circuit",
+              "correct_answer": "16 KHz",
+              "points": 100,
+              "scoring": "if(question.answer) {if(question.answer = question.correct_answer){question.feedback = 'Great!';question.points_earned = 100}} else {question.feedback = 'You did not answer this question.'} question.feedback += ' Your goodnessOfScale for the OScope at the end was '+goodness;"
+            },
+            {
+              "prompt": "What frequency maximizes the voltage across R2 (for the bottom circuit)?",
+              "shortPrompt": "Resonance frequency for bottom circuit",
+              "correct_answer": "16 KHz",
+              "points": 100,
+              "scoring": "if(question.answer) {if(question.answer = question.correct_answer){question.feedback = 'Great!';question.points_earned = 100}} else {question.feedback = 'You did not answer this question.'}"
+            },
+            {
+              "prompt": "What is the peak-to-peak voltage across the resistor at this frequency?",
+              "shortPrompt": "Voltage across R",
+              "correct_answer": "17 volts",
+              "points": 100,
+              "scoring": "if(question.answer) {if(question.answer = question.correct_answer){question.feedback = 'Great!';question.points_earned = 100}} else {question.feedback = 'You did not answer this question.'}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>The resistors have resistance </b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>The capacitors have capacitance </b> = [c1.capacitance] farads<br>&nbsp;&nbsp;<b>The inductors have inductance </b> = [l1.inductance] henries",
+      "questions": [
+        {
+          "prompt": "The frequency that maximizes the voltage across the resistor (which is proportional to the current through the circuit) is called the <i>resonance</i> frequency. Using the top circuit, measure the voltage across the capacitor and the resistor at the resonance frequency. Then use the bottom circuit to measure the voltage across the inductor and the resistor and answer the questions below.",
+          "shortPrompt": "Voltages at resonance.",
+          "subquestions": [
+            {
+              "prompt": "What is the peak-to-peak voltage across R and C at resonance?",
+              "shortPrompt": "V<sub>RC</sub> at resonance.",
+              "correct_answer": "170 volts",
+              "points": 100,
+              "scoring": "if(question.answer) {if(question.answer = question.correct_answer){question.feedback = 'Great!';question.points_earned = 100}} else {question.feedback = 'You did not answer this question.'}"
+            },
+            {
+              "prompt": "What is the peak-to-peak voltage across R and L at resonance?",
+              "shortPrompt": "V<sub>RL</sub> at resonance.",
+              "correct_answer": "170 volts",
+              "points": 100,
+              "scoring": "if(question.answer) {if(question.answer = question.correct_answer){question.feedback = 'Great!';question.points_earned = 100}} else {question.feedback = 'You did not answer this question.'}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>The resistors have resistance </b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>The capacitors have capacitance </b> = [c1.capacitance] farads<br>&nbsp;&nbsp;<b>The inductors have inductance </b> = [l1.inductance] henries",
+      "questions": [
+        {
+          "prompt": "Did you notice that the voltages across the capacitor and the inductor are much higher than across the resistor alone (about 170 volts)? Yet the total voltage across the resistor, capacitor and inductor is actually quite low (about 17 volts). How can that be??? Here's a hint: it has to do with the <i>phase</i> of the voltages, which you will measure below.",
+          "shortPrompt": "Phases at resonance.",
+          "subquestions": [
+            {
+              "prompt": "What is the phase of the voltage across the resistor and the capacitor at resonance?",
+              "shortPrompt": "Phi<sub>RC</sub> at resonance.",
+              "correct_answer": "90 degrees",
+              "points": 100,
+              "scoring": "if(question.answer) {if(question.answer = question.correct_answer){question.feedback = 'Great!';question.points_earned = 100}} else {question.feedback = 'You did not answer this question.'}"
+            },
+            {
+              "prompt": "Does this voltage lag or lead the input voltage?",
+              "shortPrompt": "Sign of phi<sub>RC</sub>",
+              "options": [
+                {
+                  "option": "Lag",
+                  "points": 5,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "Lead",
+                  "points": 0,
+                  "feedback": "No."
+                }
+              ]
+            },
+            {
+              "prompt": "What is the phase of the voltage across the resistor and the inductor at resonance?",
+              "shortPrompt": "Phi<sub>RL</sub> at resonance.",
+              "correct_answer": "90 degrees",
+              "points": 100,
+              "scoring": "if(question.answer) {if(question.answer = question.correct_answer){question.feedback = 'Great!';question.points_earned = 100}} else {question.feedback = 'You did not answer this question.'}"
+            },
+            {
+              "prompt": "Does this voltage lag or lead the input voltage?",
+              "shortPrompt": "Sign of phi<sub>RL</sub>",
+              "options": [
+                {
+                  "option": "Lead",
+                  "points": 5,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "Lag",
+                  "points": 0,
+                  "feedback": "No."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questions": [
+        {
+          "prompt": "The voltages across the capacitor and the inductor are each 90 degrees out of phase with the input voltage but one of them lags the input voltage and the other one lags. Thus, the two voltages are 180 degrees (90 degrees times two) out of phase with each other and they exactly cancel out!"
+        }
+      ]
+    }
+  ]
+}

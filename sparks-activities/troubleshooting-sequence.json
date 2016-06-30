@@ -1,0 +1,20 @@
+{
+  "_id": "troubleshooting-sequence",
+  "_rev": "15-04b69427e497bb30e69d806fc4cd9a14",
+  "type": "activity",
+  "sections": [
+    "series-troubleshoot",
+    "two-resistors-troubleshoot",
+    "series-parallel-f",
+    "series-parallel-g1",
+    "series-parallel-g2",
+    "series-parallel-g3",
+    "series-parallel-g4",
+    "series-parallel-g5",
+    "series-parallel-g6",
+    "sams-five-resistors",
+    "cube-all-same-shorted",
+    "cube-all-same-open"
+  ],
+  "title": "Troubleshooting to the Max"
+}

@@ -1,0 +1,114 @@
+{
+  "_id": "series-parallel-g7",
+  "_rev": "12-c2cede0c4a5288c227b447f2f0c181b2",
+  "title": "Advanced Troubleshooting Series-Parallel Circuits 7",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "comment": "Points: 750 for correct + 200 for fast + 300 if minimal measures",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b22,b16",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "d22,d10",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r5",
+      "connections": "a16,a10",
+      "label": "R5"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "b10,b4",
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "e16,e4",
+      "label": "R4"
+    },
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive20,a22",
+      "label": "W1"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "left_negative2,a4",
+      "label": "W2"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 60,
+        "worst": 120,
+        "points": 200,
+        "threshold": 501
+      },
+      "notes": "Labeled values:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [sparks.unit.convertMeasurement(r1.nominalResistance + 'Ω')]<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [sparks.unit.convertMeasurement(r2.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [sparks.unit.convertMeasurement(r3.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>R<sub>4</sub></b> = [sparks.unit.convertMeasurement(r4.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>R<sub>5</sub></b> = [sparks.unit.convertMeasurement(r5.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>E</b> = 9.00 volts<br><br>Unfortunately, the resistance function on your meter is broken, so you can only measure voltage and current.",
+      "questions": [
+        {
+          "prompt": "One of the resistors above is defective. Which one?",
+          "keepOrder": "true",
+          "points": 550,
+          "tutorial": "tutorial-19",
+          "radio": "true",
+          "options": [
+            {
+              "option": "R1 is open"
+            },
+            {
+              "option": "R1 is shorted"
+            },
+            {
+              "option": "R2 is open"
+            },
+            {
+              "option": "R2 is shorted"
+            },
+            {
+              "option": "R3 is open"
+            },
+            {
+              "option": "R3 is shorted"
+            },
+            {
+              "option": "R4 is open"
+            },
+            {
+              "option": "R4 is shorted"
+            },
+            {
+              "option": "R5 is open"
+            },
+            {
+              "option": "R5 is shorted"
+            }
+          ],
+          "scoring": "var badR = 'scoring-g7'; var numVMeasures = log.uniqueVMeasurements(); var numIMeasures = log.uniqueIMeasurements(); var numLeadLifts = log.connectionBreaks(); if (r1.open) {badR = 'R1 is open'} else if (r1.shorted) {badR = 'R1 is shorted'} else if (r2.open) {badR = 'R2 is open'} else if (r2.shorted) {badR = 'R2 is shorted'} else if (r3.open) {badR = 'R3 is open'} else if (r3.shorted) {badR = 'R3 is shorted'} else if (r4.open) {badR = 'R4 is open'} else if (r4.shorted) {badR = 'R4 is shorted'} else if (r5.open) {badR = 'R5 is open'} else if (r5.shorted) {badR = 'R5 is shorted'}; question.correct_answer = badR; if (question.answer == badR && (numVMeasures<1) && (numIMeasures<1)) {question.points_earned = 50; question.feedback = 'Wow...good guess! Next time, use the DMM to troubleshoot the circuit.'} else if ((numVMeasures<1) && (numIMeasures<1)) {question.points_earned = 0; question.feedback = 'Guessing? You need to use the DMM to troubleshoot the circuit.'} else if (question.answer == badR && (numVMeasures<3) && (numIMeasures<2) && (numLeadLifts<3)) {question.points_earned =750 + 300; question.feedback = 'Bravo! And you did it with amazingly few measurements! Do it again and rack up the points!'} else if (question.answer == badR && (numVMeasures<5) && (numIMeasures<3) && (numLeadLifts<6)) {question.points_earned = 750; question.feedback = 'Yes!! Good work! Want to try again and do it with even fewer measurements?'} else if (question.answer == badR && (numVMeasures<5) && (numLeadLifts<6)) {question.points_earned = 650; question.feedback = 'Yes!! But did you learn anything by all those current measurements? Try again, making only voltage measurements.'} else if (question.answer === badR) {question.points_earned = 500; question.feedback = 'Yes! Why not try again, and see if you can do it with fewer measurements?'} else {question.feedback = 'No, ' + badR + ' in this circuit. Check the tutorial for some tips on troubleshooting series-parallel circuits.'};"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "_id": "series-parallel-resistance-troubleshooting",
+  "_rev": "2-f190976d0b1db017e2d893a04eb9645c",
+  "type": "activity",
+  "sections": [
+    "series-parallel-g1",
+    "series-parallel-g2",
+    "series-parallel-g3",
+    "series-parallel-g4",
+    "series-parallel-g5",
+    "series-parallel-g6",
+    "series-parallel-g7"
+  ],
+  "title": "Series-Parallel Troubleshooting"
+}

@@ -1,0 +1,82 @@
+{
+  "_id": "series-faults",
+  "_rev": "17-7965d45d0d0de8a68e03038ad8433cbf",
+  "title": "Example Fault in Series Circuit",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive23,a29",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b29,b23",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c23,c17",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d17,d11",
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "c11,c5",
+      "label": "R4"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "faults": [
+    {
+      "type": "open",
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 120,
+        "worst": 240,
+        "points": 80,
+        "threshold": 110
+      },
+      "questions": [
+        {
+          "prompt": "One of these resistors is faulty and is allowing no current through it. Using the fewest number of measurements, can you work out which it is?",
+          "points": "10",
+          "options": [
+            {
+              "option": "R1"
+            },
+            {
+              "option": "R2"
+            },
+            {
+              "option": "R3"
+            },
+            {
+              "option": "R4"
+            }
+          ],
+          "keepOrder": true,
+          "scoring": "var badResistorName; if (${r1.resistance} > 1e12) { badResistorName = 'R1' } else if (${r2.resistance} > 1e12) { badResistorName = 'R2' } else if (${r3.resistance} > 1e12) { badResistorName = 'R3' } else if (${r4.resistance} > 1e12) { badResistorName = 'R4' } if (question.answer === badResistorName) {question.points_earned = 10} question.correct_answer = badResistorName"
+        }
+      ]
+    }
+  ]
+}

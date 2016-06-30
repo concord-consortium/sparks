@@ -1,0 +1,75 @@
+{
+  "_id": "series-a-1c",
+  "_rev": "16-a10094dbfb289a2c3ac2276a89559d9c",
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "Which wires will complete the   circuit and light the bulb?",
+          "shortPrompt": "Wires to light bulb",
+          "radio": "true",
+          "options": [
+            {
+              "option": "D and F",
+              "points": 5,
+              "feedback": "Bravo! You understand how these breadboards work! That will help you a lot in the screens to come. You can advance to the next level"
+            },
+            {
+              "option": "B and H",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, the breadboard   doesn't work that way. Check the tutorial for more   explanation."
+            },
+            {
+              "option": "C and G",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, the breadboard   doesn't work that way. Check the tutorial for more   explanation."
+            },
+            {
+              "option": "A and J",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, the breadboard   doesn't work that way. Check the tutorial for more   explanation."
+            },
+            {
+              "option": "A, B, H, and J",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, the breadboard   doesn't work that way. Check the tutorial for more   explanation."
+            },
+            {
+              "option": "B, E, and H",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, the breadboard   doesn't work that way. Check the tutorial for more   explanation."
+            },
+            {
+              "option": "A, D, and H",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, the breadboard   doesn't work that way. Check the tutorial for more   explanation."
+            },
+            {
+              "option": "F and J",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, the breadboard   doesn't work that way. Check the tutorial for more   explanation."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "image": "circuit-a-1-c.jpg",
+  "title": "Understanding a Breadboard",
+  "hide_circuit": true,
+  "_attachments": {
+    "circuit-a-1-c.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 6,
+      "length": 358261,
+      "stub": true
+    }
+  }
+}

@@ -1,0 +1,369 @@
+{
+  "_id": "sams-new-copy",
+  "_rev": "1-fc7f93a1f65a58197f0abccf570798a5",
+  "title": "Calculating V and I in Series Circuits",
+  "image": "series-schematic.jpg",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive20,a23",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d11,d5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 60,
+        "worst": 180,
+        "points": 8,
+        "threshold": 10
+      },
+      "questions": [
+        {
+          "prompt": "Using E = 9.0 volts and the rated resistance values <br>in the circuit shown above, what should be the voltages <br>across and currents through each resistor?",
+          "subquestions": [
+            {
+              "prompt": "For <b>R<sub>1</sub></b>:<br>&nbsp;&nbsp;Voltage ",
+              "shortPrompt": "R1 voltage",
+              "options": [
+                {
+                  "option": "[9*${r1.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 2,
+                  "feedback": "Right! You calculated the portion of the total voltage dropped across R1."
+                },
+                {
+                  "option": "[9*${r2.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "feedback": "Oops! You picked the voltage for R2. Did you just use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[9*${r3.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "feedback": "Oops! You picked the voltage for R3. Did you just use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Are you using the correct formula for calculating voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(Math.max(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance})+Math.min(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance}))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r1.nominalResistance}/(${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Did you make an arithmetic error? If unsure, maybe the tutorial can help."
+                },
+                {
+                  "option": "[9/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, maybe the tutorial can help."
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right method to calculate this? If unsure, maybe the tutorial can help."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Current ",
+              "shortPrompt": "R1 current",
+              "options": [
+                {
+                  "option": "[9*${r1.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r2.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r3.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 2,
+                  "feedback": "Right! The current through the whole circuit passes through this series resistor."
+                },
+                {
+                  "option": "[9/(Math.max(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance})+Math.min(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance}))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r1.nominalResistance}/(${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "For <b>R<sub>2</sub></b>:<br>&nbsp;&nbsp;Voltage ",
+              "shortPrompt": "R2 voltage",
+              "options": [
+                {
+                  "option": "[9*${r2.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 2,
+                  "feedback": "Right! You calculated the portion of the total voltage dropped across R1."
+                },
+                {
+                  "option": "[9*${r1.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "feedback": "Oops! You picked the voltage for R1. Did you just use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[9*${r3.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "feedback": "Oops! You picked the voltage for R3. Did you just use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Are you using the correct formula for calculating voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(Math.max(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance})+Math.min(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance}))] V",
+                  "points": 0,
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r2.nominalResistance}/(${r1.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Did you make an arithmetic error? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right method to calculate this? If unsure, maybe the tutorial can help."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Current ",
+              "shortPrompt": "R2 current",
+              "options": [
+                {
+                  "option": "[9*${r1.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r2.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r3.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 2,
+                  "feedback": "Right! The current through the whole circuit passes through this series resistor."
+                },
+                {
+                  "option": "[9/(Math.max(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance})+Math.min(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance}))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r2.nominalResistance}/(${r1.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "For <b>R<sub>3</sub></b>:<br>&nbsp;&nbsp;Voltage ",
+              "shortPrompt": "R3 voltage",
+              "options": [
+                {
+                  "option": "[9*${r3.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 2,
+                  "feedback": "Right! You calculated the portion of the total voltage dropped across R1."
+                },
+                {
+                  "option": "[9*${r1.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "feedback": "Oops! You picked the voltage for R1. Did you just use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[9*${r2.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "feedback": "Oops! You picked the voltage for R2. Did you just use the wrong resistor value in your calculation?"
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Are you using the correct formula for calculating voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(Math.max(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance})+Math.min(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance}))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r3.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance})] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Oops! Did you make an arithmetic error? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-5",
+                  "feedback": "Are you using the right method to calculate this? If unsure, maybe the tutorial can help."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Current ",
+              "shortPrompt": "R3 current",
+              "options": [
+                {
+                  "option": "[9*${r1.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r2.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r3.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})] A",
+                  "points": 2,
+                  "feedback": "Right! The current through the whole circuit passes through this series resistor."
+                },
+                {
+                  "option": "[9/(Math.max(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance})+Math.min(${r1.nominalResistance},${r2.nominalResistance},${r3.nominalResistance}))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*${r3.nominalResistance}/(${r1.nominalResistance}+${r2.nominalResistance})] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(${r1.nominalResistance}+${r2.nominalResistance}+${r3.nominalResistance})/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-4",
+                  "feedback": "Are you using the right formula to calculate this? If unsure, check out the tutorial."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "notes": "For this circuit:<br>  R<sub>1</sub> = [${r1.nominalResistance}] ohms<br>  R<sub>2</sub> = [${r2.nominalResistance}] ohms<br>  R<sub>3</sub> = [${r3.nominalResistance}] ohms"
+    }
+  ],
+  "hide_circuit": true,
+  "COMMENT": "Bonus for time < 60 sec: 8 pts. Max score: 20 pts.",
+  "nextSection": "series-d-1"
+}

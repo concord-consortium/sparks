@@ -1,0 +1,164 @@
+{
+  "_id": "parallel-c-1",
+  "_rev": "39-eee3457b2de843d355a2baec709f8710",
+  "title": "Calculating Total Circuit R (Parallel)",
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "Using the rated resistance values in the circuit shown above,<br>what is the circuit's <b>total resistance?</b>",
+          "shortPrompt": "Total resistance of parallel resistors",
+          "radio": "true",
+          "points": 10,
+          "options": [
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(1/(1/R1+1/R2+1/R3),3)] ohms",
+              "points": 10,
+              "feedback": "That's right! You used the correct formula to calculate the total resistance of resistors in parallel."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs((R1+R2+R3)/3,3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": " You need to use the formula for parallel resistances. Check the tutorial if you need help."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; 1000*(1/R1+1/R2+1/R3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": "You seem to have made a slight error in the formula for parallel resistances. Check the tutorial if you need help."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(R1+R2+R3,3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": "Oops! You used the formula for series resistances. These resistors are in parallel. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(Math.PI*2/(1/R1+1/R2+1/R3),3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": "You need to use the formula for parallel resistances. Check the tutorial if you need help."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(Math.PI/(1/R1+1/R2+1/R3)/3,3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": "That's close, but not correct. Check your math, or maybe the tutorial can help."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(10.314*(R1+R2+R3),3)] ohms",
+              "points": 0,
+              "feedback": "You need to use the formula for parallel resistances. Check the tutorial if you need help."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(10.314/(1/R1+1/R2+1/R3),3)] ohms",
+              "points": 5,
+              "feedback": "Did you make a mistake with the multipliers for k-ohms or M-ohms?"
+            }
+          ]
+        },
+        {
+          "prompt": "What is the <b>current</b> the battery will supply?<br><i>(Hint: Use the total resistance from above.)</i>",
+          "shortPrompt": "Total current in parallel circuit",
+          "radio": "true",
+          "points": 10,
+          "options": [
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(9*(1/R1+1/R2+1/R3),3)] A",
+              "points": 10,
+              "feedback": "That's right! The circuit current is just the battery voltage divided by the total resistance."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(1/(1/R1+1/R2+1/R3)/9000,3)] A",
+              "points": 0,
+              "tutorial": "tutorial-4",
+              "feedback": "You seem to be making an error using the formula for calculating current. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance;Math.toSigFigs(9/R1,3)] A",
+              "points": 0,
+              "tutorial": "tutorial-4",
+              "feedback": "No, you must use the <b>total</b> resistance value to make this calculation, not just R1. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[var R2 = r2.nominalResistance;Math.toSigFigs(9/R2,3)] A",
+              "points": 0,
+              "tutorial": "tutorial-4",
+              "feedback": " No, you must use the <b>total</b> resistance value to make this calculation, not just R2. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[var R3 = r3.nominalResistance;Math.toSigFigs(9/R3,3)] A",
+              "points": 0,
+              "tutorial": "tutorial-4",
+              "feedback": " No, you must use the <b>total</b> resistance value to make this calculation, not just R3. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(9/(R1+R2+R3),3)] A",
+              "points": 0,
+              "tutorial": "tutorial-4",
+              "feedback": "No, you must use the total <b>parallel</b> resistance value, not <b>series,</b> to make this calculation. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(27/(R1+R2+R3),3)] A",
+              "points": 0,
+              "tutorial": "tutorial-4",
+              "feedback": "No, you must use the formula for the total parallel resistance value to make this calculation. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(0.9*(1/R1+1/R2+1/R3)*(1+Math.random()/10),3)] A",
+              "points": 0,
+              "tutorial": "tutorial-4",
+              "feedback": "Ooops! The value is close, but did you use the wrong multiplier for the units? Check out the tutorial, if this isn't clear."
+            }
+          ]
+        }
+      ],
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.nominalResistance] ohms<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [r2.nominalResistance] ohms<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [r3.nominalResistance] ohms<br>&nbsp;&nbsp; <b>E</b> = 9.00 volts"
+    }
+  ],
+  "image": "parallel-circuit-schematic.jpg",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive20,a23",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d11,d5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "COMMENT": "Max score 20pts: 10 pts. for R, + 10 pts for I",
+  "hide_circuit": true,
+  "nextSection": "parallel-c-2",
+  "_attachments": {
+    "parallel-circuit-schematic.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 7,
+      "length": 10560,
+      "stub": true
+    }
+  }
+}

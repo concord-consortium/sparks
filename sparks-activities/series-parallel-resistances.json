@@ -1,0 +1,12 @@
+{
+  "_id": "series-parallel-resistances",
+  "_rev": "1-a08e350a068427daaccde8cd1c18f28c",
+  "type": "activity",
+  "sections": [
+    "series-parallel-c",
+    "series-parallel-d",
+    "series-parallel-e",
+    "series-parallel-f"
+  ],
+  "title": "Series-Parallel Resistances"
+}

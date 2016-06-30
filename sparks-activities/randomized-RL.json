@@ -1,0 +1,63 @@
+{
+  "_id": "randomized-RL",
+  "_rev": "28-8dfa06fff92227ec0d6e1d8c7d8f33f8",
+  "title": "RL circuit with randomized impedances",
+  "referenceFrequency": 5000,
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        50,
+        100000,
+        1001
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "resistor",
+      "UID": "R1",
+      "resistance": [
+        "uniform",
+        100,
+        1000
+      ],
+      "connections": "b17,b23",
+      "label": "R1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "impedance": [
+        "uniform",
+        100,
+        1000
+      ],
+      "connections": "c11,c17",
+      "label": "L1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [R1.resistance] ohms<br>&nbsp;&nbsp; <b>L<sub>1</sub></b> = [L1.getInductance()] henries<br>&nbsp;&nbsp; <b>V<sub>P-P</sub></b> = [source.amplitude] volts<br>&nbsp;&nbsp; <b>f<sub>source</sub></b> = [source.frequencies] Hz",
+      "questions": [
+        {
+          "prompt": "Measure the voltage across the resistor in this circuit.",
+          "show_read_multimeter_button": true,
+          "scoring": "if (question.answer) { var a = question.answer.reading + 'V at frequency ' + question.answer.frequency +'Hz and source amplitude V = ' + question.answer.amplitude +'V.'; question.correct_answer = a; question.answer = a; question.points_earned = 1; }"
+        }
+      ]
+    }
+  ],
+  "show_oscilloscope": "false",
+  "show_multimeter": "true"
+}

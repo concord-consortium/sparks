@@ -1,0 +1,96 @@
+{
+  "_id": "series-f",
+  "_rev": "32-4f4fbb1fe93c16716a7f4c6ec2655b42",
+  "title": "Troubleshooting a Series Circuit",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive20,a23",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d11,d5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "notes": "The  resistance function on your meter is broken, so you can only measure voltage and current. <b>But you can earn extra points for being efficient. If you can answer correctly while only making two measurements you'll get 100 bonus points. 50 more points if both of those are voltage measurements!</b>",
+      "questions": [
+        {
+          "prompt": "One of the resistors is bad: either <i>shorted</i> or <i>open</i>.",
+          "subquestions": [
+            {
+              "prompt": "<hr>Which resistor is bad?",
+              "shortPrompt": "Which resistor is bad?",
+              "radio": "true",
+              "keepOrder": "true",
+              "points": 200,
+              "category": "Series troubleshooting",
+              "options": [
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R2"
+                },
+                {
+                  "option": "R3"
+                }
+              ],
+              "scoring": "var numVMeasures = log.uniqueVMeasurements(); var numIMeasures = log.uniqueIMeasurements(); var numMeasures = numVMeasures + numIMeasures; var badResistorName = breadboard.getFault().label; question.points_earned = 0; question.correct_answer = badResistorName; if (question.answer == question.correct_answer && (numMeasures > 0)) {question.points_earned = 200; question.feedback = 'Yes! Resistor ' + question.answer + ' was bad.';} else if (question.answer == question.correct_answer) {question.feedback = 'Yes, resistor ' + question.answer + ' was bad, but you <b>must measure to find that, not guess.</b>';} else if (question.answer.length > 0 && (numMeasures > 0)) {question.feedback = 'No. ' + question.answer + ' was actually good!';} else if (question.answer.length > 0) {question.feedback = 'You must make a measurement to troubleshoot a circuit, not just guess.';} else if (numMeasures > 0) {question.feedback = 'You did not even try an educated guess!?';} else {question.feedback = 'You need to measure the circuit to find the faulty resistor.'}"
+            },
+            {
+              "prompt": "<hr>Is it shorted or open?",
+              "shortPrompt": "Shorted or open?",
+              "radio": "true",
+              "keepOrder": "true",
+              "points": 50,
+              "options": [
+                {
+                  "option": "shorted"
+                },
+                {
+                  "option": "open"
+                }
+              ],
+              "scoring": "var numVMeasures = log.uniqueVMeasurements(); var numIMeasures = log.uniqueIMeasurements(); var numMeasures = numVMeasures + numIMeasures; var question1points = sparks.sectionController.currentPage.questions[0].points_earned; var natureOfFault = 'Unknown'; var faultDescription = 'an unknown'; if (r1.open || r2.open || r3.open) { natureOfFault = 'open'; faultDescription = 'an open'; } else if (r1.shorted || r2.shorted || r3.shorted) { natureOfFault = 'shorted'; faultDescription = 'a shorted'; } question.correct_answer = natureOfFault; if (question.answer == question.correct_answer && (numMeasures == 2) && (numIMeasures === 0) && (question1points > 0)) { question.points_earned = 200; question.feedback = 'Bravo! You found the ' + natureOfFault + ' resistor, using amazing powers of deduction and only two voltage measurements. You earned 150 EXTRA bonus points!'; } else if (question.answer == question.correct_answer && (numMeasures == 2) && (numIMeasures > 0) && (question1points > 0)) { questions.points_earned = 100; question.feedback = 'You found the ' + natureOfFault + ' resistor using only two measurements but they weren&#39;t both voltage measurements. You earned 50 bonus points.'; } else if (question.answer == question.correct_answer && (numMeasures >= 3) && (question1points > 0)) { question.points_earned = 50; question.feedback = 'Right! This circuit had ' + faultDescription + ' resistor. Now if you can do it with only two measurements you&#39;ll get bonus points!'; } else if (question.answer == question.correct_answer && (numMeasures >= 1) && (question1points === 0)) { question.points_earned = 25; question.feedback = 'Yes, this circuit had ' + faultDescription + ' resistor, but you did not identify it correctly.'; } else if (question.answer == question.correct_answer && (numMeasures === 0)) { question.points_earned = 0; question.feedback = 'Yes, this circuit had ' + faultDescription + ' resistor, but you <b>must measure to find that, not just guess!</b>'; } else if (question.answer.length > 0 && (numMeasures > 0)) { question.feedback = 'No, this circuit had ' + faultDescription + ' resistor.'; } else if (question.answer.length > 0) { question.feedback = 'You must make a measurement to troubleshoot a circuit, not just guess.'; } else if (numMeasures > 0) { question.feedback = 'You did not even try an educated guess!?'; } else { question.feedback = 'You need to measure the circuit to find out whether the resistor is open or shorted.'; }"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

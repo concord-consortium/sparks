@@ -1,0 +1,217 @@
+{
+  "_id": "y2-RL",
+  "_rev": "284-2c090768d207262d6cef34db62d22a5f",
+  "title": "AC Circuit with Series Resistor and Inductor",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "linear",
+        100,
+        8001,
+        160
+      ],
+      "initialFrequency": 400,
+      "amplitude": 50
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": [
+        "uniform",
+        100,
+        390
+      ],
+      "connections": "b15,b21",
+      "label": "R1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "impedance": [
+        "uniform",
+        9,
+        16
+      ],
+      "referenceFrequency": "159.155",
+      "comment": "at this freq, L = X, in milliHenrys",
+      "connections": "c9,c15",
+      "label": "L1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a21"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive6,a9"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "[ /* --- DEFINE FUNCTIONS --- */ sparks.vars.fXL = function (L, f) { return (2 * Math.PI * L * f); }; sparks.vars.fZ = function (r, x) { return (Math.sqrt(r * r + x * x)); }; sparks.vars.fV = function (v, x, z) { return (Math.round(10 * v * x / z) / 10); }; sparks.vars.pctDiff = function (n1, n2) { return (Math.round(100 * Math.abs(n2 - n1) / n2 * 100) / 100 + '% diff'); }; /* --- RECALC FUNCTION AT FREQ f */ sparks.vars.Recalc = function (f) { sparks.vars.XL = sparks.vars.fXL(sparks.vars.L, f); sparks.vars.Z = sparks.vars.fZ(sparks.vars.R, sparks.vars.XL); sparks.vars.VR = sparks.vars.fV(sparks.vars.VS, sparks.vars.R, sparks.vars.Z); sparks.vars.VL = sparks.vars.fV(sparks.vars.VS, sparks.vars.XL, sparks.vars.Z); sparks.vars.freqs.push(f); console.log(''); console.log('Recalc: f = ' + sparks.unit.convertMeasurement(f + 'Hz') + ', XL = ' + sparks.unit.convertMeasurement(sparks.vars.XL + 'ohms') + ', Z = ' + sparks.unit.convertMeasurement(sparks.vars.Z + 'ohms')); console.log('Predicted VR = ' + sparks.unit.convertMeasurement(sparks.vars.VR + 'V') + ', VL = ' + sparks.unit.convertMeasurement(sparks.vars.VL + 'V')); }; /* --- CONVERT INDUCTANCE VALUES --- */ sparks.vars.convertNano = function(x,unit) { if (Math.log10(x)<-6){ /* --- HANDLE NANO --- */ roundedNanoX = Math.round(100*x*1e9)/100; return (roundedNanoX + ' n' + unit); } else /* --- ALL OTHER --- */ {return (sparks.unit.convertMeasurement(x + unit));} }; /*--- DEFINE RANDOM AMPLITUDE --- */ source.amplitude = Math.round(Math.random() * 30 + 16); /* --- STARTING VALUES --- */ sparks.vars.VS = source.amplitude / Math.sqrt(2); sparks.vars.R = r1.resistance; sparks.vars.L = L1.getInductance(); sparks.vars.Cutoff = sparks.vars.R / (2 * Math.PI * sparks.vars.L); sparks.vars.RLoc = r1.getNodes(); sparks.vars.LLoc = L1.getNodes(); sparks.vars.freqs = new Array(); sparks.vars.Recalc(source.initialFrequency); '']For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [sparks.unit.convertMeasurement(r1.resistance + ' ohms')]<br>&nbsp;&nbsp; <b>L<sub>1</sub></b> = [sparks.vars.convertNano(L1.getInductance(),'H')] ",
+      "questions": [
+        {
+          "prompt": "Here is a resistor <b>R</b> and inductor <b>L</b> in series, powered by the function generator: an AC power supply (<b>PS</b>). Since the inductor responds to different frequencies, use the slider on the function generator to explore the AC voltages in this circuit.<hr>",
+          "tutorial": "tutorial-27",
+          "subquestions": [
+            {
+              "prompt": "At a low frequency (< 1 kHz), use the DMM to measure:<br>Supply voltage <b>V<sub>PS</sub></b> &nbsp;&nbsp;&nbsp;",
+              "beforeScript": " /* --- BEFORESCRIPT --- */ /* --- DEFINE FUNCTIONS --- */ sparks.vars.fChange = function (f) { /* --- HOW MANY FREQ CHANGES? --- */ z = 0; y = f.sort(); len = y.length; for (var i = 1; i < len; i++) { if (y[i] != y[i - 1]) { z++; } } return (z); }; /* --- CHECK IF MEASUREMENTS MADE --- */ sparks.vars.didMeasureComponent = function (meta, component) { nodes = component.getNodes(); return (nodes.indexOf(meta.redProbe) > -1 && nodes.indexOf(meta.blackProbe) > -1 && meta.redProbe !== meta.blackProbe); }; /* --- CHECK PROBE PLACEMENTS ---*/ sparks.vars.dbugProbes = function (meta) { console.log('blackProbe: ' + meta.blackProbe + ' redProbe: ' + meta.redProbe); if (sparks.vars.didMeasureComponent(meta, r1)) { console.log('Measured R1 where R = ' + sparks.vars.R + ' ohms'); return ('R1'); } else if (sparks.vars.didMeasureComponent(meta, L1)) { console.log('Measured L1 where L = ' + sparks.vars.L + ' H'); return ('L1'); } else if (close(sparks.vars.VS, meta.val, 0.5)) { console.log('Measured PS where VS = ' + sparks.vars.VS + ' V'); return ('PS'); } else { console.log('NOT measuring R1 or L1 or PS'); return (-1); } }; /* --- CHECK MEASURE OF x STORED IN q, COMPARE TO target VOLTAGE --- */ sparks.vars.checkMeasurement = function (q, target, x) { console.log('====== Checking measurements for this question:'); console.log(q); q.correct_answer = Math.round(10 * target) / 10; q.points_earned = 0; /* --- CHECK PROBES AND DMM SETUP --- */ if (!q.meta.units && !q.meta.val) { /* --- NO MEASUREMENT --- */ if (q.meta.blackProbe && q.meta.redProbe) { /* --- PROBES PLACED BUT NO READING TAKEN--- */ q.feedback = 'Use the <b><i>Read Multimeter</i></b> button to record your circuit measurements.'; } else /* --- PROBES NOT PLACED AND NO READING TAKEN--- */ {q.feedback = 'Connect the DMM probes and use the <b><i>Read Multimeter</i></b> button to measure the circuit.';} } else if (!q.meta.amplitude && isNaN(q.meta.val)) { /* --- PROBES NOT PLACED IN CIRCUIT --- */ q.feedback = 'Connect both DMM probes to your circuit to make measurements.'; } else if (q.meta.dmmDial != 'acv_200' && q.meta.dmmDial != 'acv_750') { /* --- PROBES PLACED BUT BAD DMM KNOB SET --- */ q.feedback = 'Use the DMM set to measure <b>AC voltages.</b>'; if (q.meta.val !== null && !isNaN(q.meta.val)) { /* --- GOT A READING ALBEIT BAD --- */ q.answer = sparks.unit.convertMeasurement(Math.round(10000 * q.meta.val) / 10000 + ' ' + q.meta.units); } } else /* --- CHECK ACV READING --- */ { q.answer = Math.round(10 * q.meta.val) / 10; if (!q.meta.frequency) { /* --- FREQ NOT CHANGED, SO USE INIT FREQ --- */ sparks.vars.Freq = source.initialFrequency; } else { /* --- USE CURRENT FREQ VALUE --- */ sparks.vars.Freq = sparks.unit.convertMeasurement(q.meta.frequency + 'Hz'); } probePlacement = sparks.vars.dbugProbes(q.meta); if (probePlacement == x) /* --- YES, PROBES ACROSS x ---*/ { if (q.meta.dmmDial == 'acv_200') { /* --- DMM KNOB ON ACV_200 ---*/ if (close(target, q.answer, 15 / target)) { q.correct_answer = q.answer; if (q.shortPrompt.indexOf('low') > 0 || (q.shortPrompt.indexOf('high') > 0 && sparks.vars.fChange(sparks.vars.freqs) > 0) || q.shortPrompt.indexOf('upply') > 0) { /* --- BRAVO! ---*/ q.points_earned = 10; q.feedback = 'Excellent! You measured <b>V<sub>' + x + '</sub></b> at ' + sparks.vars.Freq; } else { /* --- NO CHANGE OF FREQ ---*/ q.points_earned = 2; q.feedback = 'You measured well, but not at a different frequency, as directed.'; } } else { /* --- UKNOWN RESULT ---*/ q.feedback = 'The DMM appears to have malfunctioned. Sorry! Try again?'; } } else { /* --- DMM KNOB ON ACV_750 ---*/ if (close(Math.round(target), q.answer, 20 / target)) { /* --- MEASURE IS CLOSE ---*/ if (q.shortPrompt.indexOf('low') > 0 || (q.shortPrompt.indexOf('high') > 0 && sparks.vars.fChange(sparks.vars.freqs) > 0) || q.shortPrompt.indexOf('upply') > 0) { /* --- ALMOST RIGHT AND FREQ CHANGED OK ---*/ q.points_earned = 2; q.feedback = 'Essentially right, but you need to <b>use the most precise scale</b> on the DMM for precision.'; } else { /* --- NO CHANGE OF FREQ ---*/ q.feedback = 'You need to use a more precise DMM setting, and at a different frequency, as directed.'; } } else { /* --- MEASURE IS NOT CLOSE ---*/ q.feedback = 'You placed the probes in the right place, but should use a more precise DMM setting. Sorry!'; } } } else if (probePlacement !== -1) /* --- PROBES ACROSS WRONG COMPONENT --- */ { if (close(target, q.answer, 15 / target)) { /* --- VALUE ACROSS WRONG COMPONENT IS CLOSE ---*/ console.log('close value, but bad probe placement: across ' + x); q.feedback = 'No, even though the measures appear close, you did not measure across ' + x + '.'; } else { /* --- VALUE IS NOT CLOSE ---*/ q.feedback = 'No, you need to measure across ' + x + ' to find <b>V<sub>' + x + '</sub></b>.'; } } else { /* --- PROBE PLACEMENTS UNKNOWN ---*/ q.feedback = 'What happened? You did not appear to measure across <b>' + x + '</b>.'; } q.correct_answer = sparks.unit.convertMeasurement(q.correct_answer + 'V'); q.answer = sparks.unit.convertMeasurement(q.answer + q.meta.units); if (q.points_earned > 0) { sparks.vars.Score++; } } console.log('V' + x + ' @ ' + sparks.vars.Freq + ': Meas = ' + q.answer + ' Actual = ' + sparks.unit.convertMeasurement(target + 'V') + ' ' + sparks.vars.pctDiff(q.meta.val, target)); return; }; /* --- END CHECK MEASUREMENT --- */ /* --- END BEFORESCRIPT --- */ ",
+              "shortPrompt": "Supply Voltage",
+              "show_read_multimeter_button": "true",
+              "points": 10,
+              "scoring": " /* --- VS SCORING AT FREQ F1 --- */ sparks.vars.Recalc(question.meta.frequency); sparks.vars.checkMeasurement(question, sparks.vars.VS, 'PS'); "
+            },
+            {
+              "prompt": "Voltage <b>V<sub>R</sub></b> across <b>R</b>",
+              "shortPrompt": "Voltage across R at low f",
+              "show_read_multimeter_button": "true",
+              "points": 10,
+              "scoring": " /* --- VR SCORING AT FREQ1 --- */ sparks.vars.Recalc(question.meta.frequency); sparks.vars.checkMeasurement(question, sparks.vars.VR, 'R1'); "
+            },
+            {
+              "prompt": "Voltage <b>V<sub>L</sub></b> across <b>L</b>",
+              "shortPrompt": "Voltage across L at low f",
+              "show_read_multimeter_button": "true",
+              "points": 10,
+              "scoring": " /* --- VL SCORING AT FREQ F1 --- */ sparks.vars.Recalc(question.meta.frequency); sparks.vars.checkMeasurement(question, sparks.vars.VL, 'L1'); "
+            }
+          ]
+        },
+        {
+          "prompt": "Now, increase to a high AC frequency (> 5 kHz), and measure again... <hr>",
+          "tutorial": "tutorial-20",
+          "subquestions": [
+            {
+              "prompt": "Voltage <b>V<sub>R</sub></b> across <b>R</b>",
+              "shortPrompt": "Voltage across R at high f ",
+              "show_read_multimeter_button": "true",
+              "points": 10,
+              "scoring": " /* --- VR SCORING AT FREQ F2 --- */ sparks.vars.Recalc(question.meta.frequency); sparks.vars.checkMeasurement(question, sparks.vars.VR, 'R1'); "
+            },
+            {
+              "prompt": "Voltage <b>V<sub>L</sub></b> across <b>L</b>",
+              "shortPrompt": "Voltage across L at high f",
+              "show_read_multimeter_button": "true",
+              "points": 10,
+              "scoring": " /* --- VL SCORING AT FREQ F2 --- */ sparks.vars.Recalc(question.meta.frequency); sparks.vars.checkMeasurement(question, sparks.vars.VL, 'L1'); "
+            }
+          ]
+        },
+        {
+          "prompt": "As you can see, the voltage drops across the two components do <b>not</b> add up to the supply voltage as they did with a pair of resistors. And they behave differently at different frequencies, too! <hr><b>When the frequency increases,</b> how would you summarize the voltage changes in the series-<b>RL</b> circuit?</b>",
+          "shortPrompt": "Effect of increased frequency",
+          "points": 50,
+          "tutorial": "tutorial-28",
+          "options": [
+            {
+              "option": "The voltage across the resistor decreases, and across the inductor increases.",
+              "points": 50
+            },
+            {
+              "option": "The voltage across the resistor increases, and across the inductor decreases."
+            },
+            {
+              "option": "The voltage across both the resistor and inductor increase."
+            },
+            {
+              "option": "The voltage across both the resistor and inductor decrease."
+            },
+            {
+              "option": "No change. The voltage across the resistor and inductor remain the same."
+            }
+          ],
+          "scoring": " if (question.answer.indexOf('resistor decreases')>0) { question.correct_answer = '<b>V<sub>R</sub></b> decreases, <b>V<sub>L</sub></b> increases'; if (sparks.vars.fChange(sparks.vars.freqs) > 0) { question.feedback = 'Correct! The inductor impedes more at high frequencies, reducing ' + 'the circuit current, and hence the voltage across <b>R</b>.'; question.points_earned = 50; } else { question.feedback = 'Yes, the inductor impedes more at high frequencies, ' + 'but you did not record any voltages with different frequencies.'; question.points_earned = 10; } } else { question.correct_answer = '<b>V<sub>R</sub></b> and <b>V<sub>L</sub></b> are affected!'; question.feedback = 'No, try again and look closely at your measurements with different frequencies.'; question.points_earned = 0; } "
+        }
+      ]
+    },
+    {
+      "notes": " For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [sparks.unit.convertMeasurement(r1.resistance + ' ohms')]<br>&nbsp;&nbsp; <b>L<sub>1</sub></b> = [sparks.vars.convertNano(L1.getInductance(),'H')] ",
+      "questions": [
+        {
+          "prompt": "Considering the voltage supplied to this circuit, at what voltage drop across the resistor <b>V<sub>R</sub></b> will the maximum power be cut in half?",
+          "shortPrompt": "Half-power voltage",
+          "points": 50,
+          "tutorial": "tutorial-28",
+          "radio": "true",
+          "options": [
+            {
+              "option": "[ /* --- SINCE THESE VALUES SET AT STARTUP, USE INITIAL FREQUENCY FOR DISTRACTERS --- */ sparks.unit.convertMeasurement(sparks.vars.VS/Math.SQRT2 + 'V');]",
+              "points": 50,
+              "feedback": "Good! The circuit will have <b>half</b> the maximum power at 0.707 times <b>V<sub>PS</sub></b>."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.VS/2 + 'V');]",
+              "feedback": "No, this is just half the supply voltage, <b>V<sub>PS</sub></b>. Check the tutorial for more help."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.VL + 'V');]",
+              "feedback": "No, the half power point is based on the supply voltage, <b>V<sub>PS</sub></b>. Check the tutorial for more help."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.VR/3 + 'V');]",
+              "feedback": "No, the half power point is based on the supply voltage, <b>V<sub>PS</sub></b>. Check the tutorial for more help."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.VS + 'V');]",
+              "feedback": "No, you chose the full supply voltage value, <b>V<sub>PS</sub></b>. Reduced power will occur with reduced voltage across <b>R</b>. Check the tutorial for more help."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.VS*Math.SQRT2 + 'V');]",
+              "feedback": "No, that is even more than the supply voltage, <b>V<sub>PS</sub></b>. Reduced power will occur with reduced voltage across <b>R</b>. Check the tutorial for more help."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.VL*Math.SQRT2 + 'V');]",
+              "feedback": "No, the half power point is based on the supply voltage, <b>V<sub>PS</sub></b>. Check the tutorial for more help."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.VR*Math.SQRT2 + 'V');]",
+              "feedback": "No, the half power point is based on the supply voltage, <b>V<sub>PS</sub></b>. Check the tutorial for more help."
+            }
+          ]
+        },
+        {
+          "prompt": "What is the <b>cutoff frequency</b> for this circuit? <br>(pick the closest value)",
+          "shortPrompt": "Cutoff Frequency",
+          "points": 50,
+          "tutorial": "tutorial-28",
+          "radio": "true",
+          "options": [
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.Cutoff + 'Hz');]",
+              "points": 50,
+              "feedback": "Right on! At this frequency, the inductor impedes half the maximum circuit power."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.Cutoff/Math.SQRT2 + 'Hz');]",
+              "feedback": "No. You need to find the frequency where the <b>power</b> just drops to half of the maximum. Check out the tutorial."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.Cutoff*Math.SQRT2 + 'Hz');]",
+              "feedback": "No. You need to find the frequency where the <b>power</b> just drops to half of the maximum. Check out the tutorial."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(sparks.vars.Cutoff*(2+Math.random()/5) + 'Hz');]",
+              "feedback": "No. You need to find the frequency where the <b>power</b> just drops to half of the maximum. Check out the tutorial."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(r1.resistance/2/L1.getInductance() + 'Hz');]",
+              "feedback": "No. You need to find the frequency where the <b>power</b> just drops to half of the maximum. Check out the tutorial."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(r1.resistance/2/L1.getInductance() *(1+Math.random()/5) + 'Hz');]",
+              "feedback": "No. You need to find the frequency where the <b>power</b> just drops to half of the maximum. Check out the tutorial."
+            },
+            {
+              "option": "[sparks.unit.convertMeasurement(r1.resistance*0.27566/L1.getInductance() + 'Hz');]",
+              "feedback": "No. You need to find the frequency where the <b>power</b> drops to half of the maximum, not <b>V<sub>R</sub></b>"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

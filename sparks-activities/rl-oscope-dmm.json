@@ -1,0 +1,52 @@
+{
+  "_id": "rl-oscope-dmm",
+  "_rev": "5-b88b8d7d5b47d9d8ea7ddd5638db53e3",
+  "title": "Sample RL Circuit with OScope and DMM",
+  "show_multimeter": true,
+  "show_oscilloscope": true,
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        5000,
+        100000,
+        100
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "b17,b23",
+      "label": "R1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "inductance": ".008",
+      "connections": "c11,c17",
+      "label": "L1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample LCR circuit"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "_id": "series-a-1d",
+  "_rev": "28-bd288e46d67452f4bd607256262f51cb",
+  "nextSection": "series-b-1a",
+  "title": "Understanding a Breadboard",
+  "image": "circuit-a-1-d.jpg",
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "Which wires will complete the   circuit and light the bulb?",
+          "shortPrompt": "Wires to light bulb",
+          "radio": "true",
+          "correct_answer": "A",
+          "tutorial": "tutorial-1",
+          "category": "Understanding breadboards",
+          "options": [
+            {
+              "option": "E and J",
+              "points": 5,
+              "feedback": "Bravo! You understand how these breadboards work! That will help you a lot in the screens to come. You can advance to the next level."
+            },
+            {
+              "option": "E and F",
+              "points": 0,
+              "feedback": "No, lead E connects the left end of the bulb to the positive terminal of the battery, but lead F doesn't connect to the bulb at all. Check the tutorial for more explanation."
+            },
+            {
+              "option": "C and H",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, neither lead C nor lead H actually connects to the bulb at all. The holes in the breadboard are connected <i>vertically,</i> not horizontally. Check the tutorial for more explanation."
+            },
+            {
+              "option": "A, B, and D",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No. Look closely at the picture. Together, leads A and B connect the negative terminal of the battery to the left side of the bulb, but the D lead connects the <i>same side</i> of the bulb to no voltage at all! Check the tutorial for more explanation."
+            },
+            {
+              "option": "D and H",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, that won't work. The D lead is connected to the bulb but the H lead isn't. The holes in the breadboard are connected <i>vertically,</i> not horizontally. Check the tutorial for more explanation."
+            },
+            {
+              "option": "B, C, and E",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No. Look closely at the picture. Lead E connects the left side of the bulb to the positive terminal of the battery, but there's no connection between the right side of the bulb and the negative terminal of the battery. Check the tutorial for more explanation."
+            },
+            {
+              "option": "F, H, and J",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, that won't work. Lead J connects the right side of the bulb to the negative terminal of the battery, but the other two leads don't do anything. Remember, the holes in the breadboard are connected <i>vertically,</i> not horizontally. Check the tutorial for more explanation."
+            },
+            {
+              "option": "C and G",
+              "points": 0,
+              "tutorial": "tutorial-1",
+              "feedback": "No, that's wrong. Remember, the holes in the breadboard are connected <i>vertically,</i> not <i>horizontally</i>. Check the tutorial for more explanation."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "hide_circuit": true,
+  "_attachments": {
+    "circuit-a-1-d.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 4,
+      "length": 357474,
+      "stub": true
+    }
+  }
+}

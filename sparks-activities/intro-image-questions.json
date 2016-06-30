@@ -1,0 +1,34 @@
+{
+  "_id": "intro-image-questions",
+  "_rev": "21-d741002dc8ac3bb17c904e684afd1fe1",
+  "title": "Learning About Breadboards",
+  "image": "connections_question.jpg",
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "Select all the connections above that are <b>necessary</b> connections to make the bulb light up.",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "checkbox": true,
+          "correct_answer": "C, F"
+        }
+      ]
+    }
+  ],
+  "_attachments": {
+    "connections_question.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 4,
+      "length": 30169,
+      "stub": true
+    }
+  }
+}

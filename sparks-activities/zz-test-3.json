@@ -1,0 +1,22 @@
+{
+  "_id": "zz-test-3",
+  "_rev": "46-4f0c337a610f3dcf116b6bc3f328021a",
+  "title": "Testing Functionality",
+  "pages": [
+    {
+      "notes": "[/* this would be a script, between brackets, executed first */ '']Scripts here in Notes run first, but can&rsquo;t handle arrays.<br>",
+      "questions": [
+        {
+          "prompt": "See javascript console for output.",
+          "beforeScript": " /* --- Trying to get nano- units displayed --- */ sparks.vars.convertNano = function(x,unit) { if (Math.log10(x)<-6){ /* --- handle nano units --- */ nanoX = x * 1e9; roundedNanoX = Math.round(100*nanoX)/100; return (roundedNanoX + ' n' + unit); } else {return (sparks.unit.convertMeasurement(x + unit));} }; var units = new Array('volts','V','farads','f','amps','A','ohms','Ω'); for (j=0;j<units.length;j++) { var x = Math.round(1e6*Math.PI)/1e6*1E-9; for (i=-9;i<10;i++) { x = x*10; display = sparks.vars.convertNano(x,units[j]); console.log(x + ': ' + display); } console.log('------------------------------'); } ",
+          "options": [
+            {
+              "option": "Option 1",
+              "points": 100
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

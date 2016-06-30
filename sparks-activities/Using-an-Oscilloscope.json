@@ -1,0 +1,10 @@
+{
+  "_id": "using-an-oscilloscope",
+  "_rev": "5-225427ff57287d6f5eacd7834a5e465b",
+  "type": "activity",
+  "sections": [
+    "oscilloscope-1",
+    "oscilloscope-2"
+  ],
+  "title": "How to use an oscilloscope to measure voltages"
+}

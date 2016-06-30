@@ -1,0 +1,72 @@
+{
+  "_id": "before-scripts-test",
+  "_rev": "25-c71bca0587549a219bcd3280636e943a",
+  "title": "Sample Circuit with late-appearing OScope and DMM",
+  "show_multimeter": false,
+  "show_oscilloscope": false,
+  "disable_multimeter_position": "r",
+  "referenceFrequency": 10000,
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "linear",
+        1e-30,
+        200,
+        201
+      ],
+      "amplitude": [
+        0,
+        20,
+        10
+      ]
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1",
+      "resistance": 100
+    },
+    {
+      "type": "inductor",
+      "UID": "l1",
+      "connections": "b17,b11",
+      "label": "R1",
+      "impedance": 100
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive10,a11"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "Perform some calculations",
+          "beforeScript": "sparks.sectionController.setOScopeVisibility(true)"
+        },
+        {
+          "prompt": "Woah, how did that DMM appear?!? Make some measurements",
+          "beforeScript": "sparks.sectionController.setDMMVisibility(true)",
+          "not_scored": true
+        },
+        {
+          "prompt": "And now there's an O-Scope! Make some cool high-tech measurements",
+          "beforeScript": "sparks.sectionController.setOScopeVisibility(true)",
+          "options": [
+            "123",
+            "234",
+            "345"
+          ]
+        }
+      ]
+    }
+  ]
+}

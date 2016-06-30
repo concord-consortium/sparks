@@ -1,0 +1,60 @@
+{
+  "_id": "john-RLC-series",
+  "_rev": "22-9d5633b0ef66d3ff3eb3bb7ea911cec0",
+  "title": "Measuring an RLC Series Circuit",
+  "allow_move_yellow_probe": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        10,
+        20000,
+        101
+      ],
+      "amplitude": 12
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "120",
+      "connections": "c22,c16",
+      "label": "R1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "inductance": "3.6e-3",
+      "connections": "b16,b10",
+      "label": "L1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "0.38e-6",
+      "connections": "c10,c4",
+      "label": "C1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,b22"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive3,b4"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.resistance] ohms<br>  &nbsp;&nbsp; <b>C<sub>1</sub></b> = [c1.capacitance] farads<br>&nbsp;&nbsp; <b>L<sub>1</sub></b> = [L1.inductance] henries<br>&nbsp;&nbsp; <b>V<sub>P</sub></b> = [source.amplitude] volts<br>&nbsp;&nbsp; <b>f<sub>source</sub></b> = [source.frequencies] Hz",
+      "questions": [
+        {
+          "prompt": "<b>RLC in Series.</b><br>Observe the behavior of the circuit above. What happens at resonance? What frequency? Given the value for C, determine the inductance of unlabeled L.<br><br><b>HINT:</b> Drag the curves horizontally to center a CH A peak over the axis, and observe the effect of changing the frequency."
+        }
+      ]
+    }
+  ],
+  "show_oscilloscope": "true",
+  "show_multimeter": "true"
+}

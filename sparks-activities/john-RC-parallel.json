@@ -1,0 +1,59 @@
+{
+  "_id": "john-RC-parallel",
+  "_rev": "4-0dcb33b22e69333f49fea64260c7ad05",
+  "title": "Measuring an RC Parallel Circuit",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        10,
+        10000,
+        101
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "10",
+      "connections": "c22,c16",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "10e-6",
+      "connections": "b16,b10",
+      "label": "C1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "100",
+      "connections": "d16,d10",
+      "label": "R2"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,b22"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive6,c10"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.resistance] ohms<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [r2.resistance] ohms<br>&nbsp;&nbsp; <b>C<sub>1</sub></b> = [c1.capacitance] farads <br>&nbsp;&nbsp; <b>V<sub>P</sub></b> = [source.amplitude] volts<br>&nbsp;&nbsp; <b>f<sub>source</sub></b> = [source.frequencies] Hz",
+      "questions": [
+        {
+          "prompt": "<b>RC in parallel.</b><br>Observe the frequency response of the circuit. What happens as the frequency increases? What is the cutoff frequency for this circuit?"
+        }
+      ]
+    }
+  ],
+  "show_oscilloscope": "true",
+  "show_multimeter": "true"
+}

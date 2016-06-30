@@ -1,0 +1,56 @@
+{
+  "_id": "oscilloscope-probe-location",
+  "_rev": "3-663c524af80490f19683658d8a4129a9",
+  "title": "Measuring an RC circuit with an oscilloscope",
+  "show_oscilloscope": "true",
+  "allow_move_yellow_probe": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "initialFrequency": 400,
+      "amplitude": 20
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "2.0e-07",
+      "connections": "b11,b17",
+      "label": "C1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative19,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "[source.amplitude = (Math.random()*40)+1; sparks.vars.Vs = source.amplitude; r1.resistance = (Math.random()*100) + 100; c1.capacitance = (5 * Math.random() + 1)*1.0e-6; console.log('At ' + sparks.unit.convertMeasurement(source.initialFrequency + ' Hz') + ',  VP = ' + sparks.unit.convertMeasurement(source.amplitude + ' volts') + '  Vrms = ' + sparks.unit.convertMeasurement(source.amplitude*0.707 + ' volts')); '']For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [Math.round(r1.resistance)] ohms<br>&nbsp;&nbsp; <b>C<sub>1</sub></b> = [Math.round(10*c1.capacitance * 1000000)/10] microf<br> Click the oscilloscope or function generator to make adjustments.",
+      "questions": [
+        {
+          "prompt": "Put the probes somewhere!",
+          "shortPrompt": "Where are the probes?",
+          "scoring": "  question.points_earned = 100; question.feedback = 'Your pink probe was on '+question.meta.pinkProbe+' your yellow probe was on '+question.meta.yellowProbe",
+          "points": 100
+        }
+      ]
+    }
+  ]
+}

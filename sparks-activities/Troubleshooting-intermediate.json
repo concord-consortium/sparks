@@ -1,0 +1,12 @@
+{
+  "_id": "troubleshooting-intermediate",
+  "_rev": "4-0519b785e8f128f8bfce8c73103f3596",
+  "type": "activity",
+  "sections": [
+    "series-parallel-g2",
+    "series-parallel-g3",
+    "series-parallel-g4",
+    "series-parallel-g5"
+  ],
+  "title": "Intermediate Troubleshooting"
+}

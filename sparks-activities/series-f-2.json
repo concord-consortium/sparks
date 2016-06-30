@@ -1,0 +1,93 @@
+{
+  "_id": "series-f-2",
+  "_rev": "20-93064a341f8d341cf83ccab8e9eda875",
+  "title": "Troubleshooting a series circuit #2",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b28,b22",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "d22,d16",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "b16,b10",
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "d10,d4",
+      "label": "R4"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive24,a28"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,a4"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "Unfortunately, the internal battery of the DMM is dead, so the DMM is unable to measure resistance.",
+      "questions": [
+        {
+          "prompt": "Which days begine with 'T'?",
+          "shortPrompt": "days beginning with 'T'",
+          "checkbox": "true",
+          "keepOrder": "true",
+          "correct_answer": "Tuesday, Thursday",
+          "options": [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ]
+        },
+        {
+          "prompt": "Which of the resistors in the circuit are defective, either 'open' or 'shorted'?",
+          "shortPrompt": "Defective resistors",
+          "checkbox": "true",
+          "keepOrder": "true",
+          "options": [
+            {
+              "option": "<b>R<sub>1</sub></b>"
+            },
+            {
+              "option": "<b>R<sub>2</sub></b>"
+            },
+            {
+              "option": "<b>R<sub>3</sub></b>"
+            },
+            {
+              "option": "<b>R<sub>4</sub></b>"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "open",
+        "shorted"
+      ],
+      "count": 2
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "_id": "pages-example",
+  "_rev": "33-6bf166bd03d5426ab23fe5ed7b3856b0",
+  "title": "Interpreting a Series Circuit",
+  "show_multimeter": "false",
+  "hide_circuit": "true",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1",
+      "resistance": 2000
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d11,d5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,a23",
+      "label": "W1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,a5"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "What is the value of R<sub>1</sub>:",
+          "shortPrompt": "Resistance of R1",
+          "options": [
+            {
+              "option": "[${r1.nominalResistance}] ohms",
+              "points": 1,
+              "feedback": "That's right!"
+            },
+            {
+              "option": "[${r1.nominalResistance}*1000] ohms",
+              "feedback": "You got the wrong order of magnitude",
+              "tutorial": "http:sdfsdfsf"
+            },
+            {
+              "option": "[${r1.nominalResistance}*2] ohms",
+              "feedback": "That's not right"
+            },
+            {
+              "option": "[${r1.nominalResistance}*2/10] ohms",
+              "feedback": "That's not right"
+            }
+          ]
+        },
+        {
+          "prompt": "What is the value of R<sub>2</sub>:",
+          "shortPrompt": "Resistance of R2",
+          "keepOrder": "true",
+          "options": [
+            {
+              "option": "[${r2.nominalResistance}] ohms",
+              "points": 1,
+              "feedback": "That's right!"
+            },
+            {
+              "option": "[${r2.nominalResistance}*1000] ohms",
+              "feedback": "You got the wrong order of magnitude",
+              "tutorial": "http:sdfsdfsf"
+            },
+            {
+              "option": "[${r2.nominalResistance}*2] ohms",
+              "feedback": "That's not right"
+            },
+            {
+              "option": "[${r2.nominalResistance}*2/10] ohms",
+              "feedback": "That's not right"
+            }
+          ]
+        },
+        {
+          "prompt": "What is the resistance of",
+          "subquestions": [
+            {
+              "prompt": "R2:",
+              "correct_answer": "[${r2.nominalResistance}]",
+              "points": 1
+            },
+            {
+              "prompt": "R2 * 2:",
+              "correct_answer": "[${r2.nominalResistance} * 2]"
+            }
+          ]
+        }
+      ],
+      "notes": "Here are some values you may find useful:<br/>R1: [${r1.nominalResistance}] ohms <br/>R2: [${r2.nominalResistance}/1000] kiloohms"
+    },
+    {
+      "questions": [
+        {
+          "prompt": "What is the value of R3?",
+          "correct_answer": "[${r3.nominalResistance}]"
+        },
+        {
+          "prompt": "What is the value of R3 / 100?",
+          "options": [
+            {
+              "option": "[${r3.nominalResistance}] ohms",
+              "points": 0,
+              "feedback": "Nope: <a href='https://www.pivotaltracker.com/projects/36458#'>Try this tutorial</a>."
+            },
+            {
+              "option": "[${r3.nominalResistance}/100] ohms",
+              "feedback": "That's right!",
+              "points": 5
+            },
+            {
+              "option": "[${r1.nominalResistance}*2] ohms",
+              "feedback": "That's not right"
+            },
+            {
+              "option": "[${r1.nominalResistance}*2/10] ohms",
+              "feedback": "That's not right"
+            }
+          ],
+          "radio": true
+        }
+      ],
+      "notes": "Here are some more values you may find useful:<br/>R3: [${r3.nominalResistance}] ohms"
+    }
+  ]
+}

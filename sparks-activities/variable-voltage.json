@@ -1,0 +1,39 @@
+{
+  "_id": "variable-voltage",
+  "_rev": "25-38bc7c0c4e2eaf3dd5962304d42f454b",
+  "title": "Variable Voltage",
+  "circuit": [
+    {
+      "type": "battery",
+      "UID": "source",
+      "voltage": [
+        8.5,
+        9.1
+      ],
+      "connections": "left_positive20,left_negative20"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive13,a17"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample LCR circuit"
+        }
+      ]
+    }
+  ]
+}

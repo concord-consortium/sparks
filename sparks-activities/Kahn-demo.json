@@ -1,0 +1,51 @@
+{
+  "_id": "Kahn-demo",
+  "_rev": "11-ab4c00d3a17159c5ba7b7df2de16dfbc",
+  "title": "Measuring Series Circuits (advanced)",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive20,a23",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1",
+      "resistance": "1000"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2",
+      "resistance": "1500"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d11,d5",
+      "label": "R3",
+      "resistance": "500"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "show_multimeter": "true",
+  "pages": [
+    {
+      "notes": "Here are three resistors in series. If you know the color code you should be able to tell what their resistances are, but you can measure them anyway (they might not be exactly what they say they are!)",
+      "questions": [
+        {
+          "prompt": "Use the digital multimeter to make the measurements below. You can break the circuit, if you need to, by clicking on any resistor lead."
+        }
+      ]
+    }
+  ]
+}

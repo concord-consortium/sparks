@@ -1,0 +1,12 @@
+{
+  "_id": "ac-series-measurements",
+  "_rev": "2-2a0ffbbcbd02c3928628fc5a46de2888",
+  "type": "activity",
+  "sections": [
+    "john-RRR-series",
+    "john-RL-series",
+    "john-RC-series",
+    "john-RLC-series"
+  ],
+  "title": "Measuring alternating voltages in series circuits"
+}

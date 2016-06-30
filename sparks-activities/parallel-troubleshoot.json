@@ -1,0 +1,63 @@
+{
+  "_id": "parallel-troubleshoot",
+  "_rev": "9-ff715dfba97d77e36d77b994bbf2cdd7",
+  "title": "Troubleshooting a parallel circuitt",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "a17,a11",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "e17,e11",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,b17"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,d11"
+    }
+  ],
+  "faults": [
+    {
+      "type": "open",
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "One of these resistors is open. Which one is it?",
+          "options": [
+            {
+              "option": "R1"
+            },
+            {
+              "option": "R2"
+            },
+            {
+              "option": "R3"
+            }
+          ],
+          "keepOrder": "true",
+          "scoring": "var badResistorName; if ((${r1.resistance} > 1e12)||(${r1.resistance} < 1e-5)) {badResistorName = 'R1'}  else if ((${r2.resistance} > 1e12)||(${r2.resistance} < 1e-5)) { badResistorName = 'R2' } else if ((${r3.resistance} > 1e12)||(${r3.resistance} < 1e-5)) { badResistorName = 'R3' }; if (question.answer === badResistorName) {question.points_earned = 10} question.correct_answer = badResistorName"
+        }
+      ]
+    }
+  ]
+}

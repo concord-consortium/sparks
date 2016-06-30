@@ -1,0 +1,49 @@
+{
+  "_id": "ac-dmm-test",
+  "_rev": "13-b86a68ce2980523619a87f12df3fc900",
+  "title": "AC DMM Tesr",
+  "show_multimeter": true,
+  "show_oscilloscope": true,
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        5000,
+        100000,
+        500
+      ],
+      "amplitude": [
+        0,
+        20,
+        10
+      ]
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1",
+      "resistance": 100
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive10,a17"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample circuit. Since we have an AC source, the DMM will automatically show RMS current. Note that the amplitude knob on the FG is initialized at 10V, and ranges from 0V to 20V."
+        }
+      ]
+    }
+  ]
+}

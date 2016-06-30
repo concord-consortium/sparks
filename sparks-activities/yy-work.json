@@ -1,0 +1,66 @@
+{
+  "_id": "yy-work",
+  "_rev": "17-bda3edefb5579759e2c4f94525be51a9",
+  "title": "AC Circuit TEST",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        8000,
+        160
+      ],
+      "initialFrequency": 400,
+      "amplitude": 50
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": [
+        "uniform",
+        100,
+        390
+      ],
+      "connections": "c15,c21",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": [
+        "uniform",
+        430,
+        910
+      ],
+      "connections": "b9,b15",
+      "label": "R2"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a21"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive6,a9"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "[ /* --- STARTING VALUES --- */ source.amplitude = Math.round(Math.random() * 30 + 16); sparks.vars.V = source.amplitude / Math.sqrt(2); sparks.vars.R1 = Math.round(10 * r1.resistance) / 10; sparks.vars.R2 = Math.round(10 * r2.resistance) / 10; sparks.vars.V1 = Math.round(10 * sparks.vars.V * r1.resistance / (r1.resistance + r2.resistance)) / 10; sparks.vars.V2 = Math.round(10 * sparks.vars.V * r2.resistance / (r1.resistance + r2.resistance)) / 10; sparks.vars.VS = Math.round(10 * sparks.vars.V) / 10; sparks.vars.R1Loc = r1.getNodes(); sparks.vars.R2Loc = r2.getNodes(); sparks.vars.Score = 0; '']For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [sparks.unit.convertMeasurement(r1.resistance + 'ohms')]<br>&nbsp;&nbsp; <b>R<sub>2</sub></b> = [sparks.unit.convertMeasurement(r2.resistance + 'ohms')]<br>&nbsp;&nbsp;",
+      "questions": [
+        {
+          "prompt": "Place the probes and use the DMM to measure here. The <b><i>Read Multimeter</i></b> buttons will copy your DMM readings.<hr>",
+          "shortPrompt": "Voltage measurements",
+          "tutorial": "tutorial-27",
+          "beforeScript": " /* --- BEFORESCRIPT --- */ /* --- DEFINE FUNCTIONS --- */ sparks.vars.fChange = function (f) { /* --- HOW MANY FREQ CHANGES? --- */ z = 0; y = f.sort(); len = y.length; for (var i = 1; i < len; i++) { if (y[i] > y[i - 1]) { z++; } } return (z); }; /* --- CHECK IF MEASUREMENTS MADE --- */ sparks.vars.didMeasureComponent = function (meta, component) { nodes = component.getNodes();   console.log('in didMeasureComponent,.exposing the component being tested...');  console.log(component); return (nodes.indexOf(meta.redProbe) > -1 && nodes.indexOf(meta.blackProbe) > -1 && meta.redProbe !== meta.blackProbe); }; /* --- CHECK PROBE PLACEMENTS ---*/ sparks.vars.dbugProbes = function (meta) { console.log('blackProbe: ' + meta.blackProbe + ' redProbe: ' + meta.redProbe); if (sparks.vars.didMeasureComponent(meta, r1) || meta.val == sparks.vars.R1) { console.log('Measured R1 where R = ' + sparks.vars.R1 + ' ohms'); return ('R1'); } else if (sparks.vars.didMeasureComponent(meta, r2) || meta.val == sparks.vars.R2) { console.log('Measured R2 where R = ' + sparks.vars.R2 + ' ohms'); return ('R2'); } else if (close(sparks.vars.VS, meta.val, 3)) { console.log('Measured PS where VS = ' + sparks.vars.VS + ' V'); return ('PS'); } else { console.log('NOT measuring R1 or R2 or PS'); return (-1); } }; /* --- CHECK MEASURE OF x STORED IN q, COMPARE TO target VOLTAGE --- */ sparks.vars.checkMeasurement = function (q, target, x) { console.log('====== Checking measurements for this question:'); console.log(q); q.correct_answer = Math.round(10 * target) / 10; q.points_earned = 0; q.tutorial = 'tutorial-27'; /* --- CHECK PROBES AND DMM SETUP --- */ if (!q.meta.units && !q.meta.val) { /* --- NO MEASUREMENT --- */ if (q.meta.blackProbe && q.meta.redProbe) { /* --- PROBES PLACED BUT NO READING TAKEN--- */ q.feedback = 'Use the <b><i>Read Multimeter</i></b> button to record your circuit measurements.'; } else /* --- PROBES NOT PLACED AND NO READING TAKEN--- */ { q.feedback = 'Connect the DMM probes and use the <b><i>Read Multimeter</i></b> button to measure the circuit.'; } } else if (!q.meta.amplitude && isNaN(q.meta.val)) { /* --- PROBES NOT PLACED IN CIRCUIT --- */ q.feedback = 'Connect both DMM probes to your circuit to make measurements.'; } else if (q.meta.dmmDial != 'acv_200' && q.meta.dmmDial != 'acv_750') { /* --- PROBES PLACED BUT BAD DMM KNOB SET --- */ q.feedback = 'Use the DMM, set to measure <b>AC voltages.</b>'; if (q.meta.val !== null && !isNaN(q.meta.val)) { /* --- GOT A READING ALBEIT BAD --- */ q.answer = sparks.unit.convertMeasurement(Math.round(10000 * q.meta.val) / 10000 + ' ' + q.meta.units); } } else /* --- CHECK ACV READING --- */ { q.answer = Math.round(10 * q.meta.val) / 10; if (!q.meta.frequency) { /* --- FREQ NOT CHANGED, SO USE INIT FREQ --- */ sparks.vars.Freq = source.initialFrequency; } else { /* --- USE CURRENT FREQ VALUE --- */ sparks.vars.Freq = sparks.unit.convertMeasurement(q.meta.frequency + 'Hz'); } probePlacement = sparks.vars.dbugProbes(q.meta); if (probePlacement == x) /* --- YES, PROBES ACROSS x ---*/ { if (q.meta.dmmDial == 'acv_200') { /* --- DMM KNOB ON ACV_200 ---*/ if (close(target, q.answer, 15 / target)) { /* --- BRAVO! ---*/ q.correct_answer = q.answer; q.points_earned = q.points; q.feedback = 'Excellent! You measured <b>V<sub>' + x + '</sub></b> at ' + sparks.vars.Freq; } else { /* --- UKNOWN RESULT ---*/ q.feedback = 'The DMM appears to have malfunctioned. Sorry! Try again?'; } } else { /* --- DMM KNOB ON ACV_750 ---*/ if (close(Math.round(target), q.answer, 20 / target)) { /* --- MEASURE IS CLOSE ---*/ q.points_earned = 2; q.feedback = 'Essentially right, but you need to <b>use the most precise scale</b> on the DMM for precision.'; } else { /* --- MEASURE IS NOT CLOSE ---*/ q.feedback = 'You placed the probes in the right place, but need to use a more precise DMM setting. Sorry!'; } } } else if (probePlacement !== -1) /* --- PROBES ACROSS WRONG COMPONENT --- */ { if (close(target, q.answer, 15 / target)) { /* --- VALUE ACROSS WRONG COMPONENT IS CLOSE ---*/ console.log('close value, but bad probe placement: across ' + x); q.feedback = 'No, although the measures appear close, you did not measure across ' + x + '.'; } else { /* --- VALUE IS NOT CLOSE ---*/ if ((probePlacement == 'R1' && x == 'R2') || (probePlacement == 'R2' && x == 'R1') || target == sparks.vars.V - q.answer) { q.feedback = 'Did you get the measures from the two resistors reversed? Try again.'; } else { q.feedback = 'Please measure across ' + x + ' to find <b>V<sub>' + x + '</sub></b>.'; } } } else { /* --- PROBE PLACEMENTS UNKNOWN ---*/ q.feedback = 'What happened? You did not appear to measure across <b>' + x + '</b>.'; } q.correct_answer = sparks.unit.convertMeasurement(q.correct_answer + 'V'); q.answer = sparks.unit.convertMeasurement(q.answer + q.meta.units); if (q.points_earned > 0) { sparks.vars.Score++; } } console.log('V' + x + ' @ ' + sparks.vars.Freq + ': Meas = ' + q.answer + ' Actual = ' + sparks.unit.convertMeasurement(target + 'V')); return; }; /* --- END CHECK MEASUREMENT --- */ /* --- END BEFORESCRIPT --- */",
+          "show_read_multimeter_button": true,
+          "points": 10,
+          "scoring": "sparks.vars.checkMeasurement(question, sparks.vars.VS, 'PS'); "
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "_id": "series-parallel-c-1",
+  "_rev": "24-f7bbd5fed5b028c08676af1100ba6133",
+  "title": "Calculating R in Series-Parallel Circuits",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c21,c15",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "b15,b9",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d15,d9",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,b21"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,c9"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "Using the rated resistance values in the circuit shown above,<br>what is the effective total resistance of <b>R<sub>2</sub></sub></b> and <b>R<sub>3</sub></b>?",
+          "shortPrompt": "Parallel R2 & R3 resistance",
+          "radio": "true",
+          "options": [
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(R2*R3/(R2+R3),3)] ohms",
+              "points": 20,
+              "feedback": "Right! You used the formula for parallel resistances since R2 and R3 are connected in parallel!"
+            },
+            {
+              "option": "[var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(R2+R3,3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": "Oops! R2 and R3 are connected in parallel, not in series. If unsure, check out the tutorial."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(R1+R2+R3,3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": "Oops! You incorrectly calculated the total series resistance of these resistors. R2 and R3 are in parallel. If unsure, check out the tutorial."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance;Math.toSigFigs(R1*R2/(R1+R2),3)] ohms",
+              "points": 0,
+              "feedback": "You're on the right track, but you incorrectly used the values for R1 and R2, rather than R2 and R3."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance;Math.toSigFigs(R1+R2,3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": "Oops! You incorrectly chose the series total of R1 and R2, rather than the parallel total of R2 and R3. If unsure, check out the tutorial."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(R1*R3/(R1+R3),3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": " You're on the right track, but you incorrectly used the values for R1 and R3, rather than R2 and R3."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(R2*R3/(R2+R3)*(0.97-Math.random()/10),3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": "Are you guessing? Or did you just make an error using the formula for calculating total resistance for parallel resistors. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(R2*R3/(R2+R3)*(0.77-Math.random()/10),3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-9",
+              "feedback": "Are you guessing? Or did you just make an error using the formula for calculating total resistance for parallel resistors. Check out the tutorial, if this isn't clear."
+            }
+          ]
+        },
+        {
+          "prompt": "What is the effective total resistance of <b>all</b> the resistors in the circuit?",
+          "shortPrompt": "Total circuit resistance",
+          "radio": "true",
+          "keepOrder": "true",
+          "options": [
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(R1+R2*R3/(R2+R3),3)] ohms",
+              "points": 20,
+              "feedback": "Right! R1 is in series with the parallel R2 and R3!"
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(R1+R2+R3,3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-12",
+              "feedback": "Oops! This circuit is a combination of series <b>and</b> parallel, not just series. If unsure, check out the tutorial."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(1/(1/R1+1/R2+1/R3),3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-12",
+              "feedback": "Oops! This circuit is a combination of series <b>and</b> parallel, not just parallel. If unsure, check out the tutorial."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(R3+R1*R2/(R1+R2),3)] ohms",
+              "points": 0,
+              "feedback": "You're on the right track, but you seem to have mixed up the values of R1, R2, and R3."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(R2+R1*R3/(R1+R3),3)] ohms",
+              "points": 0,
+              "feedback": "You're on the right track, but you seem to have mixed up the values of R1, R2, and R3."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance;Math.toSigFigs(10*R1+100*R2*R3/(R2+R3),3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-12",
+              "feedback": "Are you guessing? Or did you just make a math error? Check out the tutorial, if unsure."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(10*R3+100*R1*R2/(R1+R2),3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-12",
+              "feedback": "Are you guessing? Or did you just make a math error? Check out the tutorial, if unsure."
+            },
+            {
+              "option": "[var R1 = r1.nominalResistance; var R2 = r2.nominalResistance; var R3 = r3.nominalResistance; Math.toSigFigs(10*R2+100*R1*R3/(R1+R3),3)] ohms",
+              "points": 0,
+              "tutorial": "tutorial-12",
+              "feedback": "Are you guessing? Or did you just make a math error? Check out the tutorial, if unsure."
+            }
+          ]
+        }
+      ],
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.nominalResistance] ohms<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [r2.nominalResistance] ohms<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [r3.nominalResistance] ohms<br>&nbsp;&nbsp; <b>E</b> = 9.00 volts"
+    }
+  ],
+  "hide_circuit": true,
+  "COMMENT": "Bonus for time < 60 sec: 8 pts. Max score: 20 pts.",
+  "nextSection": "series-parallel-c-2",
+  "image": "series-parallel-schematic.jpg",
+  "_attachments": {
+    "series-parallel-schematic.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 3,
+      "length": 17391,
+      "stub": true
+    }
+  }
+}

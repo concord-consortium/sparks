@@ -1,0 +1,19 @@
+{
+  "_id": "consent-form",
+  "_rev": "19-25367918ee3a96f48e199f04176866e4",
+  "title": "Consent Form",
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "Your school and your teacher/professor have adopted an exciting new project called <b>SPARKS: <font color='red'>S</font>imulations for <font color='red'>P</font>erformance <font color='red'>A</font>ssessments that <font color='red'>R</font>eport on <font color='red'>K</font>nowledge and <font color='red'>S</font>kills</b> to be part of your electronics course.  This project, funded by the National Science Foundation, helps students learn various topics in electronics by presenting realistic problems&mdash;similar to what they will see in the lab&mdash;simulated on a computer.  Students receive instant feedback and detailed reporting as they work to develop their electronic lab skills in the SPARKS modules.<br><br>This project is being run by non-profit educational research companies: <b>The Concord Consortium</b>, located in Concord, Massachusetts, and <b>CORD</b>, located in Waco, Texas.<br><br>Although your professor and school have adopted this project, for us to gather data from you (your answers, computer logs), we require your signed consent. Your permission to participate in this project means that you may be 1)&nbsp;observed during your regular class time; 2)&nbsp;asked to answer some questions about the assessment process in the form of pencil and paper surveys, and 3)&nbsp;possibly interviewed (about your reaction to the programs).<br><br>Participation is not required and if you do not participate or decide to withdraw from the study, there will be no negative effect on your grade in the course.  If you do participate, your data will be stripped of all identifying information and be simply assigned a unique identification number.  A list of identification numbers and corresponding student names will be kept in a locked file cabinet.<br><br>If you have any questions, you may contact the project's Principal Investigator, Dr. Paul Horwitz, at 978-405-3223, or the Chair of the Human Subjects Institutional Review Board of the Concord Consortium, Dr. Andrew Zucker, at 978-405-3231.<br><br><b>Have you read the above and are you willing to participate in this study?</b><br>",
+          "options": [
+            "Yes"
+          ],
+          "checkbox": true,
+          "not_scored": true
+        }
+      ]
+    }
+  ]
+}

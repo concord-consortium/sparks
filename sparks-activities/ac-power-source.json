@@ -1,0 +1,54 @@
+{
+  "_id": "ac-power-source",
+  "_rev": "113-1ccdddf1718fe1deb1feeb68fc86335b",
+  "title": "AC Power source with O-Scope",
+  "show_oscilloscope": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        15920
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "b17,b23",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "1e-7",
+      "connections": "c11,c17",
+      "label": "C1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L2",
+      "inductance": "0.002",
+      "connections": "b11,b5",
+      "label": "L1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a5"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample LCR circuit"
+        }
+      ]
+    }
+  ]
+}

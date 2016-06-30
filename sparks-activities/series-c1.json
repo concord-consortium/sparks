@@ -1,0 +1,137 @@
+{
+  "_id": "series-c1",
+  "_rev": "7-a186bbc78501213a487fc296e21ec732",
+  "title": "Calculating Total Circuit R and I (Series)",
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [sparks.unit.convertMeasurement(r1.nominalResistance + 'Ω')]<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [sparks.unit.convertMeasurement(r2.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [sparks.unit.convertMeasurement(r3.nominalResistance + 'Ω')]<br>&nbsp;&nbsp; <b>E</b> = 9.00 volts",
+      "questions": [
+        {
+          "prompt": "Using the rated resistance values for the circuit shown above, what&nbsp;is&nbsp;the&nbsp;circuit's <b>total resistance?</b>",
+          "shortPrompt": "Total resistance of series resistors",
+          "radio": "true",
+          "tutorial": "tutorial-3",
+          "category": "Calculating resistance",
+          "options": [
+            {
+              "option": "[cMath.rNominalSeries('r1','r2','r3')] ohms",
+              "points": 10,
+              "feedback": "That's right! The total resistance of resistors in series is simply the sum of the R values."
+            },
+            {
+              "option": "[cMath.rNominalSeries('r1','r2')] ohms",
+              "feedback": "You need to include the values for all the resistors."
+            },
+            {
+              "option": "[cMath.rNominalSeries('r2','r3')] ohms",
+              "feedback": "You need to include the values for all the resistors."
+            },
+            {
+              "option": "[cMath.rNominalSeries('r1','r3')] ohms",
+              "feedback": "You need to include the values for all the resistors."
+            },
+            {
+              "option": "[Math.toSigFigs(cMath.rNominalParallel('r1','r2','r3'),3)] ohms",
+              "feedback": "That's not the right formula. The total resistance of resistors in series is simply the sum of the R values. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(2*Math.PI*cMath.rNominalParallel('r1','r2','r3'),3)] ohms",
+              "feedback": "The total resistance of resistors in series is simply the sum of the R values. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(Math.PI/3*cMath.rNominalSeries('r1','r2','r3'),3)] ohms",
+              "feedback": "That's close, but not correct. Check your math, or maybe the tutorial can help."
+            }
+          ]
+        },
+        {
+          "prompt": "What is the <b>current</b> delivered by the battery? <i>(Hint:&nbsp;Use&nbsp;the&nbsp;total&nbsp;resistance&nbsp;from&nbsp;above.)</i>",
+          "shortPrompt": "Total current in series circuit",
+          "radio": "true",
+          "tutorial": "tutorial-4",
+          "category": "Using Ohms Law",
+          "options": [
+            {
+              "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+              "points": 10,
+              "feedback": "That's right! The circuit current is just the battery voltage divided by the total resistance."
+            },
+            {
+              "option": "9 A",
+              "feedback": "Sorry, that's the value for the battery voltage, not the current. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r2'),3)] A",
+              "feedback": "No, you must use the <b>total</b> resistance value to make this calculation. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r2','r3'),3)] A",
+              "feedback": "No, you must use the <b>total</b> resistance value to make this calculation. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(9/cMath.rNominalSeries('r1','r3'),3)] A",
+              "feedback": "No, you must use the <b>total</b> resistance value to make this calculation. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(9/cMath.rNominalParallel('r1','r2','r3'),3)] A",
+              "feedback": "No, you must use the total <b>series</b> resistance value to make this calculation. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(2*Math.PI*9/cMath.rNominalSeries('r1','r2','r3'),3)] A",
+              "feedback": "No, you must use the total series resistance value to make this calculation. Check out the tutorial, if this isn't clear."
+            },
+            {
+              "option": "[Math.toSigFigs(cMath.rNominalSeries('r1','r2','r3')/9000000,3)] A",
+              "feedback": "No, did you perhaps invert the formula? Check out the tutorial, if this isn't clear."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "image": "series-schematic.jpg",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive20,a23",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d11,d5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "COMMENT": "20 pts: 10+10 for (calc Rtot and Itot)",
+  "hide_circuit": true,
+  "nextSection": "series-c2",
+  "attachment": "series-schematic.jpg",
+  "_attachments": {
+    "series-schematic.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 4,
+      "length": 15883,
+      "stub": true
+    }
+  }
+}

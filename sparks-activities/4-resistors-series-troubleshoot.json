@@ -1,0 +1,55 @@
+{
+  "_id": "4-resistors-series-troubleshoot",
+  "_rev": "21-51660cc6013cf19e66416a2bdd2d0be2",
+  "title": "Four resistor circuit for bug finding",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c23,c17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "b17,b11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d17,d11",
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "e17,e11",
+      "label": "R4"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "c11,c5",
+      "label": "R4"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,a30"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,a1"
+    },
+    {
+      "type": "wire",
+      "connections": "a30,e23"
+    },
+    {
+      "type": "wire",
+      "connections": "a1,a5"
+    }
+  ]
+}

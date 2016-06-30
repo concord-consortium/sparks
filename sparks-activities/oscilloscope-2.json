@@ -1,0 +1,187 @@
+{
+  "_id": "oscilloscope-2",
+  "_rev": "94-aaf1c81bb78a7b81108e6a369641ca66",
+  "title": "Exploring the effects of frequency changes",
+  "show_oscilloscope": "true",
+  "allow_move_yellow_probe": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 16.97
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": [
+        "uniform",
+        100,
+        500
+      ],
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "connections": "b11,b17",
+      "label": "C1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative19,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "[source.amplitude = (Math.random() * 40) + 1; r1.resistance = (Math.random() * 100) + 100; c1.capacitance = (5 * Math.random() + 1) * 1.0e-7;'']For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [Math.round(r1.resistance)] ohms<br>&nbsp;&nbsp; <b>C<sub>1</sub></b> = [Math.round(10*c1.capacitance * 1000000)/10] microf<br>&nbsp;&nbsp",
+      "questions": [
+        {
+          "beforeScript": "",
+          "prompt": "You've completed the first level, showing that you know how to measure the total voltage across the circuit, Vtot, as well as the voltage across the resistor, Vr, and the voltage across the capacitor, Vc. Now it&#39;s time to investigate how all these voltages vary with frequency. Click on the function generator to change the frequency up and down. Note how Vtot, Vr and Vc behave as you do this. (Hint: you can measure all three voltages without moving the oscilloscope probes!) Then answer the questions below.",
+          "subquestions": [
+            {
+              "prompt": "What frequency are you measuring at?",
+              "shortPrompt": "First frequency",
+              "scoring": "/*  Measuring frequency for the first time  */  sparks.vars.f1 = question.meta.frequency; var correctAnswer = sparks.vars.f1; if (sparks.vars.f1 < 1000) { question.correct_answer = Math.round(100 * correctAnswer) / 100 + ' Hz'; } else { question.correct_answer = Math.round(correctAnswer / 10) / 100 + ' Khz'; } if (question.answer !== '') { var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, correctAnswer, 10); var unitsExist = !! parsedAnswer.units; var unitsCorrect = false; if (unitsExist) {unitsCorrect = parsedAnswer.units === 'Hz'; } if (unitsCorrect) { if (valueCorrect) { question.feedback = 'Right!'; question.points_earned = 50; } else { question.feedback = 'That&#39;s not right. Read the frequency off the function generator display.'; } } else if (unitsExist) { question.feedback = 'You are not using frequency units.'; } else { question.feedback = 'You must include units. A number without units is meaningless!'} } else { question.feedback = 'You did not make this measurement.'; } ",
+              "tutorial": "",
+              "points": 50
+            },
+            {
+              "prompt": "What is the peak voltage across the circuit at this frequency?",
+              "shortPrompt": "V1tot",
+              "scoring": " /* Measuring Vtot for the first time */ var pinkProbePosition = question.meta.yellowProbe; /* Note: colors are reversed here to compensate for a bug in the javascript */ var yellowProbePosition = question.meta.pinkProbe; /* Note: colors are reversed here to compensate for a bug in the javascript */ var yellowTraceMeasuringVtot = yellowProbePosition == 'L11' || yellowProbePosition == 'powerPosL'; var yellowTraceMeasuringVr = yellowProbePosition == 'L17'; var yellowTraceMeasuringZero = yellowProbePosition == 'L23' || yellowProbePosition == 'powerNegL'; var yellowTraceNull = yellowProbePosition === null; var pinkTraceNull = pinkProbePosition === null; var pinkTraceMeasuringVtot = pinkProbePosition == 'L11' || pinkProbePosition == 'powerPosL'; var pinkTraceMeasuringVr = pinkProbePosition == 'L17'; var pinkTraceMeasuringZero = pinkProbePosition == 'L23' || pinkProbePosition == 'powerNegL'; var probesMeasuringVtot = ((yellowProbePosition == 'L11' || yellowProbePosition == 'powerPosL') || (pinkProbePosition == 'L11' || pinkProbePosition == 'powerPosL')); var probesMeasuringVr = (yellowProbePosition == 'L17' || pinkProbePosition == 'L17');var probesMeasuringVc = probesMeasuringVtot && probesMeasuringVr; var probeNotConnected = (yellowProbePosition === null || pinkProbePosition === null); var qualityYellowTrace = question.meta.oscopeScaleQuality[0]; var qualityPinkTrace = question.meta.oscopeScaleQuality[1]; var goodVtotTrace = (pinkTraceMeasuringVtot && qualityPinkTrace > 0.5) || (yellowTraceMeasuringVtot && qualityYellowTrace > 0.5); var goodVrTrace = (pinkTraceMeasuringVr && qualityPinkTrace > 0.5) || (yellowTraceMeasuringVr && qualityYellowTrace > 0.5); var goodVcTrace = (probesMeasuringVc && Math.max(qualityPinkTrace, qualityYellowTrace) > 0.5); var channelAMeasure; if (yellowTraceMeasuringVtot) { channelAMeasure = 'Vtotal, '; } else if (yellowTraceMeasuringVr) { channelAMeasure = 'Vr, '; } else if (yellowTraceMeasuringZero) { channelAMeasure = 'ground voltage, '; } else { channelAMeasure = 'nothing because the probe is not connected. '; } var channelBMeasure; if (pinkTraceMeasuringVtot) { channelBMeasure = 'Vtotal. '; } else if (pinkTraceMeasuringVr) { channelBMeasure = 'Vr. '; } else if (pinkTraceMeasuringZero) { channelBMeasure = 'ground voltage. '; } else { channelBMeasure = 'nothing because the probe is not connected. '; } var channelAQuality = ''; if (qualityYellowTrace) { if (qualityYellowTrace > 0.7) { channelAQuality = 'The oscilloscope setting is good.'; } else if (qualityYellowTrace > 0.4) { channelAQuality = 'The oscilloscope setting could be improved to give you better accuracy.'; } else if (qualityYellowTrace <= 0.4) { channelAQuality = 'The oscilloscope setting is so bad it is hard to read anything meaningful from it. You should try to set the oscilloscope so that between half and a full wavelength fills the display from side to side and top to bottom.'; } } var channelBQuality = ''; if (qualityPinkTrace) { if (qualityPinkTrace > 0.7) { channelBQuality = 'The setting is good.'; } else if (qualityPinkTrace > 0.4) { channelBQuality = 'The oscilloscope setting could be improved to give you better accuracy.'; } else { channelBQuality = 'The oscilloscope setting is so bad it is hard to read anything from it. You should try to set the oscilloscope so that between half and a full wavelength fills the display as fully as possible.'; } } var traceReport = '<br>Channel A is measuring ' + channelAMeasure + channelAQuality + '<br>Channel B is measuring ' + channelBMeasure + channelBQuality; sparks.vars.R = r1.resistance; sparks.vars.C = c1.capacitance; sparks.vars.f1 = question.meta.frequency; sparks.vars.Vtot = source.amplitude; sparks.vars.Zc = 1 / (6.2832 * sparks.vars.f1 * sparks.vars.C); sparks.vars.Zrc = Math.sqrt(sparks.vars.R * sparks.vars.R + sparks.vars.Zc * sparks.vars.Zc); sparks.vars.Vr = sparks.vars.Vtot * sparks.vars.R / sparks.vars.Zrc; sparks.vars.Vc = sparks.vars.Vtot * sparks.vars.Zc / sparks.vars.Zrc; var correctAnswer = sparks.vars.Vtot; question.correct_answer = Math.round(100 * correctAnswer) / 100 + ' volts'; if (question.answer !== '') { var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, correctAnswer, 10); var valueClose = close(parsedAnswer.val, correctAnswer, 20); var valueTwiceCorrect = close(parsedAnswer.val, 2 * correctAnswer, 10); var valueVr = close(parsedAnswer.val, sparks.vars.Vr, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vr, 10); var valueVc = close(parsedAnswer.val, sparks.vars.Vc, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vc, 10); var unitsExist = !! parsedAnswer.units; var unitsCorrect = false; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'; } question.points_earned = 0; question.feedback = ''; if (unitsCorrect) { if (probesMeasuringVtot) { if (valueCorrect) { question.feedback = 'You got the right answer (you only have to be within 10% ) and you used the right units! Well done!'; question.points_earned = 100; } else if (valueClose) { question.feedback = 'Close! It looks as though you made a mistake estimating the voltage from the oscilloscope trace.'; question.feedback = question.feedback + ' Half points for this one &#8211; try again!'; question.points_earned = 50; } else if (valueTwiceCorrect) { question.feedback = 'You&#39;re supposed to be measuring the peak voltage, not the peak-to-peak voltage, across the circuit.'; } else { question.feedback = 'There&#39;s something wrong with your measurement. Check the gain setting on the oscilloscope and make sure that you are interpreting the display correctly.'; } } } else if (unitsExist) { question.feedback = 'You are not using voltage units.'; } else { question.feedback = 'You must include units. A number without units is meaningless!'; } } else { question.feedback = 'You did not make this measurement.'; } /*question.feedback = question.feedback + traceReport;*/",
+              "tutorial": "",
+              "points": 100
+            },
+            {
+              "prompt": "Without changing the frequency measure the peak voltage across the resistor and report it here.",
+              "shortPrompt": "V1r",
+              "scoring": " /* Measuring Vr for the first time */ sparks.vars.R = r1.resistance; sparks.vars.C = c1.capacitance; sparks.vars.f1 = question.meta.frequency; sparks.vars.Vtot = source.amplitude; sparks.vars.Zc = 1 / (6.2832 * sparks.vars.f1 * sparks.vars.C); sparks.vars.Zrc = Math.sqrt(sparks.vars.R * sparks.vars.R + sparks.vars.Zc * sparks.vars.Zc); sparks.vars.Vr = sparks.vars.Vtot * sparks.vars.R / sparks.vars.Zrc; sparks.vars.Vc = sparks.vars.Vtot * sparks.vars.Zc / sparks.vars.Zrc; var yellowProbePosition = question.meta.yellowProbe; var pinkProbePosition = question.meta.pinkProbe; var correctAnswer = sparks.vars.Vr; question.correct_answer = Math.round(100 * correctAnswer) / 100 + ' volts'; if (question.answer !== '') { var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, correctAnswer, 10); var valueClose = close(parsedAnswer.val, correctAnswer, 20); var valueTwiceCorrect = close(parsedAnswer.val, 2 * correctAnswer, 10); var valueVtot = close(parsedAnswer.val, sparks.vars.Vtot, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vtot, 10); var valueVr = close(parsedAnswer.val, sparks.vars.Vr, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vr, 10); var valueVc = close(parsedAnswer.val, sparks.vars.Vc, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vc, 10); var unitsCorrect = false; var unitsExist = !! parsedAnswer.units; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'; } var probesMeasuringVtot = ((yellowProbePosition == 'L11' || yellowProbePosition == 'powerPosL') || (pinkProbePosition == 'L11' || pinkProbePosition == 'powerPosL'));var probesMeasuringVr = (yellowProbePosition == 'L17' || pinkProbePosition == 'L17');var probesMeasuringVc = probesMeasuringVtot && probesMeasuringVr; var probeNotConnected = (yellowProbePosition === null || pinkProbePosition === null); var frequencyChanged = !(sparks.vars.f1 == sparks.vars.f2); question.points_earned = 0; if (unitsCorrect) { if (probesMeasuringVr && frequencyChanged) { if (valueCorrect) { question.feedback = 'You got the right answer (you only have to be within 10% ) and you used the right units! Well done!'; question.points_earned = 100; } else if (valueClose) { question.feedback = 'Close! It looks as though you made a mistake estimating the voltage from the oscilloscope trace. Half points for this one -- try again!'; question.points_earned = 50; } else if (valueTwiceCorrect) { question.feedback = 'You &#39;re supposed to be measuring the peak voltage, not the peak-to-peak voltage, across the circuit.'; } else if (valueVtot && probesMeasuringVr) { question.feedback = 'You may be measuring the total voltage across the circuit by mistake. Check to see if your&#39;e reading the right oscilloscope trace.'; } else if (valueVc && probesMeasuringVc) { question.feedback = 'You may be measuring the voltage across the capacitor by mistake. Do you have the oscilloscope in &#34;A - B&#39; mode?'; } else { question.feedback = 'The probes are set correctly but there&#39;s something wrong with your measurement. Check the gain setting on the oscilloscope and make sure that you are interpreting the display correctly.'; } } else { question.feedback = 'You don&#39;t have the oscilloscope probes placed properly to measure the voltage across the resistor.'; } } else if (unitsExist) { question.feedback = 'You are not using voltage units.'; } else { question.feedback = 'You must include units. A number without units is meaningless!'; } } else { question.feedback = 'You did not make this measurement.'; } ",
+              "tutorial": "",
+              "points": 100
+            },
+            {
+              "prompt": "At the same frequency, measure the peak voltage across the capacitor and report it here.",
+              "shortPrompt": "V1c",
+              "scoring": "/*  Measuring Vc for the first time  */ sparks.vars.R = r1.resistance; sparks.vars.C = c1.capacitance; sparks.vars.f1 = question.meta.frequency; sparks.vars.Vtot = source.amplitude; sparks.vars.Zc = 1 / (6.2832 * sparks.vars.f1 * sparks.vars.C); sparks.vars.Zrc = Math.sqrt(sparks.vars.R * sparks.vars.R + sparks.vars.Zc * sparks.vars.Zc); sparks.vars.Vr = sparks.vars.Vtot * sparks.vars.R / sparks.vars.Zrc; sparks.vars.Vc = sparks.vars.Vtot * sparks.vars.Zc / sparks.vars.Zrc; var yellowProbePosition = question.meta.yellowProbe; var pinkProbePosition = question.meta.pinkProbe; var correctAnswer = sparks.vars.Vc; question.correct_answer = Math.round(100 * correctAnswer) / 100 + ' volts'; if (question.answer !== '') { var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, correctAnswer, 10); var valueClose = close(parsedAnswer.val, correctAnswer, 20); var valueTwiceCorrect = close(parsedAnswer.val, 2 * correctAnswer, 10); var valueVtot = close(parsedAnswer.val, sparks.vars.Vtot, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vtot, 10); var valueVr = close(parsedAnswer.val, sparks.vars.Vr, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vr, 10); var valueVc = close(parsedAnswer.val, sparks.vars.Vc, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vc, 10); var unitsCorrect = false; var unitsExist = !! parsedAnswer.units; if (unitsExist) {unitsCorrect = parsedAnswer.units === 'V'; } var probesMeasuringVtot = ((yellowProbePosition == 'L11' || yellowProbePosition == 'powerPosL') || (pinkProbePosition == 'L11' || pinkProbePosition == 'powerPosL'));var probesMeasuringVr = (yellowProbePosition == 'L17' || pinkProbePosition == 'L17');var probesMeasuringVc = probesMeasuringVtot && probesMeasuringVr; var probeNotConnected = (yellowProbePosition === null || pinkProbePosition === null);question.points_earned = 0; console.log('correctAnswer = ' + correctAnswer + ', question.correct_answer = ' + question.correct_answer + ', valueCorrect = ' + valueCorrect + ', unitsCorrect = ' + unitsCorrect + ', probesMeasuringVtot = ' + probesMeasuringVtot + ', probesMeasuringVr = ' + probesMeasuringVr + ', probesMeasuringVc = ' + probesMeasuringVc + ', probeNotConnected = ' + probeNotConnected); if (unitsCorrect) { if (probesMeasuringVc) { if (valueCorrect) { question.feedback = 'You got the right answer (you only have to be within 10% ) and you used the right units! Well done!'; question.points_earned = 100; } else if (valueClose) { question.feedback = 'Close! It looks as though you made a mistake estimating the voltage from the oscilloscope trace. Half points for this one -- try again!'; question.points_earned = 50; } else if (valueTwiceCorrect) { question.feedback = 'You &#39;re supposed to be measuring the peak voltage, not the peak-to-peak voltage, across the circuit.'; } else if (valueVtot && probesMeasuringVtot) { question.feedback = 'You may be measuring the total voltage across the circuit by mistake. Check to see if your&#39;e reading the right oscilloscope trace.'; } else if (valueVr && probesMeasuringVr) { question.feedback = 'You may be measuring the voltage across the resistor by mistake. Check to see if your&#39;e reading the right oscilloscope trace.'; } else { question.feedback = 'The probes are set correctly but there&#39;s something wrong with your measurement. Check the gain setting on the oscilloscope and make sure that you are interpreting the display correctly.'; } } else { question.feedback = 'You don&#39;t have the oscilloscope probes placed properly.'; } } else if (unitsExist) { question.feedback = 'You are not using voltage units.'; } else { question.feedback = 'You must include units. A number without units is meaningless!'; } } else { question.feedback = 'You did not make this measurement.'; } ",
+              "tutorial": "",
+              "points": 100
+            }
+          ]
+        },
+        {
+          "prompt": "OK, now change the frequency and make the same three measurements.",
+          "subquestions": [
+            {
+              "prompt": "What is the new frequency?",
+              "shortPrompt": "Second frequency",
+              "scoring": "/*  Measuring frequency for the second time  */ sparks.vars.f2 = question.meta.frequency; var correctAnswer = sparks.vars.f2; if (sparks.vars.f2 < 1000) { question.correct_answer = Math.round(100 * correctAnswer) / 100 + ' Hz'; } else { question.correct_answer = Math.round(correctAnswer / 10) / 100 + ' Khz'; } if (question.answer !== '') { var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, correctAnswer, 10); var unitsExist = !! parsedAnswer.units; var unitsCorrect = false; if (unitsExist) {unitsCorrect = parsedAnswer.units === 'Hz'; } if (unitsCorrect) { if (valueCorrect && sparks.vars.f2 !== sparks.vars.f1) { question.feedback = 'Right!'; question.points_earned = 50; } else if (valueCorrect) { question.feedback = 'You did not change the frequency! You won&#39;t learn anything if you don&#39;t experiment!';} else { question.feedback = 'That&#39;s not right. Read the frequency off the function generator display.'; } } else if (unitsExist) { question.feedback = 'You are not using frequency units.'; } else { question.feedback = 'You must include units. A number without units is meaningless!'; } } else { question.feedback = 'You did not make this measurement.'; } ",
+              "tutorial": "",
+              "points": 50
+            },
+            {
+              "prompt": "What is Vtot at this frequency?",
+              "shortPrompt": "V2tot",
+              "scoring": "/*  Measuring Vtot for the second time  */sparks.vars.R = r1.resistance; sparks.vars.C = c1.capacitance; sparks.vars.f2 = question.meta.frequency; sparks.vars.Vtot = source.amplitude; sparks.vars.Zc = 1 / (6.2832 * sparks.vars.f2 * sparks.vars.C); sparks.vars.Zrc = Math.sqrt(sparks.vars.R * sparks.vars.R + sparks.vars.Zc * sparks.vars.Zc); sparks.vars.Vr = sparks.vars.Vtot * sparks.vars.R / sparks.vars.Zrc; sparks.vars.Vc = sparks.vars.Vtot * sparks.vars.Zc / sparks.vars.Zrc; var yellowProbePosition = question.meta.yellowProbe; var pinkProbePosition = question.meta.pinkProbe; var correctAnswer = sparks.vars.Vtot; question.correct_answer = Math.round(100 * correctAnswer) / 100 + ' volts'; if (question.answer !== '') { var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, correctAnswer, 10); var valueClose = close(parsedAnswer.val, correctAnswer, 20); var valueTwiceCorrect = close(parsedAnswer.val, 2 * correctAnswer, 10); var valueVr = close(parsedAnswer.val, sparks.vars.Vr, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vr, 10); var valueVc = close(parsedAnswer.val, sparks.vars.Vc, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vc, 10); var unitsCorrect = false; var unitsExist = !! parsedAnswer.units; if (unitsExist) {unitsCorrect = parsedAnswer.units === 'V'; } var probesMeasuringVtot = ((yellowProbePosition == 'L11' || yellowProbePosition == 'powerPosL') || (pinkProbePosition == 'L11' || pinkProbePosition == 'powerPosL'));var probesMeasuringVr = (yellowProbePosition == 'L17' || pinkProbePosition == 'L17');var probesMeasuringVc = probesMeasuringVtot && probesMeasuringVr; var probeNotConnected = (yellowProbePosition === null || pinkProbePosition === null); var frequencyChanged = !(sparks.vars.f1 == sparks.vars.f2); question.points_earned = 0; console.log('correctAnswer = ' + correctAnswer + ', question.correct_answer = ' + question.correct_answer + ', valueCorrect = ' + valueCorrect + ', unitsCorrect = ' + unitsCorrect + ', probesMeasuringVtot = ' + probesMeasuringVtot + ', probesMeasuringVr = ' + probesMeasuringVr + ', probesMeasuringVc = ' + probesMeasuringVc + ', probeNotConnected = ' + probeNotConnected); if (unitsCorrect) { if (probesMeasuringVtot && frequencyChanged) { if (valueCorrect) { question.feedback = 'You got the right answer (you only have to be within 10% ) and you used the right units! Well done!'; question.points_earned = 100; } else if (valueClose) { question.feedback = 'Close! It looks as though you made a mistake estimating the voltage from the oscilloscope trace. Half points for this one -- try again!'; question.points_earned = 50; } else if (valueTwiceCorrect) { question.feedback = 'You &#39;re supposed to be measuring the peak voltage, not the peak-to-peak voltage, across the circuit.'; } else if (valueVr && probesMeasuringVr) { question.feedback = 'You may be measuring the voltage across the resistor by mistake. You may be reading the wrong oscilloscope trace.'; } else if (valueVr && probesMeasuringVc) { question.feedback = 'You may be measuring the voltage across the capacitor by mistake. You may be reading the wrong oscilloscope trace.'; } else { question.feedback = 'The probes are set correctly but there&#39;s something wrong with your measurement. Check the gain setting on the oscilloscope and make sure that you are interpreting the display correctly.'; } } else { question.feedback = 'You don&#39;t have the oscilloscope probes placed properly.'; } } else if (unitsExist) { question.feedback = 'You are not using voltage units.'; } else { question.feedback = 'You must include units. A number without units is meaningless!'; } if (!frequencyChanged) { if (question.points_earned !== 0) { question.feedback = question.feedback + ' No points scored because you didn&#39;t change the frequency between measurements.'; } else { question.feedback = question.feedback + ' Try again &#8211; and remember to change the frequency between measurements this time!'; } } } else { question.feedback = 'You did not make this measurement.'; }",
+              "tutorial": "",
+              "points": 100
+            },
+            {
+              "prompt": "What is Vr at this frequency?",
+              "shortPrompt": "Vr2",
+              "scoring": "/*  Measuring Vr for the second time  */ sparks.vars.R = r1.resistance; sparks.vars.C = c1.capacitance; sparks.vars.f2 = question.meta.frequency; sparks.vars.Vtot = source.amplitude; sparks.vars.Zc = 1 / (6.2832 * sparks.vars.f2 * sparks.vars.C); sparks.vars.Zrc = Math.sqrt(sparks.vars.R * sparks.vars.R + sparks.vars.Zc * sparks.vars.Zc); sparks.vars.Vr = sparks.vars.Vtot * sparks.vars.R / sparks.vars.Zrc; sparks.vars.Vc = sparks.vars.Vtot * sparks.vars.Zc / sparks.vars.Zrc; var yellowProbePosition = question.meta.yellowProbe; var pinkProbePosition = question.meta.pinkProbe; var correctAnswer = sparks.vars.Vr; question.correct_answer = Math.round(100 * correctAnswer) / 100 + ' volts'; if (question.answer !== '') { var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, correctAnswer, 10); var valueClose = close(parsedAnswer.val, correctAnswer, 20); var valueTwiceCorrect = close(parsedAnswer.val, 2 * correctAnswer, 10); var valueVtot = close(parsedAnswer.val, sparks.vars.Vtot, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vtot, 10); var valueVr = close(parsedAnswer.val, sparks.vars.Vr, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vr, 10); var valueVc = close(parsedAnswer.val, sparks.vars.Vc, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vc, 10); var unitsCorrect = false; var unitsExist = !! parsedAnswer.units; if (unitsExist) {unitsCorrect = parsedAnswer.units === 'V'; } var probesMeasuringVtot = ((yellowProbePosition == 'L11' || yellowProbePosition == 'powerPosL') || (pinkProbePosition == 'L11' || pinkProbePosition == 'powerPosL'));var probesMeasuringVr = (yellowProbePosition == 'L17' || pinkProbePosition == 'L17');var probesMeasuringVc = probesMeasuringVtot && probesMeasuringVr; var probeNotConnected = (yellowProbePosition === null || pinkProbePosition === null); var frequencyChanged = !(sparks.vars.f1 == sparks.vars.f2); question.points_earned = 0; console.log('correctAnswer = ' + correctAnswer + ', question.correct_answer = ' + question.correct_answer + ', valueCorrect = ' + valueCorrect + ', unitsCorrect = ' + unitsCorrect + ', probesMeasuringVtot = ' + probesMeasuringVtot + ', probesMeasuringVr = ' + probesMeasuringVr + ', probesMeasuringVc = ' + probesMeasuringVc + ', probeNotConnected = ' + probeNotConnected); if (unitsCorrect) { if (probesMeasuringVr && frequencyChanged) { if (valueCorrect) { question.feedback = 'You got the right answer (you only have to be within 10% ) and you used the right units! Well done!'; question.points_earned = 100; } else if (valueClose) { question.feedback = 'Close! It looks as though you made a mistake estimating the voltage from the oscilloscope trace. Half points for this one -- try again!'; question.points_earned = 50; } else if (valueTwiceCorrect) { question.feedback = 'You &#39;re supposed to be measuring the peak voltage, not the peak-to-peak voltage, across the circuit.'; } else if (valueVtot && probesMeasuringVr) { question.feedback = 'You may be measuring the total voltage across the circuit by mistake. Check to see if your&#39;e reading the right oscilloscope trace.'; } else if (valueVc && probesMeasuringVc) { question.feedback = 'You may be measuring the voltage across the capacitor by mistake. Do you have the oscilloscope in &#34;A - B&#39; mode?'; } else { question.feedback = 'The probes are set correctly but there&#39;s something wrong with your measurement. Check the gain setting on the oscilloscope and make sure that you are interpreting the display correctly.'; } } else { question.feedback = 'You don&#39;t have the oscilloscope probes placed properly to measure the voltage across the resistor.'; } } else if (unitsExist) { question.feedback = 'You are not using voltage units.'; } else { question.feedback = 'You must include units. A number without units is meaningless!'; } if (!frequencyChanged) { if (question.points_earned !== 0) { question.feedback = question.feedback + ' No points scored because you didn&#39;t change the frequency between measurements.'; } else { question.feedback = question.feedback + ' Remember to change the frequency between measurements this time!'; } } } else { question.feedback = 'You did not make this measurement.'; } ",
+              "tutorial": "",
+              "points": 100
+            },
+            {
+              "prompt": "What is Vc at this frequency?",
+              "shortPrompt": "V2c",
+              "scoring": "/*  Measuring Vc for the second time  */ sparks.vars.R = r1.resistance; sparks.vars.C = c1.capacitance; sparks.vars.f2 = question.meta.frequency; sparks.vars.Vtot = source.amplitude; sparks.vars.Zc = 1 / (6.2832 * sparks.vars.f2 * sparks.vars.C); sparks.vars.Zrc = Math.sqrt(sparks.vars.R * sparks.vars.R + sparks.vars.Zc * sparks.vars.Zc); sparks.vars.Vr = sparks.vars.Vtot * sparks.vars.R / sparks.vars.Zrc; sparks.vars.Vc = sparks.vars.Vtot * sparks.vars.Zc / sparks.vars.Zrc; var yellowProbePosition = question.meta.yellowProbe; var pinkProbePosition = question.meta.pinkProbe; var correctAnswer = sparks.vars.Vc; question.correct_answer = Math.round(100 * correctAnswer) / 100 + ' volts'; if (question.answer !== '') { var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, correctAnswer, 10); var valueClose = close(parsedAnswer.val, correctAnswer, 20); var valueTwiceCorrect = close(parsedAnswer.val, 2 * correctAnswer, 10); var valueVtot = close(parsedAnswer.val, sparks.vars.Vtot, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vtot, 10); var valueVr = close(parsedAnswer.val, sparks.vars.Vr, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vr, 10); var valueVc = close(parsedAnswer.val, sparks.vars.Vc, 10) || close(parsedAnswer.val, 2 * sparks.vars.Vc, 10); var unitsCorrect = false; var unitsExist = !! parsedAnswer.units; if (unitsExist) {unitsCorrect = parsedAnswer.units === 'V'; } var probesMeasuringVtot = ((yellowProbePosition == 'L11' || yellowProbePosition == 'powerPosL') || (pinkProbePosition == 'L11' || pinkProbePosition == 'powerPosL'));var probesMeasuringVr = (yellowProbePosition == 'L17' || pinkProbePosition == 'L17');var probesMeasuringVc = probesMeasuringVtot && probesMeasuringVr; var probeNotConnected = (yellowProbePosition === null || pinkProbePosition === null); var frequencyChanged = sparks.vars.f1 !== sparks.vars.f2; question.points_earned = 0; console.log('correctAnswer = ' + correctAnswer + ', question.correct_answer = ' + question.correct_answer + ', valueCorrect = ' + valueCorrect + ', unitsCorrect = ' + unitsCorrect + ', probesMeasuringVtot = ' + probesMeasuringVtot + ', probesMeasuringVr = ' + probesMeasuringVr + ', probesMeasuringVc = ' + probesMeasuringVc + ', probeNotConnected = ' + probeNotConnected); if (unitsCorrect) { if (probesMeasuringVr && frequencyChanged) { if (valueCorrect) { question.feedback = 'You got the right answer (you only have to be within 10% ) and you used the right units! Well done!'; question.points_earned = 100; } else if (valueClose) { question.feedback = 'Close! It looks as though you made a mistake estimating the voltage from the oscilloscope trace. Half points for this one -- try again!'; question.points_earned = 50; } else if (valueTwiceCorrect) { question.feedback = 'You &#39;re supposed to be measuring the peak voltage, not the peak-to-peak voltage, across the circuit.'; } else if (valueVtot && probesMeasuringVtot) { question.feedback = 'You may be measuring the total voltage across the circuit by mistake. Check to see if your&#39;e reading the right oscilloscope trace.'; } else if (valueVr && probesMeasuringVr) { question.feedback = 'You may be measuring the voltage across the resistor by mistake. Which trace of the oscilloscope are you using?'; } else { question.feedback = 'The probes are set correctly but there&#39;s something wrong with your measurement. Check the gain setting on the oscilloscope and make sure that you are interpreting the display correctly.'; } } else { question.feedback = 'You don&#39;t have the oscilloscope probes placed properly.'; } } else if (unitsExist) { question.feedback = 'You are not using voltage units.'; } else { question.feedback = 'You must include units. A number without units is meaningless!'; } if (!frequencyChanged) { if (question.points_earned !== 0) { question.feedback = question.feedback + ' No points scored because you didn&#39;t change the frequency between measurements.'; } else { question.feedback = question.feedback + ' Remember to change the frequency between measurements this time!'; } } } else { question.feedback = 'You did not make this measurement.'; } ",
+              "tutorial": "",
+              "points": 100
+            }
+          ]
+        },
+        {
+          "prompt": "What happens when you change the frequency?",
+          "options": [
+            {
+              "option": "Vr and Vc change, but Vtot stays the same.",
+              "points": 50,
+              "feedback": "That's right!"
+            },
+            {
+              "option": "All three voltages change.",
+              "points": 0,
+              "feedback": "Nope, one of them stays the same. Play with the function generator some more, and check the correct answers on this report. Sometimes the differences are small and hard to see on the scope."
+            },
+            {
+              "option": "Vr and Vtot change but Vc stays the same.",
+              "feedback": "Minor mixup here. Check the actual answers on this report. Sometimes the differences are small and hard to see on the scope.",
+              "points": 0
+            },
+            {
+              "option": "Vtot changes but Vr and Vc stay the same.",
+              "feedback": "&#39;Fraid not! Check the actual answers on this report. Sometimes the differences are small and hard to see on the scope.",
+              "points": 0
+            },
+            {
+              "option": "I don't know.",
+              "feedback": "Compare the answers you gave to the more precise ones in this report, then try again to see which voltages change with frequency.",
+              "points": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "notes": "[source.amplitude = (Math.random() * 40) + 1; r1.resistance = (Math.random() * 100) + 100; c1.capacitance = (5 * Math.random() + 1) * 1.0e-7;'']For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [Math.round(r1.resistance)] ohms<br>&nbsp;&nbsp; <b>C<sub>1</sub></b> = [Math.round(10*c1.capacitance * 1000000)/10] microf<br>&nbsp;&nbsp",
+      "questions": [
+        {
+          "prompt": "If you have gotten this far you've seen that the voltages across the resistor and the capacitor vary with the frequency, but the voltage across the whole circuit stays the same. This is because the impedance of the capacitor is a function of frequency. At some frequencies the capacitor acts like a short, at others it acts like an open. Play around with the circuit and then answer the questions below.",
+          "subquestions": [
+            {
+              "prompt": "Which of the following statements are true? (There may be more than one.)",
+              "shortPrompt": "Behavior of capacitor at different frequencies.",
+              "checkbox": "true",
+              "correct_answer": "Capacitors become more and more conductive as the frequency increases.",
+              "options": [
+                {
+                  "option": "At high frequencies the capacitor acts like an open.",
+                  "feedback": "No, that's wrong. Remember the voltage across an open is high. Go back and check your measurements.",
+                  "points": 0
+                },
+                {
+                  "option": "At high frequencies the capacitor acts like a short.",
+                  "feedback": "Yes that's right. The capacitor offers very little resistance at high frequencies.",
+                  "points": 100
+                },
+                {
+                  "option": "At low frequencies the capacitor acts like an open.",
+                  "feedback": "Yes that's right. The capacitor let's very little current pass at low frequencies. It's almost like an open.",
+                  "points": 100
+                },
+                {
+                  "option": "At low frequencies the capacitor acts like a short.",
+                  "feedback": "No, that's wrong. Remember the voltage across a short is very small. Go back and check your measurements.",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

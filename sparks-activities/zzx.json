@@ -1,0 +1,113 @@
+{
+  "_id": "zzx",
+  "_rev": "15-eeb9af43d440bad3625821a337687628",
+  "title": "Measuring an RL circuit with an alternating voltage source",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        1000,
+        50000,
+        1001
+      ],
+      "amplitude": 16.97
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "inductance": "2.0e-03",
+      "connections": "b11,b17",
+      "label": "L1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive19,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "In this circuit we've replaced the capacitor by an inductor. Your job is to figure out how the inductor behaves when you change the frequency. The circuit is driven by the same function generator as before. Make as many measurements as you want and then answer the questions below.",
+          "subquestions": [
+            {
+              "prompt": "Do the voltage drops across the components change with frequency?",
+              "shortPrompt": "Frequency dependence of measurements",
+              "keepOrder": "true",
+              "options": [
+                {
+                  "option": "None of my measurements change when I change the frequency.",
+                  "points": 0,
+                  "feedback": "Wrong! Try again!"
+                },
+                {
+                  "option": "Some of my measurements change when I change the frequency, but not all.",
+                  "points": 100,
+                  "feedback": "That's right! The total voltage is still the same, but the voltage drops across the resistor and the inductor change when you change the frequency."
+                },
+                {
+                  "option": "All of my measurements change when I change the frequency.",
+                  "points": 0,
+                  "feedback": "Actually, that is not so. Two of them change but the third measurement isn't affected by the frequency. Try again!"
+                }
+              ]
+            },
+            {
+              "prompt": "Is the voltage across R and L equal to the voltage across R plus the voltage across L",
+              "shortPrompt": "Sum of voltages",
+              "keepOrder": "true",
+              "options": [
+                {
+                  "option": "Yes",
+                  "points": 0,
+                  "feedback": "Wrong! The voltage drops across the components do not add up to the total applied voltage, the way they do with resistors."
+                },
+                {
+                  "option": "No",
+                  "points": 100,
+                  "feedback": "Right! The voltage drops across the components do not add up to the total applied voltage, the way they do with resistors."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "prompt": "How does the effective resistance (the correct term is 'impedance') of the inductor change with frequency?",
+          "shortPrompt": "Variation with frequency",
+          "keepOrder": "true",
+          "options": [
+            {
+              "option": "The impedance of the inductor increases when the frequency is increased.",
+              "points": 300,
+              "feedback": "Correct!"
+            },
+            {
+              "option": "The impedance of the inductor decreases when the frequency is increased.",
+              "points": 0,
+              "feedback": "No, actually the impedance of the inductor increases with increasing frequency."
+            },
+            {
+              "option": "The impedance of the inductor stays the same when the frequency is increased.",
+              "points": 0,
+              "feedback": "No, actually the impedance of the inductor increases with increasing frequency."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

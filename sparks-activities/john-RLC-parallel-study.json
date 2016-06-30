@@ -1,0 +1,88 @@
+{
+  "_id": "john-RLC-parallel-study",
+  "_rev": "5-2fcadd109c2410f10bfe8f6e42e18112",
+  "title": "Measuring an LC Parallel Circuit",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        10,
+        10000,
+        101
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c22,c16",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "10e-6",
+      "connections": "b16,b10",
+      "label": "C1"
+    },
+    {
+      "type": "inductor",
+      "UID": "L1",
+      "inductance": ".008",
+      "connections": "e16,e10",
+      "label": "L1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,b22"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive6,c10"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c2",
+      "capacitance": "10e-6",
+      "connections": "g22,g16",
+      "label": "C2"
+    },
+    {
+      "type": "inductor",
+      "UID": "L2",
+      "inductance": ".008",
+      "connections": "j22,j16",
+      "label": "L2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "100",
+      "connections": "h16,h10",
+      "label": "R2"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative22,h22"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive4,g10"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub>, R<sub>2</sub></b> = [r1.resistance] ohms<br>  &nbsp;&nbsp; <b>C<sub>1</sub>, C<sub>2</sub></b> = [c1.capacitance] farads<br>&nbsp;&nbsp; <b>L<sub>1</sub>, L<sub>2</sub></b> = [L1.inductance] henries<br>&nbsp;&nbsp; <b>V<sub>P</sub></b> = [source.amplitude] volts<br>&nbsp;&nbsp; <b>f<sub>source</sub></b> = [source.frequencies] Hz",
+      "questions": [
+        {
+          "prompt": "<b>LC in parallel.</b><br>Observe the resonant behavior of the circuit. What happens at resonance? What frequency? Given the value for C, determine the inductance of unlabeled L."
+        }
+      ]
+    }
+  ],
+  "show_oscilloscope": "true",
+  "show_multimeter": "true"
+}

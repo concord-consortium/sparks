@@ -1,0 +1,52 @@
+{
+   "_id": "oscilloscope-scale-quality",
+   "title": "Testing the oscilloscope scale quality measure",
+   "show_oscilloscope": "true",
+   "allow_move_yellow_probe": "true",
+   "circuit": [
+       {
+           "type": "function generator",
+           "UID": "source",
+           "frequencies": [
+               "logarithmic",
+               100,
+               100000,
+               1001
+           ],
+           "initialFrequency": 400,
+           "amplitude": 20
+       },
+       {
+           "type": "resistor",
+           "UID": "r1",
+           "resistance": "100",
+           "connections": "c17,c23",
+           "label": "R1"
+       },
+       {
+           "type": "capacitor",
+           "UID": "c1",
+           "capacitance": "2.0e-07",
+           "connections": "b11,b17",
+           "label": "C1"
+       },
+       {
+           "type": "wire",
+           "connections": "left_negative19,a23"
+       },
+       {
+           "type": "wire",
+           "connections": "left_positive8,a11"
+       }
+   ],
+   "pages": [
+       {
+           "questions": [
+               {
+                   "prompt": "Set up a trace with A-B or A+B visible on the OScope and click submit.",
+                   "scoring": "var quality = question.meta.oscopeScaleQuality; question.feedback = 'Here are the scale qualities. There should be no \\'undefined\\' values: A: '+quality[0]+', B: '+quality[1]+', A-B: '+quality[2]+', A+B: '+quality[3]+'.'"
+               }
+           ]
+       }
+   ]
+}

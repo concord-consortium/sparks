@@ -1,0 +1,152 @@
+{
+  "_id": "zzrcserieswithoscope",
+  "_rev": "50-b9771626d55b6406ee8c0711e40016f1",
+  "title": "Measuring an RC circuit with an oscilloscope",
+  "show_oscilloscope": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 16.97
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "2.0e-07",
+      "connections": "b11,b17",
+      "label": "C1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "100",
+      "connections": "h11,h17",
+      "label": "R2"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c2",
+      "capacitance": "2.0e-07",
+      "connections": "g17,g23",
+      "label": "C2"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative19,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative17,f23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive6,f11"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>C<sub>1</sub></b> = [Math.round(10*c1.capacitance * 1000000)/10] microf<br>&nbsp;&nbsp;  <b>R<sub>2</sub></b> = [r2.resistance] ohms<br>&nbsp;&nbsp; <b>C<sub>2</sub></b> = [Math.round(10*c2.capacitance * 1000000)/10] microf<br>",
+      "questions": [
+        {
+          "prompt": "Here are two RC circuits and an oscilloscope. The oscilloscope and the function generator share a common ground which is connected to the black lead of the function generator. Note that one of the oscilloscope probes (the yellow one) is permanently attached to ground so the oscilloscope measures all voltages with respect to ground. <br> <br> The two circuits are subtly different. In the upper circuit the resistor is attached to the red lead of the function generator, in the lower circuit it is the capacitor that is attached to the red lead of the function generator.<br> <br>This means that if you connect the probe to the junction between the resistor and the capacitor then in the upper circuit you are measuring the voltage across the resistor (which is proportional to the current through the circuit). But if you do the same measurement with the lower circuit you are measuring the voltage across the capacitor.<br> <br>Set the frequency on the function generator and then make the measurements below.",
+          "subquestions": [
+            {
+              "prompt": "Measure the peak voltage across the resistor.",
+              "shortPrompt": "Voltage across R1?",
+              "scoring": "sparks.vars.R1 = r1.resistance; sparks.vars.C1 = c1.capacitance; sparks.vars.f = question.meta.frequency; sparks.vars.V1 = source.amplitude; sparks.vars.Z1 = 1/(6.2832*sparks.vars.f*sparks.vars.C1); sparks.vars.Ztotal = Math.sqrt(Math.pow(sparks.vars.R1,2)+Math.pow(sparks.vars.Z1,2)); sparks.vars.Vr1 = Math.round(10*(sparks.vars.V1*sparks.vars.R1/sparks.vars.Ztotal))/10; sparks.vars.Vc1 = Math.round(10*(sparks.vars.V1*sparks.vars.Z1/sparks.vars.Ztotal))/10; question.correct_answer = sparks.vars.Vr1 + ' volts'; var valueCorrect = false; var unitsCorrect = false; if(question.answer != '') {var parsedAnswer = parse(question.answer); var valueCorrect = close(parsedAnswer.val, sparks.vars.Vr1, 10); var unitsExist = !!parsedAnswer.units; if (unitsExist) {unitsCorrect = parsedAnswer.units === 'V'}; question.points_earned = (valueCorrect ? 500 : 0) + (unitsCorrect ? 100 : 0); question.feedback = (valueCorrect ? 'You got the value correct' : 'You did not get the value correct') + (unitsCorrect ? ' and you got the units correct' : ' and you did not get the units correct')} else {question.feedback = 'You did not make this measurement.'}",
+              "tutorial": "tutorial-21",
+              "points": 600
+            },
+            {
+              "prompt": "Without changing the frequency, measure the peak voltage across the capacitor",
+              "shortPrompt": "Voltage across C1?",
+              "tutorial": "tutorial-21",
+              "scoring": "question.correct_answer = sparks.vars.Vc1 + ' volts'; var valueCorrect = false; var unitsCorrect = false; if(question.answer != '') {var parsedAnswer = parse(question.answer); valueCorrect = close(parsedAnswer.val, sparks.vars.Vc1, 10); var unitsExist = !!parsedAnswer.units; if (unitsExist) { unitsCorrect = parsedAnswer.units === 'V'}; question.points_earned = (valueCorrect ? 500 : 0) + (unitsCorrect ? 100 : 0); question.feedback = (valueCorrect ? 'You got the value correct' : 'You did not get the value correct') + (unitsCorrect ? ' and you got the units correct' : ' and you did not get the units correct')} else {question.feedback = 'You did not make this measurement.'}",
+              "points": 600
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questions": [
+        {
+          "prompt": "Now try changing the frequency and see if any of your measurements change. (Remember: to change the frequency, click on the thumbnail of the function generator and move the slider.) Set a different frequency and make the same measurements. Does changing the frequency affect the measurements you just made?",
+          "shortPrompt": "Measuring RC voltages at second frequency",
+          "subquestions": [
+            {
+              "prompt": "Measure the peak voltage across the resistor at this new frequency.",
+              "shortPrompt": "Voltage across R1?",
+              "scoring": "",
+              "tutorial": "tutorial-21",
+              "points": 500
+            },
+            {
+              "prompt": "Without changing the frequency, measure the peak voltage across the capacitor",
+              "shortPrompt": "Voltage across C1?",
+              "tutorial": "tutorial-21",
+              "scoring": "",
+              "points": 500
+            }
+          ]
+        },
+        {
+          "prompt": "Compare the new measurements to the old ones and answer the question below",
+          "shortPrompt": "Frequency dependence of measurements",
+          "keepOrder": "true",
+          "options": [
+            {
+              "option": "None of my measurements change when I change the frequency.",
+              "points": 0,
+              "feedback": "Wrong! Try again and be careful!"
+            },
+            {
+              "option": "Some of my measurements change when I change the frequency, but not all.",
+              "points": 50,
+              "feedback": "That's right! The total voltage is still the same, but the voltage drops across the resistor and the capacitor change when you change the frequency."
+            },
+            {
+              "option": "All of my measurements change when I change the frequency.",
+              "points": 0,
+              "feedback": "Actually, that is not so. Two of them change but the third measurement isn't affected by the frequency. Try again!"
+            }
+          ]
+        },
+        {
+          "prompt": "Is the voltage across R and C equal to the voltage across R plus the voltage across C?",
+          "shortPrompt": "Sum of voltages",
+          "keepOrder": "true",
+          "options": [
+            {
+              "option": "Yes",
+              "points": 0,
+              "feedback": "Wrong! The voltage drops across the components do not add up to the total applied voltage, the way they do with resistors."
+            },
+            {
+              "option": "No",
+              "points": 50,
+              "feedback": "Right! The voltage drops across the components do not add up to the total applied voltage, the way they do with resistors."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

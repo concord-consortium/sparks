@@ -1,0 +1,135 @@
+{
+  "_id": "y1-RR",
+  "_rev": "127-19ec27d5950197f74a6e9470229f62b6",
+  "title": "AC Circuit with Series Resistors",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        8000,
+        160
+      ],
+      "initialFrequency": 400,
+      "amplitude": 50
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": [
+        "uniform",
+        100,
+        390
+      ],
+      "connections": "c15,c21",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": [
+        "uniform",
+        430,
+        910
+      ],
+      "connections": "b9,b15",
+      "label": "R2"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a21"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive6,a9"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "[ /* --- STARTING VALUES --- */ source.amplitude = Math.round(Math.random() * 30 + 16); sparks.vars.V = source.amplitude / Math.sqrt(2); sparks.vars.V1 = Math.round(10 * sparks.vars.V * r1.resistance / (r1.resistance + r2.resistance)) / 10; sparks.vars.V2 = Math.round(10 * sparks.vars.V * r2.resistance / (r1.resistance + r2.resistance)) / 10; sparks.vars.VS = Math.round(10 * sparks.vars.V) / 10; sparks.vars.R1Loc = r1.getNodes(); sparks.vars.R2Loc = r2.getNodes(); sparks.vars.Score = 0; '']For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [sparks.unit.convertMeasurement(r1.resistance + 'ohms')]<br>&nbsp;&nbsp; <b>R<sub>2</sub></b> = [sparks.unit.convertMeasurement(r2.resistance + 'ohms')]<br>&nbsp;&nbsp;",
+      "questions": [
+        {
+          "prompt": "The function generator here serves as an AC power supply for this resistor circuit. You can change the AC frequency. Use the DMM to measure the voltages in this circuit to answer the questions below. The <b><i>Read Multimeter</i></b> buttons will copy your DMM readings.<hr>",
+          "shortPrompt": "Voltage measurements",
+          "tutorial": "tutorial-27",
+          "subquestions": [
+            {
+              "prompt": "At a low frequency (< 1 kHz), use the DMM to measure: <br>Supply voltage <b>V<sub>PS</sub></b>&nbsp;&nbsp;&nbsp;&nbsp;",
+              "shortPrompt": "Supply Voltage",
+              "show_read_multimeter_button": true,
+              "points": 10,
+              "beforeScript": " /* --- BEFORESCRIPT --- */ /* --- DEFINE FUNCTIONS --- */ /* --- CHECK IF MEASUREMENTS MADE --- */ sparks.vars.didMeasureComponent = function (meta, component) { nodes = component.getNodes(); return (nodes.indexOf(meta.redProbe) > -1 && nodes.indexOf(meta.blackProbe) > -1 && meta.redProbe !== meta.blackProbe); }; /* --- CHECK PROBE PLACEMENTS ---*/ sparks.vars.dbugProbes = function (meta) { console.log('blackProbe: ' + meta.blackProbe + ' redProbe: ' + meta.redProbe + ' dmmDial: ' + meta.dmmDial); if (meta.dmmDial == 'acv_200') {allow = 3;} else {allow = 7;} if (sparks.vars.didMeasureComponent(meta, r1) || close(meta.val, sparks.vars.V1, allow)) { console.log('Measured R1 where R = ' + sparks.vars.R1 + ' ohms'); return ('R1'); } else if (sparks.vars.didMeasureComponent(meta, r2) || close(meta.val, sparks.vars.V2, allow)) { console.log('Measured R2 where R = ' + sparks.vars.R2 + ' ohms'); return ('R2'); } else if (close(sparks.vars.VS, meta.val, allow)) { console.log('Measured PS where VS = ' + sparks.vars.VS + ' V'); return ('PS'); } else { console.log('NOT measuring R1 or R2 or PS'); return (-1); } }; /* --- CHECK MEASURE OF x STORED IN q, COMPARE TO target VOLTAGE --- */ sparks.vars.checkMeasurement = function (q, target, x) { console.log('====== Checking measurements for this question:'); console.log(q); q.correct_answer = Math.round(10 * target) / 10; q.points_earned = 0; q.tutorial = 'tutorial-27'; /* --- CHECK PROBES AND DMM SETUP --- */ if (!q.meta.units && !q.meta.val) { q.meta.val = ''; /* --- NO MEASUREMENT --- */ if (q.meta.blackProbe && q.meta.redProbe) { /* --- PROBES PLACED BUT NO READING TAKEN--- */ q.feedback = 'Use the <b><i>Read Multimeter</i></b> button to record your circuit measurements.'; } else /* --- PROBES NOT PLACED AND NO READING TAKEN--- */ { q.feedback = 'Connect the DMM probes and use the <b><i>Read Multimeter</i></b> button to measure the circuit.'; } } else if (!q.meta.amplitude && isNaN(q.meta.val)) { q.meta.val = ''; /* --- PROBES NOT PLACED IN CIRCUIT --- */ q.feedback = 'Connect both DMM probes to your circuit to make measurements.'; } else if (q.meta.dmmDial != 'acv_200' && q.meta.dmmDial != 'acv_750') { /* --- PROBES PLACED BUT BAD DMM KNOB SET --- */ q.feedback = 'Use the DMM, set to measure <b>AC voltages.</b>'; if (q.meta.val !== null && !isNaN(q.meta.val)) { /* --- GOT A READING ALBEIT BAD --- */ q.answer = sparks.unit.convertMeasurement(Math.round(10000 * q.meta.val) / 10000 + ' ' + q.meta.units); } } else /* --- CHECK ACV READING --- */ { q.answer = Math.round(10 * q.meta.val) / 10; if (!q.meta.frequency) { /* --- FREQ NOT CHANGED, SO USE INIT FREQ --- */ sparks.vars.Freq = source.initialFrequency; } else { /* --- USE CURRENT FREQ VALUE --- */ sparks.vars.Freq = sparks.unit.convertMeasurement(q.meta.frequency + 'Hz'); } probePlacement = sparks.vars.dbugProbes(q.meta); if (probePlacement == x) /* --- YES, PROBES ACROSS x ---*/ { if (q.meta.dmmDial == 'acv_200') { /* --- DMM KNOB ON ACV_200 ---*/ if (close(target, q.answer, 15 / target)) { /* --- BRAVO! ---*/ q.correct_answer = q.answer; q.points_earned = q.points; q.feedback = 'Excellent! You measured <b>V<sub>' + x + '</sub></b> at ' + sparks.vars.Freq; } else { /* --- UKNOWN RESULT ---*/ q.feedback = 'The DMM appears to have malfunctioned. Sorry! Try again?'; } } else { /* --- DMM KNOB ON ACV_750 ---*/ if (close(Math.round(target), q.answer, 20 / target)) { /* --- MEASURE IS CLOSE ---*/ q.points_earned = 2; q.feedback = 'Essentially right, but you need to <b>use the most precise scale</b> on the DMM for precision.'; } else { /* --- MEASURE IS NOT CLOSE ---*/ q.feedback = 'You placed the probes in the right place, but need to use a more precise DMM setting. Sorry!'; } } } else if (probePlacement !== -1) /* --- PROBES ACROSS WRONG COMPONENT --- */ { if (close(target, q.answer, 15 / target)) { /* --- VALUE ACROSS WRONG COMPONENT IS CLOSE ---*/ console.log('close value, but bad probe placement: across ' + x); q.feedback = 'No, although the measures appear close, you did not measure across ' + x + '.'; } else { /* --- VALUE IS NOT CLOSE ---*/ if ((probePlacement == 'R1' && x == 'R2') || (probePlacement == 'R2' && x == 'R1') || target == sparks.vars.V - q.answer) { q.feedback = 'Did you get the measures from the two resistors reversed? Try again.'; } else { q.feedback = 'Please measure across ' + x + ' to find <b>V<sub>' + x + '</sub></b>.'; } } } else { /* --- PROBE PLACEMENTS UNKNOWN ---*/ q.feedback = 'What happened? You did not appear to measure across <b>' + x + '</b>.'; } q.correct_answer = sparks.unit.convertMeasurement(q.correct_answer + 'V'); q.answer = sparks.unit.convertMeasurement(q.answer + q.meta.units); if (q.points_earned > 0) { sparks.vars.Score++; } } console.log('V' + x + ' @ ' + sparks.vars.Freq + ': Meas = ' + q.answer + ' Actual = ' + sparks.unit.convertMeasurement(target + 'V')); return; }; /* --- END CHECK MEASUREMENT --- */ /* --- END BEFORESCRIPT --- */ ",
+              "scoring": "sparks.vars.checkMeasurement(question, sparks.vars.VS, 'PS'); "
+            },
+            {
+              "prompt": "Voltage <b>V<sub>R1</sub></b> across <b>R<sub>1</sub></b>&nbsp;",
+              "shortPrompt": "Voltage across R1",
+              "show_read_multimeter_button": true,
+              "points": 20,
+              "scoring": " sparks.vars.checkMeasurement(question, sparks.vars.V1, 'R1'); "
+            },
+            {
+              "prompt": "Voltage <b>V<sub>R2</sub></b> across <b>R<sub>2</sub></b>&nbsp;",
+              "shortPrompt": "Voltage across R2",
+              "show_read_multimeter_button": true,
+              "points": 20,
+              "scoring": " sparks.vars.checkMeasurement(question, sparks.vars.V2, 'R2'); "
+            }
+          ]
+        },
+        {
+          "prompt": "Click the function generator and increase to a high AC frequency: over 5 kHz. Measure the voltage drops again and compare to your previous readings.<hr>What effect does the higher frequency have on measures of <b>V<sub>R</sub></b> across these series resistors?",
+          "shortPrompt": "Effect of frequency on voltage drops",
+          "tutorial": "tutorial-20",
+          "points": 40,
+          "beforeScript": "sparks.vars.Measures = log.measurements();",
+          "options": [
+            {
+              "option": "No effect. The voltage drops stayed the same."
+            },
+            {
+              "option": "At the higher frequency the smaller resistor had a smaller voltage drop; the larger resistor had a larger drop."
+            },
+            {
+              "option": "At the higher frequency the larger resistor had a smaller voltage drop; the smaller resistor had a larger drop."
+            },
+            {
+              "option": "At the higher frequency both the voltage drops were larger."
+            },
+            {
+              "option": "At the higher frequency both the voltage drops were smaller."
+            }
+          ],
+          "scoring": " question.correct_answer = 'No effect in resistive circuits.'; if (question.answer !== null) { myAns = 'No effect'; if (question.answer.indexOf(myAns) > -1) { /* --- CORRECT RESPONSE CHOSEN --- */ if (log.measurements() != sparks.vars.Measures) { /* --- MEASUREMENTS MADE --- */ if (sparks.vars.Score >2) { /* --- BRAVO! --- */ question.points_earned = 40; question.feedback = 'Right! Frequency has no effect on voltages in a purely resistive circuit.'; } else { /* --- ANSWER WITHOUT GOOD MEASURES --- */ question.points_earned = 5; question.feedback = 'That is right, but can you verify this with correct measurements?'; } } else { question.points_earned = 10; question.feedback = 'That is correct, but can you change the frequency and verify this with measurements?'; } } else { question.feedback = 'No, that is not the case. Try again and see!'; } } else { question.feedback = 'Measure your circuit and find out!'; question.points_earned = 0; } "
+        },
+        {
+          "prompt": "Consider the voltage drops you measured above. How do the drops by each resistor compare with the voltage supplied by the function generator?",
+          "shortPrompt": "Addition of voltage drops",
+          "tutorial": "tutorial-16",
+          "points": 30,
+          "options": [
+            {
+              "option": "In AC, the sum of voltages across the resistors always equals the voltage supplied by the function generator."
+            },
+            {
+              "option": "In AC, the sum of voltages across the resistors is always less than the voltage supplied."
+            },
+            {
+              "option": "In AC, the sum of the voltages across the resistors is always more than the voltage supplied."
+            },
+            {
+              "option": "In AC, the sum of the voltages across the resistors is greater when the frequency is increased."
+            },
+            {
+              "option": "In AC, the sum of the voltages across the resistors is less when the frequency is decreased."
+            }
+          ],
+          "scoring": " question.correct_answer = 'In resistive circuits, sum of voltage drops equals voltage supplied.'; question.feedback = 'Look at your measures to answer this question.'; question.points_earned = 0; if (question.answer !== null) { myAns = 'always equals'; if (question.answer.indexOf(myAns) > -1) { question.points_earned = 30; question.feedback = 'Right! The AC voltage drops across resistors always add up to the supplied voltage&mdash;same as with DC sources.'; } else { question.feedback = 'Really? Did your voltages change at all at different frequencies? Try measuring again and confirm this.'; } } "
+        }
+      ]
+    }
+  ]
+}

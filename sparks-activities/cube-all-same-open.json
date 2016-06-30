@@ -1,0 +1,168 @@
+{
+  "_id": "cube-all-same-open",
+  "_rev": "7-7b2f78963bea4876e61ef9ea8f5127e4",
+  "title": "Toubleshooting a 3-D circuit with an open",
+  "show_multimeter": "true",
+  "hide-circuit": "false",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "wire",
+      "connections": "left_negative24,a27"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive1,j3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "d27,g27",
+      "label": "R1",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "h27,h21",
+      "label": "R2",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d21,g21",
+      "label": "R3",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "c27,c21",
+      "label": "R4",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r5",
+      "connections": "d9,g9",
+      "label": "R5",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r6",
+      "connections": "h9,h3",
+      "label": "R6",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r7",
+      "connections": "d3,g3",
+      "label": "R7",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r8",
+      "connections": "c9,c3",
+      "label": "R8",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r9",
+      "connections": "j27,j9",
+      "label": "R9",
+      "resistance": 1000
+    },
+    {
+      "type": "resistor",
+      "UID": "r10",
+      "connections": "i21,i3",
+      "label": "10",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r11",
+      "connections": "b27,b9",
+      "label": "11",
+      "resistance": 100
+    },
+    {
+      "type": "resistor",
+      "UID": "r12",
+      "connections": "a21,a3",
+      "label": "12",
+      "resistance": 100
+    }
+  ],
+  "faults": [
+    {
+      "type": "open",
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "notes": "Hint: which resistor has no current through it?",
+      "questions": [
+        {
+          "prompt": "This is the same cube circuit as before, and again one of the resistors is bad. But this time the bad resistor is open (infinite resistance), not shorted. Once again R10, R11, and R12 are labeled 10, 11, and 12, respectively. <br>Which resistor is open?",
+          "subquestions": [
+            {
+              "shortPrompt": "Which resistor is open?",
+              "options": [
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R2"
+                },
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R3"
+                },
+                {
+                  "option": "R4"
+                },
+                {
+                  "option": "R5"
+                },
+                {
+                  "option": "R6"
+                },
+                {
+                  "option": "R7"
+                },
+                {
+                  "option": "R8"
+                },
+                {
+                  "option": "R9"
+                },
+                {
+                  "option": "10"
+                },
+                {
+                  "option": "11"
+                },
+                {
+                  "option": "12"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 10000,
+              "scoring": "var badResistorName = breadboard.getFault().label; var rightAnswer = 'You got it!'; var wrongAnswer = 'No, that is not the faulty resistor.'; var nullAnswer = 'You did not answer the question!'; question.correct_answer = badResistorName; if (question.answer == '') {question.feedback = nullAnswer} else if (question.answer === badResistorName) {question.points_earned = 10000; question.feedback = rightAnswer} else {question.feedback = wrongAnswer}",
+              "category": "Serious troubleshooting"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "_id": "Als-test",
+  "_rev": "23-db57410b846ca6109dd1d88717691ffa",
+  "title": "Understanding Breadboard Connections",
+  "show_multimeter": "false",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "W1",
+      "connections": "left_positive20,b20"
+    }
+  ]
+}

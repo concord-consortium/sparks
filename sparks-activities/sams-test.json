@@ -1,0 +1,294 @@
+{
+  "_id": "sams-test",
+  "_rev": "69-7844001c68395fec02e0bb92b0618c83",
+  "nextActivity": "series-measuring",
+  "title": "Sam's Test",
+  "show_oscilloscope": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        1000,
+        2000
+      ],
+      "amplitude": 100
+    },
+    {
+      "type": "resistor",
+      "draggable": true,
+      "resistance": [
+        "uniform",
+        700,
+        100000
+      ],
+      "connections": "b15,b22"
+    },
+    {
+      "type": "resistor",
+      "draggable": true,
+      "resistance": [
+        "uniform",
+        700,
+        100000
+      ],
+      "connections": "c15,c9"
+    },
+    {
+      "type": "wire",
+      "draggable": true,
+      "connections": "a9,left_positive5"
+    },
+    {
+      "type": "wire",
+      "draggable": true,
+      "connections": "a22,left_negative22"
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 5,
+        "worst": 15,
+        "points": 4
+      },
+      "questions": [
+        {
+          "beforeScript": "sparks.flash.sendCommand('enable_component_dragging', 'true');",
+          "prompt": "What is the rated resistance of",
+          "subquestions": [
+            {
+              "prompt": "R<sub>1</sub>:",
+              "shortPrompt": "Resistance of R1",
+              "options": [
+                {
+                  "option": "[0.005] ohms",
+                  "points": 1,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "[var x = Math.random(1); if (x == 0) {'X was zero'} else {'X was one'}]",
+                  "feedback": "You got the wrong order of magnitude",
+                  "tutorial": "/sparks-content/tutorials/how_do_breadboards_work.html"
+                },
+                {
+                  "option": "[211206] ohms",
+                  "feedback": "That's not right",
+                  "tutorial": "/sparks-content/tutorials/how_do_breadboards_work.html"
+                },
+                {
+                  "option": "[${r1.nominalResistance}*2/10] ohms",
+                  "feedback": "That's not right",
+                  "tutorial": "/sparks-content/tutorials/how_do_breadboards_work.html"
+                }
+              ]
+            },
+            {
+              "prompt": "R<sub>2</sub>:",
+              "shortPrompt": "Resistance of R2",
+              "correct_answer": "[500] A"
+            },
+            {
+              "prompt": "R<sub>3</sub>:",
+              "shortPrompt": "Resistance of R3",
+              "options": [
+                {
+                  "option": "[${r3.nominalResistance}] ohms",
+                  "points": 1,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "[${r3.nominalResistance}*10] ohms",
+                  "feedback": "You got the wrong order of magnitude"
+                },
+                {
+                  "option": "[${r3.nominalResistance}*2] ohms",
+                  "feedback": "That's not right"
+                },
+                {
+                  "option": "[${r3.nominalResistance}*2/10] ohms",
+                  "feedback": "That's not right"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "prompt": "What is the total rated resistance across all the resistors? ",
+          "shortPrompt": "Total resistance",
+          "options": [
+            {
+              "option": "[${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}] ohms",
+              "points": 2,
+              "feedback": "That's right!"
+            },
+            {
+              "option": "[${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}*1000] ohms",
+              "feedback": "You got the wrong order of magnitude"
+            },
+            {
+              "option": "[${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}*2] ohms",
+              "feedback": "That's not right"
+            },
+            {
+              "option": "[${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}*2/10] ohms",
+              "feedback": "That's not right"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questions": [
+        {
+          "prompt": "Given that the battery is producing 9 Volts, what is the voltage drop across",
+          "subquestions": [
+            {
+              "prompt": "R<sub>1</sub>:",
+              "shortPrompt": "Voltage across R1",
+              "options": [
+                {
+                  "option": "[ 9 * ${r1.nominalResistance} / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] V",
+                  "points": 1,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "[ 9 * ${r1.nominalResistance} / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) / 1000] V",
+                  "feedback": "You got the wrong order of magnitude"
+                },
+                {
+                  "option": "[ 9 * ${r1.nominalResistance} * (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] V",
+                  "feedback": "That's not right"
+                },
+                {
+                  "option": "[  (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) / 9 * ${r1.nominalResistance}] V",
+                  "feedback": "That's not right"
+                }
+              ]
+            },
+            {
+              "prompt": "R<sub>2</sub>:",
+              "shortPrompt": "Voltage across R2",
+              "options": [
+                {
+                  "option": "[ 9 * ${r2.nominalResistance} / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] V",
+                  "points": 1,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "[ 9 * ${r2.nominalResistance} / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) / 1000] V",
+                  "feedback": "You got the wrong order of magnitude"
+                },
+                {
+                  "option": "[ 9 * ${r2.nominalResistance} * (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] V",
+                  "feedback": "That's not right"
+                },
+                {
+                  "option": "[  (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) / 9 * ${r2.nominalResistance}] V",
+                  "feedback": "That's not right"
+                }
+              ]
+            },
+            {
+              "prompt": "R<sub>3</sub>:",
+              "shortPrompt": "Voltage across R3",
+              "options": [
+                {
+                  "option": "[ 9 * ${r3.nominalResistance} / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] V",
+                  "points": 1,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "[ 9 * ${r3.nominalResistance} / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) / 1000] V",
+                  "feedback": "You got the wrong order of magnitude"
+                },
+                {
+                  "option": "[ 9 * ${r3.nominalResistance} * (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] V",
+                  "feedback": "That's not right"
+                },
+                {
+                  "option": "[  (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) / 9 * ${r3.nominalResistance}] V",
+                  "feedback": "That's not right"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "prompt": "What is the current through",
+          "subquestions": [
+            {
+              "prompt": "R<sub>1</sub>:",
+              "shortPrompt": "Current through R1",
+              "options": [
+                {
+                  "option": "[ 9 / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] A",
+                  "points": 1,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "[ 9 / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) * 1000] A",
+                  "feedback": "You got the wrong order of magnitude"
+                },
+                {
+                  "option": "[ 9 * (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] A",
+                  "feedback": "That's not right"
+                },
+                {
+                  "option": "[ (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) / 9] A",
+                  "feedback": "That's not right"
+                }
+              ]
+            },
+            {
+              "prompt": "R<sub>2</sub>:",
+              "shortPrompt": "Current through R2",
+              "options": [
+                {
+                  "option": "[ 9 / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] A",
+                  "points": 1,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "[ 9 / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) * 1000] A",
+                  "feedback": "You got the wrong order of magnitude"
+                },
+                {
+                  "option": "[ 9 * (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] A",
+                  "feedback": "That's not right"
+                },
+                {
+                  "option": "[ (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) / 9] A",
+                  "feedback": "That's not right"
+                }
+              ]
+            },
+            {
+              "prompt": "R<sub>3</sub>:",
+              "shortPrompt": "Current through R3",
+              "options": [
+                {
+                  "option": "[ 9 / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] A",
+                  "points": 1,
+                  "feedback": "That's right!"
+                },
+                {
+                  "option": "[ 9 / (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) * 1000] A",
+                  "feedback": "You got the wrong order of magnitude"
+                },
+                {
+                  "option": "[ 9 * (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance})] A",
+                  "feedback": "That's not right"
+                },
+                {
+                  "option": "[ (${r1.nominalResistance} + ${r2.nominalResistance} + ${r3.nominalResistance}) / 9] A",
+                  "feedback": "That's not right"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

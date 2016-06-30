@@ -1,0 +1,17 @@
+{
+  "_id": "john-test",
+  "_rev": "38-2c949b504bafa53112442eb737d85784",
+  "title": "TESTING CODE",
+  "pages": [
+    {
+      "notes": "[/* I can do scripts inside brackets, but I CANNOT reference array elements here because that requires another bracket. */ console.log('In notes, I can do scripts, and by avoiding brackets, even create and reference an array:'); sparks.vars.myArray = new Array(0, 1,2,Math.PI); console.log(sparks.vars.myArray); console.log('But I cannot reference an array element, because that requires brackets.');  console.log('Here is myArray(3)=' + 'sparks.vars.myArray BRACKET 3 BRACKET'); '']",
+      "questions": [
+        {
+          "prompt": "I cannot do scripts here, in a question prompt.",
+          "beforeScript": "/* I CAN do scripts, including arrays, here */ console.log('In beforeScript I CAN use brackets, and so CAN reference an array element.'); console.log('Here is myArray(3)=' + sparks.vars.myArray[3]);",
+          "scoring": "console.log('In scoring, also no problem:' + sparks.vars.myArray[3]);"
+        }
+      ]
+    }
+  ]
+}

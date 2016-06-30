@@ -1,0 +1,30 @@
+{
+  "_id": "circuit-creator",
+  "_rev": "2-98a65aed7736c449a5509c9b3e0cc7d8",
+  "title": "RLC Circuit with draggable components",
+  "show_multimeter": "true",
+  "show_oscilloscope": "true",
+  "showComponentDrawer": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 10
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "This is a sample RLC circuit with draggable components."
+        }
+      ]
+    }
+  ]
+}

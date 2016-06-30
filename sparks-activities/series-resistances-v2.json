@@ -1,0 +1,17 @@
+{
+  "_id": "series-resistances-v2",
+  "_rev": "2-e810bb0a082f07c43f7d212fcd6f0336",
+  "type": "activity",
+  "sections": [
+    "series-a",
+    "series-b",
+    "series-c1",
+    "series-c2",
+    "series-d1",
+    "series-d2",
+    "series-e1",
+    "series-e2",
+    "series-f"
+  ],
+  "title": "Series Resistances"
+}

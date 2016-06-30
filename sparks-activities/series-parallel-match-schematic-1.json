@@ -1,0 +1,100 @@
+{
+  "_id": "series-parallel-match-schematic-1",
+  "_rev": "15-12fa5dd7ef96b3fefeea02697e3bcef6",
+  "title": "Interpreting a Breadboard (Series-Parallel)",
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "Which of the schematics matches the circuit on the breadboard?",
+          "shortPrompt": "Matching schematic to breadboard circuit",
+          "radio": "true",
+          "keepOrder": "true",
+          "points": 50,
+          "options": [
+            {
+              "option": "A",
+              "points": 0,
+              "feedback": "Nope."
+            },
+            {
+              "option": "B",
+              "points": 0,
+              "feedback": "Nope."
+            },
+            {
+              "option": "C",
+              "points": 0,
+              "feedback": "Nope."
+            },
+            {
+              "option": "D",
+              "points": 50,
+              "feedback": "Right!"
+            },
+            {
+              "option": "E",
+              "points": 0,
+              "feedback": "Nope."
+            },
+            {
+              "option": "F",
+              "points": 0,
+              "feedback": "Nope."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "image": "series-parallel-schematic-1abcdef.png",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive6,a5",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "c21,c15",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "e21,e15",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "a15,a10",
+      "label": "R3"
+    },
+    {
+      "type": "resistor",
+      "UID": "r4",
+      "connections": "c10,c5",
+      "label": "R4"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a21,left_negative20",
+      "label": "wire2"
+    }
+  ],
+  "COMMENT": "Max score: 50 pts.",
+  "nextSection": "series-parallel-c-1",
+  "show_multimeter": true,
+  "_attachments": {
+    "series-parallel-schematic-1abcdef.png": {
+      "content_type": "image/png",
+      "revpos": 14,
+      "length": 63819,
+      "stub": true
+    }
+  }
+}

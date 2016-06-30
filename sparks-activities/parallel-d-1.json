@@ -1,0 +1,157 @@
+{
+  "_id": "parallel-d-1",
+  "_rev": "108-bf6d4b121bcef5b629a35097259027b8",
+  "title": "Measuring to Calculate Total R",
+  "circuit": [
+    {
+      "type": "wire",
+      "connections": "left_positive20,b16"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "a16,a10",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c16,c10",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "e16,e10",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,b10"
+    }
+  ],
+  "disable_multimeter_position": "r",
+  "image": "parallel-schematic-small.jpg",
+  "show_multimeter": "true",
+  "CHEAT": "<b>CHEAT:</b><br>R1:&nbsp;[Math.toSigFigs(r1.resistance,6)]<br>R2:&nbsp;[ Math.toSigFigs(r2.resistance,6)]<br>R3:&nbsp;[ Math.toSigFigs(r3.resistance,6)]<br>I: [Math.toSigFigs(9/cMath.rParallel('r1','r2','r3'),3)]<br>RTOT: [Math.toSigFigs(9/Math.toSigFigs(9/cMath.rParallel('r1','r2','r3'), 4),3)]",
+  "pages": [
+    {
+      "time": {
+        "best": 60,
+        "worst": 173,
+        "points": 15,
+        "threshold": 10
+      },
+      "notes": "Labeled values for this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.nominalResistance] ohms<br>  &nbsp;&nbsp; <b>R<sub>2</sub></b> = [r2.nominalResistance] ohms<br>&nbsp;&nbsp; <b>R<sub>3</sub></b> = [r3.nominalResistance] ohms<br>&nbsp;&nbsp; <b>E</b> = 9.00 volts<br><br>Unfortunately, the internal battery of the DMM is dead, so the DMM is unable to measure resistance.",
+      "questions": [
+        {
+          "prompt": "The resistors on the breadboard may have slightly different values than the labeled values. Use the DMM to measure the circuit. <b>(Bonus points for fast work!)</b>",
+          "subquestions": [
+            {
+              "prompt": "<hr>What is the current delivered by the battery?<br>",
+              "shortPrompt": "Current through circuit",
+              "options": [
+                {
+                  "option": "[if (r1.resistance<120){r1.resistance=r1.resistance*10;''}else{''};if (r2.resistance<120){r2.resistance=r2.resistance*10;''}else{''};if (r3.resistance<120){r3.resistance=r3.resistance*10;''}else{''};var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9*(1/R1+1/R2+1/R3),3)] A",
+                  "points": 15,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Right! The circuit current passes through one of the leads attached to the battery power."
+                },
+                {
+                  "option": "[var R1 = r1.resistance;Math.toSigFigs(9/R1,3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you must lift a wire lead attached to the battery power, not just the R1 lead. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R2 = r2.resistance;Math.toSigFigs(9/R2,3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you must lift a wire lead attached to the battery power, not just the R2 lead. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R3 = r3.resistance;Math.toSigFigs(9/R3,3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "No, you must lift a wire lead attached to the battery power, not just the R3 lead. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9/(R1+R2+R3),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Did you really measure this? You must lift a wire lead attached to the battery power and measure the current value. See the tutorial for more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9/Math.max(R1, R2, R3)*(10.314+Math.random()),3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Did you really measure this? You must lift a wire lead attached to the battery power and measure the current value. See the tutorial for more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs(9/Math.min(R1,R2,R3)*3.14,3)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-10",
+                  "feedback": "Did you really measure this? You must lift a wire lead attached to the battery power and measure the current value. See the tutorial for more help."
+                }
+              ]
+            },
+            {
+              "prompt": "<hr>What is the actual <b>total</b> resistance value for this circuit?",
+              "shortPrompt": "Total circuit resistance",
+              "options": [
+                {
+                  "option": "[Math.toSigFigs(9/Math.toSigFigs(9/cMath.rParallel('r1','r2','r3'),4),3)] ohms",
+                  "points": 15,
+                  "feedback": "Right! Using Ohm's Law with your measurements you found the actual total resistance of this circuit."
+                },
+                {
+                  "option": "[Math.toSigFigs(cMath.rParallel('r2','r3'),3)] ohms",
+                  "points": 0,
+                  "feedback": "You seem to have the theory right, but this is the resistance value calculated from incorrectly measuring the current value."
+                },
+                {
+                  "option": "[Math.toSigFigs(cMath.rParallel('r1','r3'),3)] ohms",
+                  "points": 0,
+                  "feedback": "You seem to have the theory right, but this is the resistance value calculated from incorrectly measuring the current value."
+                },
+                {
+                  "option": "[Math.toSigFigs(cMath.rParallel('r1','r2'),3)] ohms",
+                  "points": 0,
+                  "feedback": "You seem to have the theory right, but this is the resistance value calculated from incorrectly measuring the current value."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;Math.toSigFigs((R1+R2+R3)/3,3)] ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-6",
+                  "feedback": "Oops! Are you guessing? To calculate the resistance for all the resistors you use the total voltage and the total current with Ohm’s Law. If you're unsure about this, check the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs((1.09+.3*Math.random())*cMath.rParallel('r1','r2','r3'),3)] ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-6",
+                  "feedback": "Oops! Are you guessing? To calculate the resistance for all the resistors you use the total voltage and the total current with Ohm’s Law. If you're unsure about this, check the tutorial."
+                },
+                {
+                  "option": "[Math.toSigFigs((0.91-.3*Math.random())*cMath.rParallel('r1','r2','r3'),3)] ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-6",
+                  "feedback": "Oops! Are you guessing? To calculate the resistance for all the resistors you use the total voltage and the total current with Ohm’s Law. If you're unsure about this, check the tutorial."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "COMMENT": "Bonus for time < 60 sec: 30 pts. Max score: 60 pts.",
+  "nextSection": "parallel-d-2",
+  "_attachments": {
+    "parallel-schematic-small.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 19,
+      "length": 14100,
+      "stub": true
+    }
+  }
+}

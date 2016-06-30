@@ -1,0 +1,12 @@
+{
+  "_id": "ac-parallel-measurements",
+  "_rev": "2-7791385055f711b26023e04ecb88c7b5",
+  "type": "activity",
+  "sections": [
+    "john-RRR-parallel",
+    "john-RL-parallel",
+    "john-RC-parallel",
+    "john-RLC-parallel"
+  ],
+  "title": "Measuring alternating voltages in parallel circuits"
+}

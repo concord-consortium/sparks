@@ -1,0 +1,79 @@
+ {
+  "_id": "checkbox-example",
+  "title": "Checkbox Example",
+  "show_multimeter": "true",
+  "show_oscilloscope": "true",
+  "showComponentDrawer": "true",
+  "circuit": [
+  {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 10
+    }
+  ],
+  "pages": [
+    {
+      "notes": "Both questions should award 10 points and only show up as green in the report if both A and B are answered.",
+      "questions": [
+        {
+          "prompt": "Pick A and B (default scoring)",
+          "keepOrder": true,
+          "checkbox": true,
+          "options": [
+             {
+                 "option": "A",
+                 "points": 5,
+                 "feedback": "A is right."
+             },
+             {
+                 "option": "B",
+                 "points": 5,
+                 "feedback": "B is right."
+             },
+             {
+                 "option": "C",
+                 "points": 0,
+                 "feedback": "C is wrong."
+             },
+             {
+                 "option": "D",
+                 "points": 0,
+                 "feedback": "D is wrong."
+             }
+          ]
+        },
+        {
+          "prompt": "Pick A and B (scripted scoring)",
+          "keepOrder": true,
+          "checkbox": true,
+          "points": 10,
+          "options": [
+             {
+                 "option": "A",
+                 "feedback": "A is right."
+             },
+             {
+                 "option": "B",
+                 "feedback": "B is right."
+             },
+             {
+                 "option": "C",
+                 "feedback": "C is wrong."
+             },
+             {
+                 "option": "D",
+                 "feedback": "D is wrong."
+             }
+          ],
+          "scoring": "if (typeof question.answer === 'object') {if (~question.answer.indexOf('A') && ~question.answer.indexOf('B')) {question.feedback = 'You got it!'; question.points_earned = 10} else {question.feedback = 'Answer is an array, but is not correct.';}} else {question.feedback = 'Answer is not an array, so I can\\'t score it '}"
+        }
+      ]
+    }
+  ]
+}

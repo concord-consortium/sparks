@@ -1,0 +1,75 @@
+{
+  "_id": "zz-test",
+  "_rev": "21-afec55732ef4372a99b9f5ccafbef39b",
+  "title": "Testing scope of sparks.vars variables",
+  "pages": [
+    {
+      "notes": "[ sparks.vars.Notes1 = 1; console.log(''); console.log('N1--From the page 1 notes script...'); console.log('N1--Notes1 = ' + sparks.vars.Notes1); console.log('N1--BeforeScript1 = ' + sparks.vars.BeforeScript1); console.log('N1--Scoring1 = ' + sparks.vars.Scoring1); console.log('N1--Notes2 = ' + sparks.vars.Notes2); console.log('N1--BeforeScript2 = ' + sparks.vars.BeforeScript2); console.log('N1--Scoring2 = ' + sparks.vars.Scoring2); '']<b>Timing of sparks.vars</b><br> Notes1: [sparks.vars.Notes1;]<br> BeforeScript1: [sparks.vars.BeforeScript1;]<br> Scoring1: [sparks.vars.Scoring1;]<br> Notes2: [sparks.vars.Notes2;]<br> BeforeScript2: [sparks.vars.BeforeScript2;]<br> Scoring2: [sparks.vars.Scoring2;]<br> ",
+      "questions": [
+        {
+          "prompt": "PAGE 1: What variables are available on page 1?",
+          "shortPrompt": "Page 1 Testing",
+          "beforeScript": " sparks.vars.BeforeScript1=1; console.log(''); console.log('B1--From the page 1 beforeScript...'); console.log('B1--Notes1 = ' + sparks.vars.Notes1); console.log('B1--BeforeScript1 = ' + sparks.vars.BeforeScript1); console.log('B1--Scoring1 = ' + sparks.vars.Scoring1); console.log('B1--Notes2 = ' + sparks.vars.Notes2); console.log('B1--BeforeScript2 = ' + sparks.vars.BeforeScript2); console.log('B1--Scoring2 = ' + sparks.vars.Scoring2); ",
+          "points": 100,
+          "scoring": " sparks.vars.Scoring1=1; console.log(''); console.log('S1--From the page 1 scoring script...'); console.log('S1--Notes1 = ' + sparks.vars.Notes1); console.log('S1--BeforeScript1 = ' + sparks.vars.BeforeScript1); console.log('S1--Scoring1 = ' + sparks.vars.Scoring1); console.log('S1--Notes2 = ' + sparks.vars.Notes2); console.log('S1--BeforeScript2 = ' + sparks.vars.BeforeScript2); console.log('S1--Scoring2 = ' + sparks.vars.Scoring2); question.feedback = 'S1--Notes1 = ' + sparks.vars.Notes1 + '<br>S1--BeforeScript1 = ' + sparks.vars.BeforeScript1 + '<br>S1--Scoring1 = ' + sparks.vars.Scoring1 + '<br>S1--Notes1 = ' + sparks.vars.Notes1 + '<br>S1--BeforeScript2 = ' + sparks.vars.BeforeScript2 + '<br>S1--Scoring2 = ' + sparks.vars.Scoring2 ",
+          "radio": "true",
+          "keepOrder": "true",
+          "options": [
+            {
+              "option": "BeforeScript1: [sparks.vars.BeforeScript1;]"
+            },
+            {
+              "option": "Notes1: [sparks.vars.Notes1;]"
+            },
+            {
+              "option": "Scoring1: [sparks.vars.Scoring1;]"
+            },
+            {
+              "option": "BeforeScript2: [sparks.vars.BeforeScript2;]"
+            },
+            {
+              "option": "Notes2: [sparks.vars.Notes2;]"
+            },
+            {
+              "option": "Scoring2: [sparks.vars.Scoring2;]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "notes": " [ sparks.vars.Notes2 = 2; console.log(''); console.log('N2--From the page 2 notes script...'); console.log('N2--Notes1 = ' + sparks.vars.Notes1); console.log('N2--BeforeScript1 = ' + sparks.vars.BeforeScript1); console.log('N2--Scoring1 = ' + sparks.vars.Scoring1); console.log('N2--Notes2 = ' + sparks.vars.Notes2); console.log('N2--BeforeScript2 = ' + sparks.vars.BeforeScript2); console.log('N2--Scoring2 = ' + sparks.vars.Scoring2); '']<b>Timing of sparks.vars</b><br> BeforeScript1: [sparks.vars.BeforeScript1;]<br> Notes1: [sparks.vars.Notes1;]<br> Scoring1: [sparks.vars.Scoring1;]<br> BeforeScript2: [sparks.vars.BeforeScript2;]<br> Notes2: [sparks.vars.Notes2;]<br> Scoring2: [sparks.vars.Scoring2;]<br> ",
+      "questions": [
+        {
+          "prompt": "PAGE 2: What variables are available on page 2?",
+          "shortPrompt": "Page 2 Testing",
+          "beforeScript": " sparks.vars.BeforeScript2=2; console.log(''); console.log('B2--From the page 2 beforeScript...'); console.log('B2--Notes1 = ' + sparks.vars.Notes1); console.log('B2--BeforeScript1 = ' + sparks.vars.BeforeScript1); console.log('B2--Scoring1 = ' + sparks.vars.Scoring1); console.log('B2--Notes2 = ' + sparks.vars.Notes2); console.log('B2--BeforeScript2 = ' + sparks.vars.BeforeScript2); console.log('B2--Scoring2 = ' + sparks.vars.Scoring2); ",
+          "points": 100,
+          "scoring": " sparks.vars.Scoring2=2; console.log(''); console.log('S2--From the page 2 scoring script...'); console.log('S2--Notes1 = ' + sparks.vars.Notes1); console.log('S2--BeforeScript1 = ' + sparks.vars.BeforeScript1); console.log('S2--Scoring1 = ' + sparks.vars.Scoring1); console.log('S2--Notes2 = ' + sparks.vars.Notes2); console.log('S2--BeforeScript2 = ' + sparks.vars.BeforeScript2); console.log('S2--Scoring2 = ' + sparks.vars.Scoring2); question.feedback = 'S2--Notes1 = ' + sparks.vars.Notes1 + '<br>S2--BeforeScript1 = ' + sparks.vars.BeforeScript1 + '<br>S2--Scoring1 = ' + sparks.vars.Scoring1 + '<br>S2--Notes2 = ' + sparks.vars.Notes2 + '<br>S2--BeforeScript2 = ' + sparks.vars.BeforeScript2 + '<br>S2--Scoring2 = ' + sparks.vars.Scoring2 ",
+          "radio": "true",
+          "keepOrder": "true",
+          "options": [
+            {
+              "option": "BeforeScript1: [sparks.vars.BeforeScript1;]"
+            },
+            {
+              "option": "Notes1: [sparks.vars.Notes1;]"
+            },
+            {
+              "option": "Scoring1: [sparks.vars.Scoring1;]"
+            },
+            {
+              "option": "BeforeScript2: [sparks.vars.BeforeScript2;]"
+            },
+            {
+              "option": "Notes2: [sparks.vars.Notes2;]"
+            },
+            {
+              "option": "Scoring2: [sparks.vars.Scoring2;]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "_id": "test-DMM",
+  "_rev": "4-e50c19bc028987dc7ca73be595d4338f",
+  "title": "Measuring an RC circuit with an oscilloscope",
+  "show_oscilloscope": "true",
+  "show_multimeter": "true",
+  "allow_move_yellow_probe": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "initialFrequency": 400,
+      "amplitude": 20
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c17,c23",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "c1",
+      "capacitance": "2.0e-07",
+      "connections": "b11,b17",
+      "label": "C1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative19,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ]
+}

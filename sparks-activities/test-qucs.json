@@ -1,0 +1,99 @@
+{
+  "_id": "test-qucs",
+  "_rev": "42-08303ceb4a5daeb62b7154fc170b248c",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "wire",
+      "connections": "left_positive24,b23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,f8"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "h25,e23",
+      "label": "R1",
+      "uid": "r1"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "i25,f20",
+      "label": "R2",
+      "uid": "r2"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "h20,e18",
+      "label": "R3",
+      "uid": "r3"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "d23,d18",
+      "label": "R4",
+      "uid": "r4"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "c23,c16",
+      "label": "R5",
+      "uid": "r5"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "a16,a10",
+      "label": "R6",
+      "uid": "r6"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "b10,b18",
+      "label": "R7",
+      "uid": "r7"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "h8,c10",
+      "label": "R8",
+      "uid": "r8"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "j20,j8",
+      "label": "R9",
+      "uid": "r9"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "i13,i8",
+      "label": "10",
+      "uid": "r10"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "j25,h13",
+      "label": "11",
+      "uid": "r11"
+    },
+    {
+      "type": "resistor",
+      "resistance": 1000,
+      "connections": "d16,g13",
+      "label": "12",
+      "uid": "r12"
+    }
+  ]
+}

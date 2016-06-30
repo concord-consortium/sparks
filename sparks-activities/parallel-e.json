@@ -1,0 +1,401 @@
+{
+  "_id": "parallel-e",
+  "_rev": "18-6b83b81fcdd4bf4876434fc4d6dd0174",
+  "title": "Measuring Parallel Circuits (advanced)",
+  "circuit": [
+    {
+      "type": "wire",
+      "connections": "left_positive20,b16"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "a16,a10",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c16,c10",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "e16,e10",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,b10"
+    }
+  ],
+  "disable_multimeter_position": "r",
+  "image": "parallel-schematic-small.jpg",
+  "show_multimeter": "true",
+  "pages": [
+    {
+      "notes": "Unfortunately, the resistance function on your meter is broken, so you can only measure voltage and current.",
+      "questions": [
+        {
+          "prompt": "The resistors on the breadboard may have slightly different values than the labeled values. Use the DMM to measure the circuit.",
+          "subquestions": [
+            {
+              "prompt": "<hr>What is the current delivered by the battery?<br>",
+              "shortPrompt": "Current through circuit",
+              "tutorial": "tutorial-10",
+              "category": "Measuring current",
+              "options": [
+                {
+                  "option": "[if (r1.resistance<120){r1.resistance=r1.resistance*10;''}else{''};if (r2.resistance<120){r2.resistance=r2.resistance*10;''}else{''};if (r3.resistance<120){r3.resistance=r3.resistance*10;''}else{''}; var ANS = 9/cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "points": 25,
+                  "feedback": "Right! The same current passes through all the resistors in a series circuit."
+                },
+                {
+                  "option": "[var ANS = 9/r1.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, you must lift a wire lead attached to the battery, not just the R1 lead. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[ var ANS = 9/r2.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, you must lift a wire lead attached to the battery, not just the R2 lead. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[ var ANS = 9/r3.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, you must lift a wire lead attached to the battery, not just the R3 lead. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[ var ANS = 9/cMath.rSeries('r1','r2','r3');var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "Did you really measure this? You must lift a wire lead attached to the battery and measure the current value. See the tutorial for more help."
+                },
+                {
+                  "option": "[ var ANS = 9/Math.max(r1.resistance, r2.resistance, r3.resistance)*(10.314+Math.random());var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "Did you really measure this? You must lift a wire lead attached to the battery and measure the current value. See the tutorial for more help."
+                },
+                {
+                  "option": "[ var ANS = 9/Math.min(r1.resistance, r2.resistance, r3.resistance)*3.14;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "Did you really measure this? You must lift a wire lead attached to the battery and measure the current value. See the tutorial for more help."
+                }
+              ]
+            },
+            {
+              "prompt": "<hr>What is the actual <b>total</b> resistance value for this circuit?",
+              "shortPrompt": "Total circuit resistance",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "points": 25,
+                  "feedback": "Right! Using Ohm's Law with your measurements you found the actual total resistance of this circuit."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "You seem to be on the right track, but you may have measured the current incorrectly, making your calculation also incorrect."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "You seem to be on the right track, but you may have measured the current incorrectly, making your calculation also incorrect."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "You seem to be on the right track, but you may have measured the current incorrectly, making your calculation also incorrect."
+                },
+                {
+                  "option": "[var ANS = 9/(cMath.rSeries('r1','r2','r3')/3);  var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-6",
+                  "feedback": "Oops! Are you guessing? To calculate the resistance for all the resistors you use the total voltage and the total current with Ohm’s Law. If you're unsure about this, check the tutorial."
+                },
+                {
+                  "option": "[var ANS = (1.09+.3*Math.random())*cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-6",
+                  "feedback": "Oops! Are you guessing? To calculate the resistance for all the resistors you use the total voltage and the total current with Ohm’s Law. If you're unsure about this, check the tutorial."
+                },
+                {
+                  "option": "[var ANS = (0.91-.3*Math.random())*cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-6",
+                  "feedback": "Oops! Are you guessing? To calculate the resistance for all the resistors you use the total voltage and the total current with Ohm’s Law. If you're unsure about this, check the tutorial."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "prompt": "Use the DMM to measure the current through each resistor in the circuit above.",
+          "subquestions": [
+            {
+              "prompt": "&nbsp;&nbsp;Through <b>R<sub>1</sub></b>:",
+              "shortPrompt": "R1 current",
+              "tutorial": "tutorial-10",
+              "category": "Measuring current",
+              "options": [
+                {
+                  "option": "[var ANS = 9/r1.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "points": 25,
+                  "feedback": "Right! This is the current through R1."
+                },
+                {
+                  "option": "[var ANS = 9/r2.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R1."
+                },
+                {
+                  "option": "[var ANS = 9/r3.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R1."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is actually the current through R2 and R3. You should lift and measure through the R1 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is actually the current through R1 and R3. You should lift and measure through the R1 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is actually the current through R1 and R2. You should lift and measure through the R1 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is the current for the entire circuit current. You should lift and measure through the R1 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance; var ANS = 9*R1/(R1+R2+R3)/(99-10*Math.random()); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits) ] A",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Through <b>R<sub>2</sub></b>:",
+              "shortPrompt": "R2 current",
+              "tutorial": "tutorial-10",
+              "category": "Measuring current",
+              "options": [
+                {
+                  "option": "[var ANS = 9/r2.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "points": 25,
+                  "feedback": "Right! This is the current through R2."
+                },
+                {
+                  "option": "[var ANS = 9/r1.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R2."
+                },
+                {
+                  "option": "[var ANS = 9/r3.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R2."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is actually the current through R2 and R3. You should lift and measure through the R2 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is actually the current through R1 and R3. You should lift and measure through the R2 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is actually the current through R1 and R2. You should lift and measure through the R2 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is the current for the entire circuit current. You should lift and measure through the R2 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance; var ANS = 9*R2/(R1+R2+R3)/(99-10*Math.random()); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits) ] A",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Through <b>R<sub>3</sub></b>:",
+              "shortPrompt": "R3 current",
+              "tutorial": "tutorial-10",
+              "category": "Measuring current",
+              "options": [
+                {
+                  "option": "[var ANS = 9/r3.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "points": 25,
+                  "feedback": "Right! This is the current through R3."
+                },
+                {
+                  "option": "[var ANS = 9/r1.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R3."
+                },
+                {
+                  "option": "[var ANS = 9/r2.resistance;var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "Oops! You picked the current through another resistor, not R3."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is actually the current through R2 and R3. You should lift and measure through the R3 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is actually the current through R1 and R3. You should lift and measure through the R3 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is actually the current through R1 and R2. You should lift and measure through the R3 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] A",
+                  "feedback": "No, this is the current for the entire circuit current. You should lift and measure through the R3 lead. See the tutorial if you need more help."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance; var ANS = 9*R3/(R1+R2+R3)/(99-10*Math.random()); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits) ] A",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "prompt": "Using your measured current values, what is each resistor's actual resistance?",
+          "subquestions": [
+            {
+              "prompt": "&nbsp;&nbsp;<b>R<sub>1</sub></b>:",
+              "shortPrompt": "R1 resistance",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[var ANS = 9/r1.resistance; var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "points": 25,
+                  "feedback": "Right! This is the resistance of R1."
+                },
+                {
+                  "option": "[var ANS = 9/r2.resistance; var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "feedback": "Oops! You picked the resistance of another resistor, not R1."
+                },
+                {
+                  "option": "[var ANS = 9/r3.resistance; var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "feedback": "Oops! You picked the resistance of another resistor, not R1."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R1 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R1 and R2. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used the current for the whole circuit, leading you to choose the resistance value for the entire circuit. The tutorial should help you correctly measure the current for just one resistor."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;var ANS = R1/(R1+R2+R3)/(99-10*Math.random()); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;<b>R<sub>2</sub></b>:",
+              "shortPrompt": "R2 resistance",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[var ANS = 9/r2.resistance; var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "points": 25,
+                  "feedback": "Right! This is the resistance of R2."
+                },
+                {
+                  "option": "[var ANS = 9/r1.resistance; var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "feedback": "Oops! You picked the resistance of another resistor, not R2."
+                },
+                {
+                  "option": "[var ANS = 9/r3.resistance; var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "feedback": "Oops! You picked the resistance of another resistor, not R2."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R1 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R1 and R2. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used the current for the whole circuit, leading you to choose the resistance value for the entire circuit. The tutorial should help you correctly measure the current for just one resistor."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;var ANS = R2/(R1+R2+R3)/(99-10*Math.random()); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;<b>R<sub>3</sub></b>:",
+              "shortPrompt": "R3 resistance",
+              "category": "Using Ohms Law",
+              "options": [
+                {
+                  "option": "[var ANS = 9/r3.resistance; var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "points": 25,
+                  "feedback": "Right! This is the resistance of R3."
+                },
+                {
+                  "option": "[var ANS = 9/r1.resistance; var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "feedback": "Oops! You picked the resistance of another resistor, not R3."
+                },
+                {
+                  "option": "[var ANS = 9/r2.resistance; var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "feedback": "Oops! You picked the resistance of another resistor, not R3."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R2 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R1 and R3. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used an incorrect current measurement, leading you to choose the combined resistance of R1 and R2. The tutorial should help you measure the current correctly."
+                },
+                {
+                  "option": "[var ANS = 9/cMath.rParallel('r1','r2','r3'); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; ANS = 9/Math.toSigFigs(ANS,numDigits); numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "tutorial": "tutorial-10",
+                  "feedback": "Sorry, you must have used the current for the whole circuit, leading you to choose the resistance value for the entire circuit. The tutorial should help you correctly measure the current for just one resistor."
+                },
+                {
+                  "option": "[var R1 = r1.resistance; var R2 = r2.resistance; var R3 = r3.resistance;var ANS = R3/(R1+R2+R3)/(99-10*Math.random()); var numDigits = 3; if (Math.floor(ANS/Math.powNdigits(ANS,1)) == 1) {numDigits = 4}; Math.toSigFigs(ANS,numDigits)] ohms",
+                  "feedback": "Are you guessing? Did you actually measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "COMMENT": "275 pts: 185 plus 90 if < 120 sec",
+  "_attachments": {
+    "parallel-schematic-small.jpg": {
+      "content_type": "image/jpeg",
+      "revpos": 3,
+      "length": 14100,
+      "stub": true
+    }
+  }
+}

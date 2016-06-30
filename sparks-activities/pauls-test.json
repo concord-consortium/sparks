@@ -1,0 +1,51 @@
+{
+  "_id": "pauls-test",
+  "_rev": "77-dc7eee68211a91ea6a9ce231c2d6d285",
+  "title": "Measuring a CR Series Circuit with Oscilloscope",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        10,
+        100000,
+        1001
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "c11,c17",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "C1",
+      "capacitance": "2e-7",
+      "connections": "b17,b23",
+      "label": "C1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub></b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>C<sub>1</sub></b> = [C1.capacitance] farads<br>&nbsp;&nbsp; <b>V<sub>P-P</sub></b> = [source.amplitude] volts<br>&nbsp;&nbsp; <b>f<sub>source</sub></b> = [source.frequencies] Hz",
+      "questions": [
+        {
+          "prompt": "This is a sample RL circuit. Observe the low-pass nature of the circuit. Measure to determine the corner frequency and phase shift."
+        }
+      ]
+    }
+  ],
+  "show_oscilloscope": "true"
+}

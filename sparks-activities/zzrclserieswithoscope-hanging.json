@@ -1,0 +1,21 @@
+{
+  "_id": "zzrclserieswithoscope-hanging",
+  "_rev": "57-a2bc0737be85dfba963415fbf9f67890",
+  "title": "Measuring an RCL circuit with an oscilloscope",
+  "show_multimeter": "true",
+  "allow_move_yellow_probe": "true",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        100,
+        100000,
+        1001
+      ],
+      "amplitude": 16.97
+    }
+  ],
+  "pages": []
+}

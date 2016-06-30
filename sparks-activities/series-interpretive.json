@@ -1,0 +1,513 @@
+{
+  "_id": "series-interpretive",
+  "_rev": "5-046edba08c001ffee062ff52b357f4d8",
+  "title": "Measuring Series R's in Circuits",
+  "show_multimeter": "true",
+  "circuit": [
+    {
+      "type": "wire",
+      "UID": "w1",
+      "connections": "left_positive20,a23",
+      "label": "wire1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "b23,b17",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c11",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "d11,d5",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "UID": "w2",
+      "connections": "a5,left_negative2",
+      "label": "wire2"
+    }
+  ],
+  "pages": [
+    {
+      "time": {
+        "best": 120,
+        "worst": 240,
+        "points": 80,
+        "threshold": 110
+      },
+      "questions": [
+        {
+          "prompt": "For the resistors in the breadboard circuit above, use the DMM to measure the voltages across each and the current through each.",
+          "tutorial": "tutorial-7",
+          "subquestions": [
+            {
+              "prompt": "For <b>R<sub>1</sub></b>:<br>&nbsp;&nbsp;Voltage ",
+              "shortPrompt": "R1 voltage",
+              "tutorial": "tutorial-7",
+              "options": [
+                {
+                  "option": "[Math.round(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 10,
+                  "feedback": "Right! This is the voltage measured across resistor R1."
+                },
+                {
+                  "option": "[Math.round(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)*Math.pow(10,(1+Math.floor(Math.random()*2)))] V",
+                  "points": 0,
+                  "feedback": "Oops! Did you misread the knob setting on the DMM? You have the right digits, but the wrong decimal point location."
+                },
+                {
+                  "option": "[Math.round(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Oops! Were the probes placed across this resistor when you measured that voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Oops! Were the probes placed across this resistor when you measured that voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9*r1.nominalResistance/(r1.nominalResistance+r2.nominalResistance+r3.nominalResistance)/Math.pow(10,Math.floor(Math.log(9*r1.nominalResistance/(r1.nominalResistance+r2.nominalResistance+r3.nominalResistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r1.nominalResistance/(r1.nominalResistance+r2.nominalResistance+r3.nominalResistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "That's close, but not quite correct since the actual resistances are a little different from the values labeled by the color bands. You need to use the DMM to measure the <b>actual</b> voltage drop across this resistor. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9*(r2.resistance+r1.resistance)/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*(r2.resistance+r1.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*(r2.resistance+r1.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Did you accidentally measure across two resistors? You need to place the DMM probes on either end of R1 to measure this voltage. If unsure about this, check out the tutorial."
+                },
+                {
+                  "option": "[9.123/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Are you guessing? You need to use the DMM in voltage mode to measure the voltage across R1. See the tutorial for more help."
+                },
+                {
+                  "option": "[9.123/(r1.resistance+r2.resistance+r3.resistance)/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Are you guessing? You need to use the DMM in voltage mode to measure the voltage across R1. See the tutorial for more help."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Current ",
+              "shortPrompt": "R1 current",
+              "options": [
+                {
+                  "option": "[Math.round(9/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] A",
+                  "points": 10,
+                  "feedback": "Right! The current through the whole circuit passes through this series resistor."
+                },
+                {
+                  "option": "[Math.round(9/(r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r3.resistance))/Math.log(10))-2)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "You must measure current differently than voltage: lift a lead to break the circuit, insert the DMM probes into the break, and then measure the current. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9/(r2.resistance+r1.resistance)/Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r1.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r1.resistance))/Math.log(10))-2)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "You must measure current differently than voltage: lift a lead to break the circuit, insert the DMM probes into the break, and then measure the current. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9/(r1.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r3.resistance))/Math.log(10))-2)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "You must measure current differently than voltage: lift a lead to break the circuit, insert the DMM probes into the break, and then measure the current. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(Math.max(r1.resistance,r2.resistance,r3.resistance)+Math.min(r1.resistance,r2.resistance,r3.resistance))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*r1.resistance/(r2.resistance+r3.resistance)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(r1.resistance+r2.resistance+r3.resistance)/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "For <b>R<sub>2</sub></b>:<br>&nbsp;&nbsp;Voltage ",
+              "shortPrompt": "R2 voltage",
+              "options": [
+                {
+                  "option": "[Math.round(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 10,
+                  "feedback": "Right! This is the voltage measured across resistor R2."
+                },
+                {
+                  "option": "[Math.round(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)*Math.pow(10,(1+Math.floor(Math.random()*2)))] V",
+                  "points": 0,
+                  "feedback": "Oops! Did you misread the knob setting on the DMM? You have the right digits, but the wrong decimal point location."
+                },
+                {
+                  "option": "[Math.round(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Oops! Were the probes placed across this resistor when you measured that voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Oops! Were the probes placed across this resistor when you measured that voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9*r2.nominalResistance/(r1.nominalResistance+r2.nominalResistance+r3.nominalResistance)/Math.pow(10,Math.floor(Math.log(9*r2.nominalResistance/(r1.nominalResistance+r2.nominalResistance+r3.nominalResistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r2.nominalResistance/(r1.nominalResistance+r2.nominalResistance+r3.nominalResistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "This is the value you'd get if the resistor's value was exactly as labeled. But since the actual resistance is a little different, you need to use the DMM to measure the <b>actual</b> voltage drop across this resistor. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9*(r2.resistance+r1.resistance)/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*(r2.resistance+r1.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*(r2.resistance+r1.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Did you accidentally measure across two resistors? You need to place the DMM probes on either end of R2 to measure this voltage. If unsure about this, check out the tutorial."
+                },
+                {
+                  "option": "[9*(1.01+Math.floor(Math.random()*9))/100] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "No, this is greater than the voltage across the whole circuit. You need to place the probes just across R1 to measure the voltage dropped across that resistor. If unsure about this, check out the tutorial."
+                },
+                {
+                  "option": "[9.123/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Are you guessing? You need to use the DMM in voltage mode to measure the voltage across R1. See the tutorial for more help."
+                },
+                {
+                  "option": "[9.123/(r1.resistance+r2.resistance+r3.resistance)/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Are you guessing? You need to use the DMM in voltage mode to measure the voltage across R1. See the tutorial for more help."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Current ",
+              "shortPrompt": "R2 current",
+              "options": [
+                {
+                  "option": "[Math.round(9/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] A",
+                  "points": 10,
+                  "feedback": "Right! The current through the whole circuit passes through this series resistor."
+                },
+                {
+                  "option": "[Math.round(9/(r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r3.resistance))/Math.log(10))-2)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "You must measure current differently than voltage: lift a lead to break the circuit, insert the DMM probes into the break, and then measure the current. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9/(r2.resistance+r1.resistance)/Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r1.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r1.resistance))/Math.log(10))-2)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "You must measure current differently than voltage: lift a lead to break the circuit, insert the DMM probes into the break, and then measure the current. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9/(r1.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r3.resistance))/Math.log(10))-2)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "You must measure current differently than voltage: lift a lead to break the circuit, insert the DMM probes into the break, and then measure the current. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(Math.max(r1.resistance,r2.resistance,r3.resistance)+Math.min(r1.resistance,r2.resistance,r3.resistance))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*r2.resistance/(r1.resistance+r3.resistance)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(r1.resistance+r2.resistance+r3.resistance)/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            },
+            {
+              "prompt": "For <b>R<sub>3</sub></b>:<br>&nbsp;&nbsp;Voltage ",
+              "shortPrompt": "R3 voltage",
+              "options": [
+                {
+                  "option": "[Math.round(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 10,
+                  "feedback": "Right! This is the voltage measured across resistor R3."
+                },
+                {
+                  "option": "[Math.round(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)*Math.pow(10,(1+Math.floor(Math.random()*2)))] V",
+                  "points": 0,
+                  "feedback": "Oops! Did you misread the knob setting on the DMM? You have the right digits, but the wrong decimal point location."
+                },
+                {
+                  "option": "[Math.round(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Oops! Were the probes placed across this resistor when you measured that voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Oops! Were the probes placed across this resistor when you measured that voltage? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9*r3.nominalResistance/(r1.nominalResistance+r2.nominalResistance+r3.nominalResistance)/Math.pow(10,Math.floor(Math.log(9*r3.nominalResistance/(r1.nominalResistance+r2.nominalResistance+r3.nominalResistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r3.nominalResistance/(r1.nominalResistance+r2.nominalResistance+r3.nominalResistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "This is the value you'd get if the resistor's value was exactly as labeled. But since the actual resistance is a little different, you need to use the DMM to measure the <b>actual</b> voltage drop across this resistor. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9*(r2.resistance+r3.resistance)/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*(r2.resistance+r3.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*(r2.resistance+r3.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Did you accidentally measure across two resistors? You need to place the DMM probes on either end of R3 to measure this voltage. If unsure about this, check out the tutorial."
+                },
+                {
+                  "option": "[9*(1.01+Math.floor(Math.random()*9))/100] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "No, this is greater than the voltage across the whole circuit. You need to place the probes just across R1 to measure the voltage dropped across that resistor. If unsure about this, check out the tutorial."
+                },
+                {
+                  "option": "[9*r3.resistance/(r1.resistance+r2.resistance)] V",
+                  "points": 0,
+                  "feedback": "Oops! Did you make an arithmetic error? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Are you guessing? You need to use the DMM in voltage mode to measure the voltage across R3. See the tutorial for more help."
+                },
+                {
+                  "option": "[9/(r1.resistance+r2.resistance+r3.resistance)/(2+Math.floor(Math.random()*5))] V",
+                  "points": 0,
+                  "tutorial": "tutorial-7",
+                  "feedback": "Are you guessing? You need to use the DMM in voltage mode to measure the voltage across R3. See the tutorial for more help."
+                }
+              ]
+            },
+            {
+              "prompt": "&nbsp;&nbsp;Current ",
+              "shortPrompt": "R3 current",
+              "options": [
+                {
+                  "option": "[Math.round(9/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] A",
+                  "points": 10,
+                  "feedback": "Right! The current through the whole circuit passes through this series resistor."
+                },
+                {
+                  "option": "[Math.round(9/(r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r3.resistance))/Math.log(10))-2)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "You must measure current differently than voltage: lift a lead to break the circuit, insert the DMM probes into the break, and then measure the current. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9/(r2.resistance+r1.resistance)/Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r1.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r2.resistance+r1.resistance))/Math.log(10))-2)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "You must measure current differently than voltage: lift a lead to break the circuit, insert the DMM probes into the break, and then measure the current. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[Math.round(9/(r1.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r3.resistance))/Math.log(10))-2)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "You must measure current differently than voltage: lift a lead to break the circuit, insert the DMM probes into the break, and then measure the current. If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9/(Math.max(r1.resistance,r2.resistance,r3.resistance)+Math.min(r1.resistance,r2.resistance,r3.resistance))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9*r3.resistance/(r2.resistance+r1.resistance)] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9.123/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                },
+                {
+                  "option": "[9.123/(r1.resistance+r2.resistance+r3.resistance)/(2+Math.floor(Math.random()*5))] A",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "Did you really measure this value? If unsure, check out the tutorial."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "prompt": "What are the actual resistance values for each resistor?",
+          "subquestions": [
+            {
+              "prompt": "<b>R<sub>1</sub></b>:<br>&nbsp;&nbsp;Resistance ",
+              "shortPrompt": "R1 resistance",
+              "options": [
+                {
+                  "option": "[Math.round(r1.resistance)] ohms",
+                  "points": 20,
+                  "feedback": "Right! You correctly calculated the resistance of R1."
+                },
+                {
+                  "option": "[Math.round(r2.resistance/Math.pow(10,Math.floor(Math.log(r2.resistance)/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(r2.resistance)/Math.log(10))-2)] ohms",
+                  "points": 0,
+                  "feedback": "Oops! Did you accidentally select the value for another resistor?"
+                },
+                {
+                  "option": "[Math.round(r3.resistance/Math.pow(10,Math.floor(Math.log(r3.resistance)/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(r3.resistance)/Math.log(10))-2)] ohms",
+                  "points": 0,
+                  "feedback": "Oops! Did you accidentally select the value for another resistor?"
+                },
+                {
+                  "option": "[r1.nominalResistance] ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-6",
+                  "feedback": "That's the rated value, but you must use V and I to find the actual value! See the tutorial if you're unsure."
+                },
+                {
+                  "option": "[r2.nominalResistance] ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-6",
+                  "feedback": "That's the rated value of one of the other resistors. You must use V and I to find the actual value! See the tutorial if you're unsure."
+                },
+                {
+                  "option": "[Math.round(r1.resistance*(r2.resistance+r3.resistance)/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(r1.resistance*(r2.resistance+r3.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(r1.resistance*(r2.resistance+r3.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)]  ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "It seems you're using a wrong current value to make your calculation. See the tutorial if you're unsure."
+                }
+              ]
+            },
+            {
+              "prompt": "<b>R<sub>2</sub></b>:<br>&nbsp;&nbsp;Resistance ",
+              "shortPrompt": "R2 resistance",
+              "options": [
+                {
+                  "option": "[Math.round(r2.resistance)] ohms",
+                  "points": 20,
+                  "feedback": "Right! You correctly calculated the resistance of R2."
+                },
+                {
+                  "option": "[Math.round(r1.resistance/Math.pow(10,Math.floor(Math.log(r1.resistance)/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(r1.resistance)/Math.log(10))-2)] ohms",
+                  "points": 0,
+                  "feedback": "Oops! Did you accidentally select the value for another resistor?"
+                },
+                {
+                  "option": "[Math.round(r3.resistance/Math.pow(10,Math.floor(Math.log(r3.resistance)/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(r3.resistance)/Math.log(10))-2)] ohms",
+                  "points": 0,
+                  "feedback": "Oops! Did you accidentally select the value for another resistor?"
+                },
+                {
+                  "option": "[r2.nominalResistance] ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-6",
+                  "feedback": "That's the rated value, but you must use V and I to find the actual value! See the tutorial if you're unsure."
+                },
+                {
+                  "option": "[r1.nominalResistance] ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-6",
+                  "feedback": "That's the rated value of one of the other resistors. You must use V and I to find the actual value! See the tutorial if you're unsure."
+                },
+                {
+                  "option": "[Math.round(r2.resistance*(r1.resistance+r3.resistance)/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(r2.resistance*(r1.resistance+r3.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(r2.resistance*(r1.resistance+r3.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)]  ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "It seems you're using a wrong current value to make your calculation. See the tutorial if you're unsure."
+                }
+              ]
+            },
+            {
+              "prompt": "<b>R<sub>3</sub></b>:<br>&nbsp;&nbsp;Resistance ",
+              "shortPrompt": "R3 resistance",
+              "options": [
+                {
+                  "option": "[Math.round(r3.resistance)] ohms",
+                  "points": 20,
+                  "feedback": "Right! You correctly calculated the resistance of R3."
+                },
+                {
+                  "option": "[Math.round(r1.resistance/Math.pow(10,Math.floor(Math.log(r1.resistance)/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(r1.resistance)/Math.log(10))-2)] ohms",
+                  "points": 0,
+                  "feedback": "Oops! Did you accidentally select the value for another resistor?"
+                },
+                {
+                  "option": "[Math.round(r2.resistance/Math.pow(10,Math.floor(Math.log(r2.resistance)/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(r2.resistance)/Math.log(10))-2)] ohms",
+                  "points": 0,
+                  "feedback": "Oops! Did you accidentally select the value for another resistor?"
+                },
+                {
+                  "option": "[r3.nominalResistance] ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-6",
+                  "feedback": "That's the rated value, but you must use V and I to find the actual value! See the tutorial if you're unsure."
+                },
+                {
+                  "option": "[r2.nominalResistance] ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-6",
+                  "feedback": "That's the rated value of one of the other resistors. You must use V and I to find the actual value! See the tutorial if you're unsure."
+                },
+                {
+                  "option": "[Math.round(r3.resistance*(r2.resistance+r1.resistance)/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(r3.resistance*(r2.resistance+r1.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(r3.resistance*(r2.resistance+r1.resistance)/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)]  ohms",
+                  "points": 0,
+                  "tutorial": "tutorial-8",
+                  "feedback": "It seems you're using a wrong current value to make your calculation. See the tutorial if you're unsure."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "COMMENT": "Bonus for Time<120: 80 pts. Max score: 200 pts.",
+  "CHEAT": "<b>CHEAT:</b> Actual values<br>&nbsp;&nbsp; R<sub>1</sub> = [r1.resistance] ohms<br>&nbsp;&nbsp; R<sub>2</sub> = [r2.resistance] ohms<br>&nbsp;&nbsp; R<sub>3</sub> = [r3.resistance] ohms<br><b>Expected DMM values</b><br>&nbsp;&nbsp; V<sub>1</sub> = [Math.round(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r1.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V <br>&nbsp;&nbsp; V<sub>2</sub> = [Math.round(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r2.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)] V<br>&nbsp;&nbsp; V<sub>3</sub> = [Math.round(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9*r3.resistance/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)]  V <br>&nbsp;&nbsp; I<sub>TOT</sub> = [Math.round(9/(r1.resistance+r2.resistance+r3.resistance)/Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2))*Math.pow(10,Math.floor(Math.log(9/(r1.resistance+r2.resistance+r3.resistance))/Math.log(10))-2)]  A"
+}

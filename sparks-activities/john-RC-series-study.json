@@ -1,0 +1,74 @@
+{
+  "_id": "john-RC-series-study",
+  "_rev": "1-fc765070f94030ba1bd85113ce5d7d1b",
+  "title": "Measuring a RC Series Circuit",
+  "circuit": [
+    {
+      "type": "function generator",
+      "UID": "source",
+      "frequencies": [
+        "logarithmic",
+        10,
+        10000,
+        101
+      ],
+      "amplitude": 10
+    },
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "resistance": "100",
+      "connections": "b17,b23",
+      "label": "R1"
+    },
+    {
+      "type": "capacitor",
+      "UID": "C1",
+      "capacitance": "10e-6",
+      "connections": "c11,c17",
+      "label": "C1"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative20,a23"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive8,a11"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "resistance": "100",
+      "connections": "g11,g17",
+      "label": "R2"
+    },
+    {
+      "type": "capacitor",
+      "UID": "C2",
+      "capacitance": "10e-6",
+      "connections": "h17,h23",
+      "label": "C2"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive7,f11"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative22,f23"
+    }
+  ],
+  "pages": [
+    {
+      "notes": "For this circuit:<br>&nbsp;&nbsp; <b>R<sub>1</sub>, R<sub>2</sub></b> = [r1.resistance] ohms<br>&nbsp;&nbsp; <b>C<sub>1</sub>, C<sub>2</sub></b> = [C1.capacitance] farads<br>&nbsp;&nbsp; <b>V<sub>P</sub></b> = [source.amplitude] volts<br>&nbsp;&nbsp; <b>f<sub>source</sub></b> = [source.frequencies] Hz",
+      "questions": [
+        {
+          "prompt": "These are two simple RC circuits, each a mirror image of the other. Compare the behavior of each. Verify Ohm's Law using circuit impedance. Observe the high-pass nature of the circuit. Measure to determine the corner frequency and phase shift."
+        }
+      ]
+    }
+  ],
+  "show_oscilloscope": "true",
+  "show_multimeter": "true"
+}
