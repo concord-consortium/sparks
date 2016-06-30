@@ -11289,6 +11289,9 @@ window["breadboardView"] = {
         } else {
           sectionName = sparks.activity_base_url + jsonSection + ".json";
           $.get(sectionName, function(jsonSection) {
+            if (typeof jsonSection == "string") {
+              jsonSection = JSON.parse(jsonSection);
+            }
             self.addSection(jsonSection, i);
             totalCreated++;
             if (totalCreated == activity.sections.length){
@@ -11975,7 +11978,7 @@ window["breadboardView"] = {
         var win = sparks.tutorialController.tutorialWindow,
             tutorialName;
 
-        if (win && win.location) {
+        if (win && win.location && win.location.pathname) {
           tutorialName = win.location.pathname.replace("/","");
           sparks.logController.addEvent(sparks.LogEvent.CHANGED_TUTORIAL, tutorialName);
           win.moveActionCallback = sparks.tutorialController.tutorialMoveActionCallback;
@@ -15677,6 +15680,9 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
     this.loadSounds();
 
     var startActivity = function(activity) {
+      if (typeof activity == "string") {
+        activity = JSON.parse(activity);
+      }
       new sparks.ActivityConstructor(activity);
     };
 
