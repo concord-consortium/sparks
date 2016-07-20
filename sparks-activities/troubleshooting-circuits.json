@@ -1,0 +1,12 @@
+{
+  "_id": "troubleshooting-circuits",
+  "_rev": "5-f269fab343b76554877bff309f349567",
+  "type": "activity",
+  "sections": [
+    "3-series-troubleshoot",
+    "4-series-troubleshoot",
+    "3-series-parallel-troubleshoot",
+    "4-series-parallel-troubleshoot"
+  ],
+  "title": "Troubleshooting circuit"
+}

@@ -5,8 +5,7 @@
   "sections": [
     "series-parallel-c",
     "series-parallel-d",
-    "series-parallel-e",
-    "series-parallel-f"
+    "series-parallel-e"
   ],
   "title": "Series-Parallel Resistances"
 }

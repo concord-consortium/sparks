@@ -117,7 +117,7 @@
           ]
         },
         {
-          "prompt": "What is the voltage dropped across each resistor?",
+          "prompt": "What is the voltage drop across each resistor?",
           "subquestions": [
             {
               "prompt": "&nbsp;&nbsp;Across <b>R<sub>1</sub></b>:",

@@ -1,0 +1,86 @@
+{
+  "_id": "3-parallel-troubleshoot",
+  "_rev": "16-34bed54aed70a4444fb678f020207e5",
+  "title": "Troubleshooting resistors in series and parallel",
+  "show_multimeter": "true",
+  "disable_multimeter_position": "r",
+  "circuit": [
+    {
+      "type": "resistor",
+      "UID": "r1",
+      "connections": "a17,a10",
+      "label": "R1"
+    },
+    {
+      "type": "resistor",
+      "UID": "r2",
+      "connections": "c17,c10",
+      "label": "R2"
+    },
+    {
+      "type": "resistor",
+      "UID": "r3",
+      "connections": "e17,e10",
+      "label": "R3"
+    },
+    {
+      "type": "wire",
+      "connections": "left_positive20,b17"
+    },
+    {
+      "type": "wire",
+      "connections": "left_negative3,b10"
+    }
+  ],
+  "faults": [
+    {
+      "type": [
+        "shorted",
+        "open"
+      ],
+      "count": 1
+    }
+  ],
+  "pages": [
+    {
+      "questions": [
+        {
+          "prompt": "One, <i>and only one,</i> of these resistors is either shorted or open. <i>Using as few measurments as possible,</i> find the bad resistor and determine whether it is shorted or open.",
+          "subquestions": [
+            {
+              "prompt": "Which resistor is bad?",
+              "options": [
+                {
+                  "option": "R1"
+                },
+                {
+                  "option": "R2"
+                },
+                {
+                  "option": "R3"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 10,
+              "scoring": "var badResistorName; if ((${r1.resistance} > 1e12)||(${r1.resistance} < 1e-5)) {badResistorName = 'R1'}  else if ((${r2.resistance} > 1e12)||(${r2.resistance} < 1e-5)) { badResistorName = 'R2' } else if ((${r3.resistance} > 1e12)||(${r3.resistance} < 1e-5)) { badResistorName = 'R3' }; if (question.answer === badResistorName) {question.points_earned = 10} question.correct_answer = badResistorName"
+            },
+            {
+              "prompt": "Is it shorted or open?",
+              "options": [
+                {
+                  "option": "Shorted"
+                },
+                {
+                  "option": "Open"
+                }
+              ],
+              "keepOrder": "true",
+              "points": 5,
+              "scoring": "var natureOfFault; if ((${r1.resistance} > 1e12)||(${r2.resistance} > 1e12)||(${r3.resistance} > 1e12)||(${r3.resistance} > 1e12)) {natureOfFault = 'Open'} else if ((${r1.resistance} < 1e-5)||(${r2.resistance} < 1e-5)||(${r3.resistance} < 1e-5)) {natureOfFault = 'Shorted'}; if (question.answer === natureOfFault) {question.points_earned = 5} question.correct_answer = natureOfFault"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
