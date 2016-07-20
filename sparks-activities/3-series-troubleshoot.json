@@ -1,7 +1,7 @@
 {
   "_id": "3-series-troubleshoot",
   "_rev": "16-34bed54aed70a044ebfba92f020207e5",
-  "title": "Challenge 1: Troubleshooting five resistors in series",
+  "title": "Challenge 1: Troubleshooting three resistors in series",
   "show_multimeter": "true",
   "disable_multimeter_position": "r",
   "circuit": [
