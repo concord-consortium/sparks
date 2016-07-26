@@ -3364,7 +3364,7 @@ sparks.createQuestionsCSV = function(data) {
       $('.report').html('');
       if (!!finalReport){
         $('#image').html('');
-        $('#breadboard_wrapper').children().html('').hide();
+        $('#breadboard_wrapper').children().hide();
       }
       this.$reportDiv = $('<div>').addClass('report').css('float', 'left').css('padding-top', '15px').css('padding-left', '40px');
       this.$reportDiv.append($report);
