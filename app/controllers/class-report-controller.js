@@ -25,7 +25,7 @@
       var self = this;
 
       if (classId) {
-        $.get("http://sparks.portal.concord.org/portal/classes/"+classId, function(data) {
+        $.get("https://learn.concord.org/portal/classes/"+classId, function(data) {
           if (data) {
             var classElem = $(data).find('strong:contains("Class:")'),
                 className = classElem ? classElem.text().split(": ")[1] : "",
