@@ -209,10 +209,6 @@
     // share dialog
     $("#share-prompt").on("click", function() {
       $("#about").hide();
-      $("#share-link").text("https://sparks-activities.concord.org/sparks-content/activities.html"+window.location.hash);
-      var iframeText = $("#share-iframe-content").html();
-      var hash = /html([^"]*)"/.exec(iframeText)[1];
-      $("#share-iframe-content").html(iframeText.replace(hash, window.location.hash));
       $("#share-panel").toggle();
     })
 
