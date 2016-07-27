@@ -183,7 +183,7 @@
             "Go to the portal": function () {
               $(this).dialog("close");
               window.onbeforeunload = null;
-              window.location.href = "http://sparks.portal.concord.org";
+              window.location.href = "https://learn.concord.org/sparks/";
             },
             "Keep working": function() {
               $(this).dialog("close");
@@ -192,7 +192,7 @@
         });
       } else {
         window.onbeforeunload = null;
-        window.location.href = "http://sparks.portal.concord.org";
+        window.location.href = "https://learn.concord.org/sparks/";
       }
     });
   };
@@ -209,10 +209,6 @@
     // share dialog
     $("#share-prompt").on("click", function() {
       $("#about").hide();
-      $("#share-link").text("http://sparks.portal.concord.org/activities.html"+window.location.hash);
-      var iframeText = $("#share-iframe-content").html();
-      var hash = /html([^"]*)"/.exec(iframeText)[1];
-      $("#share-iframe-content").html(iframeText.replace(hash, window.location.hash));
       $("#share-panel").toggle();
     })
 

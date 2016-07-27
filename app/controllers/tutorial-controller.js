@@ -37,20 +37,26 @@
     },
 
     getTutorialTitle: function(filename, callback) {
-      $.get(this._getURL(filename), function(data) {
+      var iframe = document.createElement("iframe");
+      iframe.src = this._getURL(filename);
+      iframe.style = "display: none;"
+      iframe.onload = function () {
         var title = filename,
-            $title = $(data).find('#tutorial_title');
+            $doc = $(iframe.contentWindow.document),
+            $title = $doc.find('#tutorial_title');
 
         if ($title.length > 0){
           title = $title[0].innerHTML;
         } else {
-          $title = $(data).find('h3');
+          $title = $doc.find('h3');
           if ($title.length > 0){
             title = $title[0].innerHTML;
           }
         }
+        document.body.removeChild(iframe);
         callback(title);
-      });
+      };
+      document.body.appendChild(iframe);
     },
 
     _getURL: function(filename) {

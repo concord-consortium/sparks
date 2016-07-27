@@ -4,7 +4,7 @@ The authoring database can be found here: [http://couchdb.cosmos.concord.org/_ut
 
 New activity files can be created quickly, and given an id. That id then instantly becomes a url where you can find the activity you have been authoring. This is designed to be a nice, quick, iterative authoring setup.
 
-If you give an activity the id X, it can be found at [http://sparks.portal.concord.org/sparks-content/activities.html#X]. So, for example, the activity file with the id series-interpretive, for instance, which can be found here: [http://couchdb.cosmos.concord.org/_utils/document.html?sparks/series-interpretive], will instantly create an activity which can be found at [http://sparks.portal.concord.org/sparks-content/activities.html#series-interpretive]
+If you give an activity the id X, it can be found at [https://sparks-activities.concord.org/sparks-content/activities.html#X]. So, for example, the activity file with the id series-interpretive, for instance, which can be found here: [http://couchdb.cosmos.concord.org/_utils/document.html?sparks/series-interpretive], will instantly create an activity which can be found at [https://sparks-activities.concord.org/sparks-content/activities.html#series-interpretive]
 
 *Note:* We now can author both "Activities" and "Sections" (or "Levels"). One activity is made up of several sections. Most of the information below is about authoring sections. Authoring activities is described at the bottom of this document.
 
@@ -95,7 +95,7 @@ To create a new section file in the authoring database, we first create the new 
 
 As you type, clicking off of the document will cause it to validate itself, which is a quick way to know if your syntax is correct.
 
-Save the document. (Save early and often\!) Visit it at [http://sparks.portal.concord.org/sparks-content/activities.html#my-level]
+Save the document. (Save early and often\!) Visit it at [https://sparks-activities.concord.org/sparks-content/activities.html#my-level]
 
 h1. Level properties
 
@@ -786,7 +786,7 @@ Two in-built script functions are available to help authors decipher and score h
 Example:
 
 {code}
-var parsedAnswer = parse(question.answer); 
+var parsedAnswer = parse(question.answer);
 var valueCorrect = close(parsedAnswer.val, 5010);
 if (valueCorrect) {
   question.points_earned = 10;
@@ -885,4 +885,4 @@ To define an activity, you can create a new JSON document in the Couch Database,
 }
 {code}
 
-Just as with levels, ff you give an activity the id X, it can be found at [http://sparks.portal.concord.org/sparks-content/activities.html#X].
+Just as with levels, ff you give an activity the id X, it can be found at [https://sparks-activities.concord.org/sparks-content/activities.html#X].

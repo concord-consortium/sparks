@@ -3364,7 +3364,7 @@ sparks.createQuestionsCSV = function(data) {
       $('.report').html('');
       if (!!finalReport){
         $('#image').html('');
-        $('#breadboard_wrapper').children().html('').hide();
+        $('#breadboard_wrapper').children().hide();
       }
       this.$reportDiv = $('<div>').addClass('report').css('float', 'left').css('padding-top', '15px').css('padding-left', '40px');
       this.$reportDiv.append($report);
@@ -11848,7 +11848,7 @@ window["breadboardView"] = {
       var self = this;
 
       if (classId) {
-        $.get("http://sparks.portal.concord.org/portal/classes/"+classId, function(data) {
+        $.get("https://learn.concord.org/portal/classes/"+classId, function(data) {
           if (data) {
             var classElem = $(data).find('strong:contains("Class:")'),
                 className = classElem ? classElem.text().split(": ")[1] : "",
@@ -11943,20 +11943,26 @@ window["breadboardView"] = {
     },
 
     getTutorialTitle: function(filename, callback) {
-      $.get(this._getURL(filename), function(data) {
+      var iframe = document.createElement("iframe");
+      iframe.src = this._getURL(filename);
+      iframe.style = "display: none;"
+      iframe.onload = function () {
         var title = filename,
-            $title = $(data).find('#tutorial_title');
+            $doc = $(iframe.contentWindow.document),
+            $title = $doc.find('#tutorial_title');
 
         if ($title.length > 0){
           title = $title[0].innerHTML;
         } else {
-          $title = $(data).find('h3');
+          $title = $doc.find('h3');
           if ($title.length > 0){
             title = $title[0].innerHTML;
           }
         }
+        document.body.removeChild(iframe);
         callback(title);
-      });
+      };
+      document.body.appendChild(iframe);
     },
 
     _getURL: function(filename) {
@@ -15745,7 +15751,7 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
             "Go to the portal": function () {
               $(this).dialog("close");
               window.onbeforeunload = null;
-              window.location.href = "http://sparks.portal.concord.org";
+              window.location.href = "https://learn.concord.org/sparks/";
             },
             "Keep working": function() {
               $(this).dialog("close");
@@ -15754,7 +15760,7 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
         });
       } else {
         window.onbeforeunload = null;
-        window.location.href = "http://sparks.portal.concord.org";
+        window.location.href = "https://learn.concord.org/sparks/";
       }
     });
   };
@@ -15771,10 +15777,6 @@ sparks.GAHelper.userVisitedTutorial = function (tutorialId) {
     // share dialog
     $("#share-prompt").on("click", function() {
       $("#about").hide();
-      $("#share-link").text("http://sparks.portal.concord.org/activities.html"+window.location.hash);
-      var iframeText = $("#share-iframe-content").html();
-      var hash = /html([^"]*)"/.exec(iframeText)[1];
-      $("#share-iframe-content").html(iframeText.replace(hash, window.location.hash));
       $("#share-panel").toggle();
     })
 

@@ -4,10 +4,10 @@
     <title>SPARKS Module 2: Measuring a Series Circuit</title>
 
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type' />
-    <link rel="icon" href="http://concord.org/sparks/virtual-electronics/favicon.ico" />
+    <link rel="icon" href="https://concord.org/sparks/virtual-electronics/favicon.ico" />
 
     <link href='lib/jquery/css/ui-lightness/jquery-ui-1.8.24.custom.css' rel='stylesheet' type='text/css' />
-    <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro:700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Anonymous+Pro:700' rel='stylesheet' type='text/css'>
     <link href='common/stylesheets/app.css' rel='stylesheet' type='text/css' />
     <link href='common/stylesheets/sparks.css' rel='stylesheet' type='text/css' />
     <link href="common/stylesheets/breadboard.css" rel="stylesheet" type="text/css" >
@@ -33,12 +33,9 @@
       );
 
       (function() {
-        // only initialize GA if we're running on the portal
-        if (location.host === "sparks.portal.concord.org") {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        }
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
     </script>
@@ -47,13 +44,13 @@
 
     <div class="wrapper" id="wrapper">
       <div class="wrapper-title" style="height: 100px; padding-left: 25px; background-color: eeeeee; border-bottom: solid #999999">
-        <a href="http://sparks.portal.concord.org/">
+        <a href="https://learn.concord.org/sparks/">
           <img class='no_border' src='common/icons/sparks-left-logo.png' style="float:left; height: 90px; margin: 5px"/>
         </a>
         <h1 style="padding: 25px; margin-left: 90px">
           <span id="title"></span>
         </h1>
-        <span id="share-prompt">Share or Embed this model</span>
+        <span id="share-prompt">About this model</span>
       </div>
       <div id="primary">
 
@@ -99,12 +96,11 @@
     </div>
     <div id="share-panel" style="display: none;">
       <span id="close-share">X</span>
-      <h2>Paste this link in email or IM</h2>
-      <textarea id="share-link"></textarea>
-      <h2>Paste HTML to embed the model alone in a website or blog</h2>
-      <textarea id="share-iframe-content">&lt;iframe src="http://sparks.portal.concord.org/sparks-content/embeddable.html#" width="800px" height="500px"&gt;&lt;/iframe&gt;</textarea>
       <div class="copyright-section">
-        <strong>Copyright © 2013&nbsp;</strong><a class="opens-in-new-window" href="http://concord.org" id="share-license-link" target="_blank">The Concord Consortium</a>. All rights reserved. The software is licensed under&nbsp;<a class="opens-in-new-window" href="http://opensource.org/licenses/BSD-2-Clause" id="share-license-link" target="_blank">Simplified BSD</a>, <a class="opens-in-new-window" href="http://opensource.org/licenses/MIT" id="share-license-link" target="_blank">MIT</a> or <a class="opens-in-new-window" href="http://opensource.org/licenses/Apache-2.0" id="share-license-link" target="_blank">Apache 2.0</a> licenses. Please provide attribution to the Concord Consortium and the URL&nbsp;<a class="opens-in-new-window" href="http://concord.org/" id="share-license-link" target="_blank">http://concord.org</a>.
+        <strong>Copyright © 2016&nbsp;</strong><a class="opens-in-new-window" href="https://concord.org" id="share-license-link" target="_blank">The Concord Consortium</a>. All rights reserved.
+        The content is licensed under <a class="opens-in-new-window" href="https://creativecommons.org/licenses/by/4.0/" id="share-license-link" target="_blank">CC BY 4.0</a>.
+        The software is licensed under <a class="opens-in-new-window" href="http://opensource.org/licenses/MIT" id="share-license-link" target="_blank">MIT</a>.
+        Please provide attribution to the Concord Consortium and the URL <a class="opens-in-new-window" href="https://concord.org/" id="share-license-link" target="_blank">https://concord.org</a>.
       </div>
     </div>
   </body>
